@@ -99,4 +99,36 @@ class EpisodeRepositoryTest {
             }
         ).containsExactly(com.acrovox.core.model.EpisodeActionType.NEW)
     }
+
+    @Test
+    fun complete_marksPlayedAndLeavesQueue_nextFollowsQueueOrder() = runTest {
+        repository.addToQueue(listOf(ids[0], ids[1]))
+
+        assertThat(repository.nextInQueue(ids[0])).isEqualTo(ids[1])
+        assertThat(repository.previousInQueue(ids[1])).isEqualTo(ids[0])
+        // Un épisode hors file enchaîne sur la tête de file.
+        assertThat(repository.nextInQueue(ids[2])).isEqualTo(ids[0])
+
+        repository.complete(ids[0])
+
+        assertThat(db.episodeDao().get(ids[0])!!.state).isEqualTo(EpisodeState.PLAYED)
+        assertThat(repository.observeQueuedIds().first()).containsExactly(ids[1])
+        assertThat(repository.nextInQueue(ids[1])).isNull()
+    }
+
+    @Test
+    fun listening_recordsPlayAction_savesPositionAndHistory() = runTest {
+        repository.onPlaybackStarted(ids[0], 0)
+        repository.savePosition(ids[0], 125_000)
+        repository.recordListening(ids[0], startedMs = 5_000, positionMs = 125_000)
+        repository.recordListening(ids[0], startedMs = 10_000, positionMs = 10_000)
+
+        assertThat(db.episodeDao().get(ids[0])!!.state).isEqualTo(EpisodeState.IN_PROGRESS)
+        assertThat(db.episodeDao().get(ids[0])!!.positionMs).isEqualTo(125_000)
+        val action = db.episodeActionDao().getPending(10).single()
+        assertThat(action.action).isEqualTo(com.acrovox.core.model.EpisodeActionType.PLAY)
+        assertThat(action.started).isEqualTo(5)
+        assertThat(action.position).isEqualTo(125)
+        assertThat(repository.observeHistory().first().map { it.episode.id }).containsExactly(ids[0])
+    }
 }

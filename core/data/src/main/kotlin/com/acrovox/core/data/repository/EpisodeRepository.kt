@@ -5,6 +5,7 @@ import com.acrovox.core.database.AcroVoxDatabase
 import com.acrovox.core.database.entity.EpisodeActionEntity
 import com.acrovox.core.database.entity.EpisodeEntity
 import com.acrovox.core.database.entity.EpisodeWithFeed
+import com.acrovox.core.database.entity.PlaybackHistoryEntity
 import com.acrovox.core.model.EpisodeActionType
 import com.acrovox.core.model.EpisodeState
 import java.time.Clock
@@ -100,6 +101,64 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
     }
 
     suspend fun setFavorite(episodeId: Long, favorite: Boolean) = episodeDao.setFavorite(episodeId, favorite)
+
+    // Lecture
+
+    suspend fun getWithFeed(episodeId: Long): EpisodeWithFeed? = episodeDao.getWithFeed(listOf(episodeId)).firstOrNull()
+
+    /** Début d'écoute : entrée d'historique. */
+    suspend fun onPlaybackStarted(episodeId: Long, positionMs: Long) {
+        db.playbackHistoryDao().insert(
+            PlaybackHistoryEntity(episodeId = episodeId, playedAt = clock.millis(), positionMs = positionMs)
+        )
+    }
+
+    /** Position courante ; l'épisode passe « en cours » s'il n'est pas déjà écouté. */
+    suspend fun savePosition(episodeId: Long, positionMs: Long) =
+        episodeDao.updatePosition(episodeId, positionMs, clock.millis())
+
+    /**
+     * Segment d'écoute terminé (pause, arrêt, changement d'épisode) : action gPodder `play`
+     * de [startedMs] à [positionMs].
+     */
+    suspend fun recordListening(episodeId: Long, startedMs: Long, positionMs: Long) {
+        if (positionMs <= startedMs) return
+        val item = getWithFeed(episodeId) ?: return
+        val (episode, feed) = item
+        db.episodeActionDao().insertAll(
+            listOf(
+                EpisodeActionEntity(
+                    podcastUrl = feed.feedUrl,
+                    episodeUrl = episode.mediaUrl,
+                    guid = episode.guid,
+                    action = EpisodeActionType.PLAY,
+                    timestamp = clock.millis(),
+                    started = (startedMs / 1000).toInt(),
+                    position = (positionMs / 1000).toInt(),
+                    total = episode.durationMs?.div(1000)?.toInt()
+                )
+            )
+        )
+    }
+
+    /** Fin d'épisode : écouté, retiré de la file. */
+    suspend fun complete(episodeId: Long) = db.withTransaction {
+        episodeDao.markPlayed(episodeId, clock.millis())
+        queueDao.remove(listOf(episodeId))
+    }
+
+    /** Épisode à lire après [episodeId] : le suivant dans la file, ou la tête de file. */
+    suspend fun nextInQueue(episodeId: Long): Long? {
+        val queue = queueDao.getEpisodeIds()
+        val index = queue.indexOf(episodeId)
+        return if (index >= 0) queue.getOrNull(index + 1) else queue.firstOrNull { it != episodeId }
+    }
+
+    suspend fun previousInQueue(episodeId: Long): Long? {
+        val queue = queueDao.getEpisodeIds()
+        val index = queue.indexOf(episodeId)
+        return if (index > 0) queue[index - 1] else null
+    }
 
     private suspend fun record(episodes: List<EpisodeWithFeed>, type: EpisodeActionType): List<Long> {
         if (episodes.isEmpty()) return emptyList()
