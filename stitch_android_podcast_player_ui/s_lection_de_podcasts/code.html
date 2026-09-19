@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Onboarding - Choisissez vos podcasts</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#c97e66",
+            "tertiary": "#ffb59e",
+            "inverse-primary": "#b02f00",
+            "on-surface-variant": "#e4beb4",
+            "secondary": "#cdbdff",
+            "tertiary-fixed": "#ffdbd0",
+            "surface-container-highest": "#323539",
+            "error": "#ffb4ab",
+            "surface-dim": "#111418",
+            "surface-variant": "#323539",
+            "surface": "#111418",
+            "secondary-fixed-dim": "#cdbdff",
+            "surface-container-low": "#191c20",
+            "on-primary-fixed-variant": "#862200",
+            "error-container": "#93000a",
+            "on-error-container": "#ffdad6",
+            "on-error": "#690005",
+            "on-primary-container": "#541200",
+            "on-surface": "#e1e2e8",
+            "on-tertiary-fixed-variant": "#713623",
+            "primary": "#ffb5a0",
+            "on-secondary-fixed-variant": "#4f00d0",
+            "secondary-fixed": "#e8deff",
+            "primary-fixed": "#ffdbd1",
+            "surface-tint": "#ffb5a0",
+            "on-tertiary-fixed": "#390c01",
+            "primary-container": "#ff5722",
+            "secondary-container": "#5203d5",
+            "on-secondary-container": "#c0acff",
+            "inverse-on-surface": "#2e3135",
+            "surface-bright": "#36393e",
+            "on-primary-fixed": "#3b0900",
+            "on-primary": "#5f1500",
+            "on-secondary-fixed": "#20005f",
+            "surface-container-lowest": "#0b0e12",
+            "outline": "#ab8980",
+            "background": "#111418",
+            "tertiary-fixed-dim": "#ffb59e",
+            "on-background": "#e1e2e8",
+            "inverse-surface": "#e1e2e8",
+            "on-secondary": "#370096",
+            "surface-container-high": "#272a2e",
+            "surface-container": "#1d2024",
+            "on-tertiary": "#54200f",
+            "primary-fixed-dim": "#ffb5a0",
+            "outline-variant": "#5b4039",
+            "on-tertiary-container": "#4c1a09"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.25rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-md": "0.75rem",
+            "gutter": "1rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "label-lg": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Space Grotesk"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "title-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Space Grotesk"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-md": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "label-lg": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex justify-center selection:bg-primary-container selection:text-on-primary">
+<!-- Mobile Container / Max-W Canvas -->
+<div class="w-full max-w-md min-h-screen flex flex-col relative bg-surface border-x border-surface-container-highest/20 pb-36">
+<!-- Android Status Bar -->
+<div class="w-full h-11 px-5 flex items-center justify-between text-on-surface select-none z-30 pt-1">
+<span class="font-label-md text-label-md font-semibold tracking-tight">09:41</span>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]">battery_full</span>
+</div>
+</div>
+<!-- Onboarding Step Indicator & Header -->
+<header class="px-5 pt-3 pb-4">
+<div class="flex items-center justify-between mb-3">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-primary font-medium tracking-wide">Étape 2 sur 3</span>
+</div>
+<!-- Micro Step Progress Indicator -->
+<div class="flex items-center gap-1.5">
+<div class="w-5 h-1.5 rounded-full bg-primary-container/40"></div>
+<div class="w-7 h-1.5 rounded-full bg-primary-container"></div>
+<div class="w-5 h-1.5 rounded-full bg-surface-container-highest"></div>
+</div>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold tracking-tight">
+        Choisissez vos podcasts &amp; thèmes favoris
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant/80 mt-1.5">
+        Sélectionnez au moins 3 émissions pour personnaliser votre flux quotidien
+      </p>
+</header>
+<!-- Search Input -->
+<div class="px-5 mb-4">
+<div class="relative flex items-center w-full">
+<span class="material-symbols-outlined absolute left-4 text-on-surface-variant/60 pointer-events-none text-[20px]">search</span>
+<input class="w-full h-12 pl-11 pr-4 rounded-full bg-surface-container text-on-surface placeholder:text-on-surface-variant/60 border border-outline-variant/20 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none font-body-md text-body-md transition-all duration-200" placeholder="Rechercher une émission, un thème, un créateur..." type="text"/>
+</div>
+</div>
+<!-- Thematic Chips (Horizontally Scrollable) -->
+<div class="w-full mb-5 overflow-hidden">
+<div class="flex items-center space-x-2 px-5 overflow-x-auto no-scrollbar py-1">
+<!-- Selected Chip 1 -->
+<button class="shrink-0 h-8 px-4 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>Tech &amp; IA</span>
+</button>
+<!-- Selected Chip 2 -->
+<button class="shrink-0 h-8 px-4 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>Actualités</span>
+</button>
+<!-- Unselected Chip -->
+<button class="shrink-0 h-8 px-4 rounded-full bg-transparent border border-outline-variant/40 text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center active:scale-95 transition-all duration-150" type="button">
+<span>Sciences &amp; Découverte</span>
+</button>
+<!-- Selected Chip 3 -->
+<button class="shrink-0 h-8 px-4 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>True Crime</span>
+</button>
+<!-- Unselected Chips -->
+<button class="shrink-0 h-8 px-4 rounded-full bg-transparent border border-outline-variant/40 text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center active:scale-95 transition-all duration-150" type="button">
+<span>Culture &amp; Société</span>
+</button>
+<button class="shrink-0 h-8 px-4 rounded-full bg-transparent border border-outline-variant/40 text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center active:scale-95 transition-all duration-150" type="button">
+<span>Business &amp; Startups</span>
+</button>
+<button class="shrink-0 h-8 px-4 rounded-full bg-transparent border border-outline-variant/40 text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center active:scale-95 transition-all duration-150" type="button">
+<span>Humour</span>
+</button>
+</div>
+</div>
+<!-- Podcast Selection Bento / Grid -->
+<main class="px-5 flex-1">
+<div class="flex items-center justify-between mb-3">
+<h2 class="font-title-lg text-title-lg text-on-surface">Recommandés pour vous</h2>
+<span class="font-label-sm text-label-sm text-primary tracking-wider uppercase">Populaires</span>
+</div>
+<div class="grid grid-cols-2 gap-3.5">
+<!-- Podcast Card 1 (SELECTED) -->
+<div class="podcast-card group relative p-3 rounded-2xl bg-surface-container border border-primary-container/70 shadow-sm cursor-pointer active:scale-[0.98] transition-all duration-200">
+<div class="relative aspect-square w-full rounded-xl overflow-hidden mb-2.5 bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Modern cyberpunk podcast artwork with glowing neon violet and vibrant coral sound waves over an obsidian backdrop. Clean high-contrast digital illustration with minimalist typography reading Tech Culture. Premium dark mode studio lighting aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN6YdqnXVWXlHqbZ_UrCHRhe81P3gowuJ99-BeZZKtptcLrAFhnFyREuc5Y6op13HxvRCXWLZ_4k2HgvbwKKTznQxC1GWd-9OO9pUTwqXYeWpXR_aBUmZUJaY-00qOYCusU7skV6e7_sWGb0NifUhTyoyjo5NW_cJ6IofItHt4m6X_4R2dNNrrkhN2jNgP3Kf-ymVNNPcts28U-JmmQaCiVAyh1yJ2mIsfrDWglUJ7iQqYZziSd_LU"/>
+<!-- Circular tactile checkmark (Selected) -->
+<div class="absolute top-2 right-2 w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-md ring-2 ring-surface">
+<span class="material-symbols-outlined text-[18px] font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<!-- Episode count pill -->
+<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-surface-dim/80 backdrop-blur-md border border-white/10 font-label-sm text-label-sm text-on-surface">
+              128 épisodes
+            </div>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">Underscore_</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 truncate">Micode &amp; Invités</p>
+</div>
+<!-- Podcast Card 2 (SELECTED) -->
+<div class="podcast-card group relative p-3 rounded-2xl bg-surface-container border border-primary-container/70 shadow-sm cursor-pointer active:scale-[0.98] transition-all duration-200">
+<div class="relative aspect-square w-full rounded-xl overflow-hidden mb-2.5 bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Editorial dynamic news podcast cover art featuring warm directional amber lighting casting cinematic highlights on modern journalistic microphones and acoustic wall panels. Deep charcoal background with subtle orange accents, clean typography and bold framing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrKheeJ1c7r01nyBW9FAZwPhJhjWeuzD5Zg7qe4-0kVIUu5bnumKQLIWihS-fGrkl8X7qY9mbObDmQiqnnpq8IkSAmeybJZDm9HQ0R1sGnfK47ngdEg2NwBuxrIE77ef3oR4nmJ7f0ReoGMGILBsAQqjd2dLXImUlBwqIHZfH5Eg7XOCiNsgaYeEftJUaNcCmSTDqlwS9jjvIdUftvqXBiDPu6iu9IxpAaB5kvzCFf6q49mI3uRPWF"/>
+<!-- Circular tactile checkmark (Selected) -->
+<div class="absolute top-2 right-2 w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-md ring-2 ring-surface">
+<span class="material-symbols-outlined text-[18px] font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<!-- Episode count pill -->
+<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-surface-dim/80 backdrop-blur-md border border-white/10 font-label-sm text-label-sm text-on-surface">
+              850+ épisodes
+            </div>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">HugoDécrypte - Les Actus</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 truncate">Hugo Travers</p>
+</div>
+<!-- Podcast Card 3 (SELECTED) -->
+<div class="podcast-card group relative p-3 rounded-2xl bg-surface-container border border-primary-container/70 shadow-sm cursor-pointer active:scale-[0.98] transition-all duration-200">
+<div class="relative aspect-square w-full rounded-xl overflow-hidden mb-2.5 bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Elegant and serious international journalism podcast artwork with geometric world globe wireframe glowing in muted gold and deep indigo against a matte slate black canvas. Sophisticated typography and atmospheric moody shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4SQYY78FRySXeWmhsCZcgAmvxJyLD9jF4W1C0Yy98p4jpgkVDlvoGUhj7NrQ_-DTMp7IUqTg3HQTLKHQ4hHS0AG2AiUbrJ791uCZ2excfl7TuVHV_qcEGax1h0T5ge56aWwYcp6bs8BxXwOEhuOW50Nty73JDf0iOtYRiLF_wk8D7hNeAbmbvVYIi2SuJYAVZETpnuJHeS9EIlnypA1jCK4Flbo2dP0i4qfONPpYGVg_FH2mu5dT6"/>
+<!-- Circular tactile checkmark (Selected) -->
+<div class="absolute top-2 right-2 w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-md ring-2 ring-surface">
+<span class="material-symbols-outlined text-[18px] font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<!-- Episode count pill -->
+<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-surface-dim/80 backdrop-blur-md border border-white/10 font-label-sm text-label-sm text-on-surface">
+              Quotidien • 20 min
+            </div>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">L'Heure du Monde</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 truncate">Le Monde</p>
+</div>
+<!-- Podcast Card 4 (UNSELECTED) -->
+<div class="podcast-card group relative p-3 rounded-2xl bg-surface-container border border-outline-variant/15 hover:border-outline-variant/40 cursor-pointer active:scale-[0.98] transition-all duration-200">
+<div class="relative aspect-square w-full rounded-xl overflow-hidden mb-2.5 bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Intimate psychological storytelling podcast cover displaying an abstract human profile dissolving into ethereal smoke particles and warm sepia tones against a pure dark charcoal backdrop. Soft dramatic rim light with poetic emotional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAmulP5Dw0_9Fn8aq9UpmTYAAt-18Vq4m9u3pUblFGl0mM2Np22Si8VKTBQ93h3_neCUjUVOKp3ynq9eJP5clKoWE0sQelpwCr8lA6cezRfo0Bor4k1m_da4p4RiZAuhDrjSDJ3zJO8dXcu3zKdaYRFhQKLDTF5UXEAGj0O3CVAaTmBCD5Kacyo8eiYsP5PjJV-X6NDfxHL11fWv_oxME_cJQGI8PT2jXRiek-nRmTPpEGqEWzB2dC"/>
+<!-- Circular tactile checkmark (Unselected) -->
+<div class="absolute top-2 right-2 w-7 h-7 rounded-full bg-surface-container-highest/80 border border-white/20 text-transparent flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<!-- Episode count pill -->
+<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-surface-dim/80 backdrop-blur-md border border-white/10 font-label-sm text-label-sm text-on-surface">
+              340 épisodes
+            </div>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">Transfert</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 truncate">Slate Podcasts</p>
+</div>
+<!-- Podcast Card 5 (UNSELECTED) -->
+<div class="podcast-card group relative p-3 rounded-2xl bg-surface-container border border-outline-variant/15 hover:border-outline-variant/40 cursor-pointer active:scale-[0.98] transition-all duration-200">
+<div class="relative aspect-square w-full rounded-xl overflow-hidden mb-2.5 bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Contemporary science and nature podcast cover art with a stylized luminous topographic contour map in bio-luminescent emerald green and nocturnal violet over deep graphite terrain. Tactile modern minimalist styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwuP7q4YpLnowuAhTrQba_ebz2igpOhi8cgvslZqeQqLhoDHqXnHRPMBKJ_YyP2g0JofZhBRUiXJc3r9WmVk9sRu-Nq1uSe3YSWpbfoZC0xllMix1A19MJxbCaOYDx1df2nvhN3j_7LfjGgFwDkcaHP2T6VuDmWQIFaypQLyyQ1dRx2TZVTb4z-fhLSsVoplDcrpAbSX-p619_ycdXP4kZLzaakKYOLs-9blZQUy8JlYyXQJq5OVnX"/>
+<!-- Circular tactile checkmark (Unselected) -->
+<div class="absolute top-2 right-2 w-7 h-7 rounded-full bg-surface-container-highest/80 border border-white/20 text-transparent flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<!-- Episode count pill -->
+<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-surface-dim/80 backdrop-blur-md border border-white/10 font-label-sm text-label-sm text-on-surface">
+              Écologie &amp; Terre
+            </div>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">La Terre au Carré</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 truncate">France Inter</p>
+</div>
+<!-- Podcast Card 6 (UNSELECTED) -->
+<div class="podcast-card group relative p-3 rounded-2xl bg-surface-container border border-outline-variant/15 hover:border-outline-variant/40 cursor-pointer active:scale-[0.98] transition-all duration-200">
+<div class="relative aspect-square w-full rounded-xl overflow-hidden mb-2.5 bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Bold entrepreneurial business podcast graphic featuring sharp monochrome portraits combined with energetic kinetic coral diagonal typography and abstract architectural angles. High energy studio lighting and crisp geometric layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0hotcmZIDyxZ3sPbifUqMLfUdHvpDCx_9mzv9-3JWFF3JEmvd9ny7i2p0kxpZaDR4m5vScYtOiXNgBVdsTM8zZSOWvNN0Qsgc1MgxqHcbBk5UezksjR-XckGd1cgE4kAI7ZN48nv9GT186MlX8R_Bgm6wwWYqoUx9EjrDI09t9_ap0eWBCAXroTErp9YkfggGJ04uxuRhZuVnS1eiRLo9HWPF2kbDoEbO1RToXfFG3-UwVdwhY4kY"/>
+<!-- Circular tactile checkmark (Unselected) -->
+<div class="absolute top-2 right-2 w-7 h-7 rounded-full bg-surface-container-highest/80 border border-white/20 text-transparent flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<!-- Episode count pill -->
+<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-surface-dim/80 backdrop-blur-md border border-white/10 font-label-sm text-label-sm text-on-surface">
+              412 épisodes
+            </div>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">Génération Do It Yourself</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 truncate">Matthieu Stefani</p>
+</div>
+</div>
+</main>
+<!-- Bottom Dock Floating Action Bar (Sticky with blur & Dynamic Counter) -->
+<div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
+<div class="w-full max-w-md p-4 bg-gradient-to-t from-surface via-surface/95 to-transparent backdrop-blur-md pointer-events-auto flex flex-col gap-3">
+<!-- Selection Counter Feedback -->
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<span class="flex h-2.5 w-2.5 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-container"></span>
+</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface" id="counter-label">
+              3 podcasts sélectionnés
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-medium">Objectif atteint (min. 3)</span>
+</div>
+<!-- Android Large Pill Primary FAB Action Button -->
+<button class="w-full h-14 rounded-full bg-primary-container text-on-primary font-title-md text-title-md font-bold flex items-center justify-center gap-3 shadow-lg shadow-primary-container/25 hover:brightness-110 active:scale-[0.97] transition-all duration-150" id="continue-btn" type="button">
+<span>Continuer vers mon flux</span>
+<span class="material-symbols-outlined text-[22px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive script for chips and card selection -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let selectedCount = 3;
+      const counterLabel = document.getElementById('counter-label');
+      const continueBtn = document.getElementById('continue-btn');
+
+      const updateUI = () => {
+        counterLabel.textContent = `${selectedCount} podcast${selectedCount > 1 ? 's' : ''} sélectionné${selectedCount > 1 ? 's' : ''}`;
+        if (selectedCount >= 3) {
+          continueBtn.classList.remove('opacity-50', 'pointer-events-none');
+        } else {
+          continueBtn.classList.add('opacity-50', 'pointer-events-none');
+        }
+      };
+
+      const cards = document.querySelectorAll('.podcast-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const badge = card.querySelector('.absolute.top-2.right-2');
+          const isSelected = card.classList.contains('border-primary-container/70');
+
+          if (isSelected) {
+            // Unselect
+            card.classList.remove('border-primary-container/70');
+            card.classList.add('border-outline-variant/15');
+            badge.className = "absolute top-2 right-2 w-7 h-7 rounded-full bg-surface-container-highest/80 border border-white/20 text-transparent flex items-center justify-center backdrop-blur-sm";
+            selectedCount = Math.max(0, selectedCount - 1);
+          } else {
+            // Select
+            card.classList.remove('border-outline-variant/15');
+            card.classList.add('border-primary-container/70');
+            badge.className = "absolute top-2 right-2 w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-md ring-2 ring-surface";
+            selectedCount += 1;
+          }
+          updateUI();
+        });
+      });
+    });
+  </script>
+</body></html>

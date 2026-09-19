@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>File de lecture - Podcasts</title>
+<!-- Google Fonts: Space Grotesk & Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#c97e66",
+            "tertiary": "#ffb59e",
+            "inverse-primary": "#b02f00",
+            "on-surface-variant": "#e4beb4",
+            "secondary": "#cdbdff",
+            "tertiary-fixed": "#ffdbd0",
+            "surface-container-highest": "#323539",
+            "error": "#ffb4ab",
+            "surface-dim": "#111418",
+            "surface-variant": "#323539",
+            "surface": "#111418",
+            "secondary-fixed-dim": "#cdbdff",
+            "surface-container-low": "#191c20",
+            "on-primary-fixed-variant": "#862200",
+            "error-container": "#93000a",
+            "on-error-container": "#ffdad6",
+            "on-error": "#690005",
+            "on-primary-container": "#541200",
+            "on-surface": "#e1e2e8",
+            "on-tertiary-fixed-variant": "#713623",
+            "primary": "#ffb5a0",
+            "on-secondary-fixed-variant": "#4f00d0",
+            "secondary-fixed": "#e8deff",
+            "primary-fixed": "#ffdbd1",
+            "surface-tint": "#ffb5a0",
+            "on-tertiary-fixed": "#390c01",
+            "primary-container": "#ff5722",
+            "secondary-container": "#5203d5",
+            "on-secondary-container": "#c0acff",
+            "inverse-on-surface": "#2e3135",
+            "surface-bright": "#36393e",
+            "on-primary-fixed": "#3b0900",
+            "on-primary": "#5f1500",
+            "on-secondary-fixed": "#20005f",
+            "surface-container-lowest": "#0b0e12",
+            "outline": "#ab8980",
+            "background": "#111418",
+            "tertiary-fixed-dim": "#ffb59e",
+            "on-background": "#e1e2e8",
+            "inverse-surface": "#e1e2e8",
+            "on-secondary": "#370096",
+            "surface-container-high": "#272a2e",
+            "surface-container": "#1d2024",
+            "on-tertiary": "#54200f",
+            "primary-fixed-dim": "#ffb5a0",
+            "outline-variant": "#5b4039",
+            "on-tertiary-container": "#4c1a09"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.25rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-md": "0.75rem",
+            "gutter": "1rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "label-lg": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Space Grotesk"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "title-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Space Grotesk"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-md": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "label-lg": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+            "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Dynamic Equalizer wave animation */
+    @keyframes eqWave1 { 0%, 100% { height: 6px; } 50% { height: 18px; } }
+    @keyframes eqWave2 { 0%, 100% { height: 16px; } 50% { height: 8px; } }
+    @keyframes eqWave3 { 0%, 100% { height: 10px; } 50% { height: 20px; } }
+    @keyframes eqWave4 { 0%, 100% { height: 18px; } 50% { height: 4px; } }
+    .eq-bar-1 { animation: eqWave1 1.2s infinite ease-in-out; }
+    .eq-bar-2 { animation: eqWave2 0.9s infinite ease-in-out; }
+    .eq-bar-3 { animation: eqWave3 1.4s infinite ease-in-out; }
+    .eq-bar-4 { animation: eqWave4 1.1s infinite ease-in-out; }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex justify-center selection:bg-primary-container selection:text-on-primary">
+<!-- Mobile Container (Simulated Android Screen) -->
+<div class="w-full max-w-md min-h-screen flex flex-col bg-surface relative shadow-2xl overflow-x-hidden">
+<!-- Android Standard Status Bar -->
+<header class="w-full h-8 pt-2 px-6 flex justify-between items-center z-50 select-none bg-surface/90 backdrop-blur-md">
+<div class="text-label-md font-label-md text-on-surface tracking-tight font-semibold">09:41</div>
+<div class="flex items-center space-x-2 text-on-surface">
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]">battery_full</span>
+</div>
+</header>
+<!-- Top App Bar / Queue Context Header -->
+<nav class="sticky top-0 z-40 bg-surface/90 backdrop-blur-md px-4 h-16 flex items-center justify-between border-b border-outline-variant/10">
+<div class="flex items-center space-x-3">
+<button aria-label="Retour" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container-high active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<div>
+<h1 class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tight">File de lecture</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">4 épisodes • 2h 15m au total</p>
+</div>
+</div>
+<div class="flex items-center space-x-1">
+<button class="text-label-md font-label-md font-semibold text-primary px-3 py-1.5 rounded-full hover:bg-surface-container-high active:scale-95 transition-all" type="button">
+          Effacer tout
+        </button>
+<button aria-label="Menu d'options" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container-high active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+</nav>
+<!-- Primary Scrollable Content Area -->
+<main class="flex-1 px-4 pt-3 pb-32 space-y-6 overflow-y-auto">
+<!-- SECTION: En cours de lecture (Current Playback Hero Card) -->
+<section aria-labelledby="now-playing-title" class="space-y-3">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center space-x-2">
+<span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+<h2 class="text-label-lg font-label-lg font-bold text-primary tracking-wide" id="now-playing-title">
+              EN COURS DE LECTURE
+            </h2>
+</div>
+<!-- Real-time Equalizer Indicator -->
+<div class="flex items-end space-x-1 h-5 px-2 py-1 rounded-full bg-surface-container-low border border-outline-variant/20">
+<span class="w-[3px] bg-primary-container rounded-full eq-bar-1"></span>
+<span class="w-[3px] bg-primary-container rounded-full eq-bar-2"></span>
+<span class="w-[3px] bg-primary-container rounded-full eq-bar-3"></span>
+<span class="w-[3px] bg-primary-container rounded-full eq-bar-4"></span>
+</div>
+</div>
+<!-- Grand Format Detailed Card -->
+<div class="p-5 rounded-2xl bg-surface-container-low border border-outline-variant/20 relative overflow-hidden shadow-lg">
+<!-- Ambient Glow Backdrop -->
+<div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-16 -left-16 w-48 h-48 rounded-full bg-primary-container/10 blur-3xl pointer-events-none"></div>
+<div class="flex space-x-4 relative z-10">
+<!-- Large Artwork Thumbnail -->
+<div class="relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden shadow-md border border-white/10">
+<img class="w-full h-full object-cover" data-alt="Modern geometric album art for Underscore tech podcast with deep nocturnal slate background, vibrant kinetic coral waveforms and subtle electric violet gradient ribbons, minimal tactile Android interface style, high detail professional composition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPRNAX48xWHKQglW3lgR4gCdm4wS_LTYWsBecV4lJgI9Ns0V2CZsyVDWTudfrD0oJ67aXF9phW2LC_nS6ygT1HjMW3Nag10l3rh3S4aDA4XoE-BA-bTUMxOxYKu5UQ7W3rmyjJMP53g3INg9y4MMDsB3ycjXQKpr08oQAylNJYKPbz8zFRYxhp6sSU7HhiiJwkvG_NiLHzjR3jljpOdVcxyHWQ-dFkehpujGF3ZwnyhRezcJDZPFrM"/>
+<div class="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-sm text-label-sm font-label-sm text-on-surface">
+                HQ
+              </div>
+</div>
+<!-- Metadata Details -->
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<span class="inline-block text-label-md font-label-md font-semibold text-secondary mb-1 truncate">
+                Underscore_
+              </span>
+<h3 class="text-title-md font-title-md font-bold text-on-surface line-clamp-2 leading-snug">
+                L'impact des modèles génératifs
+              </h3>
+<div class="flex items-center space-x-2 mt-2">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/30 border border-secondary/20 text-on-secondary-container text-label-sm font-label-sm font-medium">
+                  Épisode 142
+                </span>
+<span class="text-body-sm font-body-sm text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1">auto_awesome</span>
+                  IA &amp; Tech
+                </span>
+</div>
+</div>
+</div>
+<!-- Interactive Progress Bar & Timestamps -->
+<div class="mt-5 space-y-1.5 relative z-10">
+<div class="relative w-full h-2 rounded-full bg-surface-container-highest cursor-pointer group flex items-center">
+<div class="absolute left-0 top-0 bottom-0 w-[41%] bg-gradient-to-r from-primary-container to-tertiary rounded-full"></div>
+<div class="absolute left-[41%] w-3.5 h-3.5 -ml-1.5 rounded-full bg-primary shadow-md border-2 border-surface transform scale-100 group-hover:scale-125 transition-transform"></div>
+</div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant font-mono">
+<span class="font-semibold text-primary">24:12</span>
+<span>58:40</span>
+</div>
+</div>
+<!-- Quick Actions & Playback Controls Bar -->
+<div class="mt-4 pt-4 border-t border-outline-variant/15 flex items-center justify-between relative z-10">
+<!-- Speed Control Chip -->
+<button class="h-9 px-3 rounded-full bg-surface-container hover:bg-surface-container-high border border-white/5 active:scale-95 transition-transform flex items-center text-label-md font-label-md font-semibold text-on-surface" type="button">
+              1.2x
+            </button>
+<!-- Rewind 15s -->
+<button aria-label="Reculer de 15 secondes" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface hover:text-primary hover:bg-surface-container active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-2xl">export_notes</span>
+</button>
+<!-- Primary Large Play/Pause FAB -->
+<button aria-label="Pause" class="w-14 h-14 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-lg shadow-primary-container/30 active:scale-95 hover:brightness-110 transition-all" type="button">
+<span class="material-symbols-outlined text-3xl text-white" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<!-- Forward 30s -->
+<button aria-label="Avancer de 30 secondes" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface hover:text-primary hover:bg-surface-container active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-2xl">forward_30</span>
+</button>
+<!-- Sleep Timer Button -->
+<button aria-label="Minuteur de sommeil" class="w-9 h-9 rounded-full bg-surface-container hover:bg-surface-container-high border border-white/5 flex items-center justify-center text-on-surface active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-lg">bedtime</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION: À écouter ensuite (Glisser pour réordonner) -->
+<section aria-labelledby="queue-list-title" class="space-y-3">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center space-x-2">
+<h2 class="text-title-md font-title-md font-bold text-on-surface tracking-tight" id="queue-list-title">
+              À écouter ensuite
+            </h2>
+<span class="text-label-sm font-label-sm text-on-surface-variant font-normal">
+              (Glisser pour réordonner)
+            </span>
+</div>
+<button class="text-label-sm font-label-sm text-secondary hover:underline flex items-center" type="button">
+<span class="material-symbols-outlined text-sm mr-1">shuffle</span>
+            Aléatoire
+          </button>
+</div>
+<!-- Draggable Episode Queue List -->
+<div class="space-y-2.5" role="list">
+<!-- ITEM 1: Les mystères des fonds marins -->
+<article class="p-3 rounded-xl bg-surface-container hover:bg-surface-container-high border border-white/5 transition-all flex items-center space-x-3 active:scale-[0.99] group shadow-sm" role="listitem">
+<!-- Left Thumbnail -->
+<div class="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="Deep ocean artistic representation with luminescent bioluminescent deep-sea creatures, aquatic dark navy tones, ambient coral highlights, high aesthetic contrast audio show cover format" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGoGLjYBQ-C8fZff8CjsZ-3By7frH9c5zfy48M902uWtzsYDrZmCfsMUkeBjfBLjWaZO2KrTyGsWC8r9HPBsU-5lRl9L1VM-We30ys5gUdwwfqrB1SI_FD7BU7kvs1a4-G3_uc4mONoOJSd_EkAb6a8uzS06GlFDo90INTJ_M7jkTeaHQ8PHE7WmRaiOO4wSEiTbUBo4xaNv4xY4j6B5v7JL8xLqnVQ4dfBYmm9aNSaZSUYSZJbOiO"/>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="absolute bottom-1 right-1 px-1 py-0.2 rounded bg-black/70 text-[9px] font-mono text-white">
+                34m
+              </div>
+</div>
+<!-- Episode Details -->
+<div class="flex-1 min-w-0">
+<h3 class="text-title-md font-title-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors">
+                Les mystères des fonds marins
+              </h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant truncate">
+                La Terre au Carré
+              </p>
+<div class="flex items-center space-x-2 mt-1">
+<span class="inline-flex items-center text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[13px] mr-1 text-secondary">schedule</span>
+                  34 min
+                </span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="inline-flex items-center text-label-sm font-label-sm text-secondary font-medium">
+<span class="material-symbols-outlined text-[13px] mr-0.5">download_done</span>
+                  Téléchargé
+                </span>
+</div>
+</div>
+<!-- Action: Remove / Options -->
+<button aria-label="Supprimer de la file" class="p-2 rounded-full text-on-surface-variant hover:text-error hover:bg-surface-container-highest transition-colors active:scale-90" type="button">
+<span class="material-symbols-outlined text-xl">remove_circle_outline</span>
+</button>
+<!-- Drag Handle (6-dot Android style) -->
+<div aria-label="Glisser pour réordonner" class="cursor-grab active:cursor-grabbing p-1.5 text-on-surface-variant/60 hover:text-on-surface transition-colors" role="button" tabindex="0">
+<span class="material-symbols-outlined text-2xl">drag_indicator</span>
+</div>
+</article>
+<!-- ITEM 2: Bâtir une licorne européenne -->
+<article class="p-3 rounded-xl bg-surface-container hover:bg-surface-container-high border border-white/5 transition-all flex items-center space-x-3 active:scale-[0.99] group shadow-sm" role="listitem">
+<!-- Left Thumbnail -->
+<div class="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="Sleek European architectural cityscape combined with high-tech abstract neon graph lines, obsidian dark surfaces with coral and violet highlights, business and tech podcast thumbnail styling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf2H0jUoxoccSVLb1KW7gydD2oC99yCmkPT68NQiLy4xccFXLvuhVao3Ic2_UISo8HLYRoEXGWPVKT8seehtidLM7TmjiqLxZ591_7mOXyPAteiaI1phPhyNPuuV680RzoCmLIucpxTmI2G6NwVR9vOF9-uPa0Sbnh0C4GZHtstSrsP7QrN8zLkyYsGPhDsAZrxbsSUq4IHGqpsUnKudh8Z35-ywekETMqRHow1yyY1zfNt932fTzG"/>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="absolute bottom-1 right-1 px-1 py-0.2 rounded bg-black/70 text-[9px] font-mono text-white">
+                1h 12m
+              </div>
+</div>
+<!-- Episode Details -->
+<div class="flex-1 min-w-0">
+<h3 class="text-title-md font-title-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors">
+                Bâtir une licorne européenne
+              </h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant truncate">
+                GDIY
+              </p>
+<div class="flex items-center space-x-2 mt-1">
+<span class="inline-flex items-center text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[13px] mr-1 text-secondary">schedule</span>
+                  1h 12 min
+                </span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="inline-flex items-center text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[13px] mr-0.5">cloud</span>
+                  En streaming
+                </span>
+</div>
+</div>
+<!-- Action: Remove / Options -->
+<button aria-label="Supprimer de la file" class="p-2 rounded-full text-on-surface-variant hover:text-error hover:bg-surface-container-highest transition-colors active:scale-90" type="button">
+<span class="material-symbols-outlined text-xl">remove_circle_outline</span>
+</button>
+<!-- Drag Handle (6-dot Android style) -->
+<div aria-label="Glisser pour réordonner" class="cursor-grab active:cursor-grabbing p-1.5 text-on-surface-variant/60 hover:text-on-surface transition-colors" role="button" tabindex="0">
+<span class="material-symbols-outlined text-2xl">drag_indicator</span>
+</div>
+</article>
+<!-- ITEM 3: L'affaire du vol 305 -->
+<article class="p-3 rounded-xl bg-surface-container hover:bg-surface-container-high border border-white/5 transition-all flex items-center space-x-3 active:scale-[0.99] group shadow-sm" role="listitem">
+<!-- Left Thumbnail -->
+<div class="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="Moody cinematic aviation investigation artwork, silhouette of commercial aircraft flying against stormy twilight clouds, neon amber and violet accents, documentary podcast visual style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbL_52zkQNSxokBiDVzbgknTQ0KpRaeKopAr8_JQSBPq2AwqrfJTSdVuFI3BFyIueudZuk-wq7LTjQSG-3BtBLfoz76iVz51MjBIHWG1M3EZ16Kz8VkZzAuCNVMGACCKCKGMxbuehoDAsCJWdGyBeszWO14LrzzA0UD5XnO-FN12T8UY7OteoUBc_qrhxUfOqyHLzY3YPjS1tGyJFSfaz6gY9jqJullI-nmfA0B158i81NJfNXP8Ks"/>
+<div class="absolute inset-0 bg-black/20"></div>
+<div class="absolute bottom-1 right-1 px-1 py-0.2 rounded bg-black/70 text-[9px] font-mono text-white">
+                45m
+              </div>
+</div>
+<!-- Episode Details -->
+<div class="flex-1 min-w-0">
+<h3 class="text-title-md font-title-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors">
+                L'affaire du vol 305
+              </h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant truncate">
+                Affaires Sensibles
+              </p>
+<div class="flex items-center space-x-2 mt-1">
+<span class="inline-flex items-center text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[13px] mr-1 text-secondary">schedule</span>
+                  45 min
+                </span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="inline-flex items-center text-label-sm font-label-sm text-secondary font-medium">
+<span class="material-symbols-outlined text-[13px] mr-0.5">download_done</span>
+                  Téléchargé
+                </span>
+</div>
+</div>
+<!-- Action: Remove / Options -->
+<button aria-label="Supprimer de la file" class="p-2 rounded-full text-on-surface-variant hover:text-error hover:bg-surface-container-highest transition-colors active:scale-90" type="button">
+<span class="material-symbols-outlined text-xl">remove_circle_outline</span>
+</button>
+<!-- Drag Handle (6-dot Android style) -->
+<div aria-label="Glisser pour réordonner" class="cursor-grab active:cursor-grabbing p-1.5 text-on-surface-variant/60 hover:text-on-surface transition-colors" role="button" tabindex="0">
+<span class="material-symbols-outlined text-2xl">drag_indicator</span>
+</div>
+</article>
+</div>
+</section>
+<!-- Queue Settings & Autoplay Toggle Card -->
+<section class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-xl">queue_play_next</span>
+</div>
+<div>
+<h4 class="text-title-md font-title-md font-semibold text-on-surface">Lecture continue</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Enchaîner automatiquement les épisodes recommandés</p>
+</div>
+</div>
+<!-- Android Material Switch Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-12 h-7 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</section>
+</main>
+<!-- Bottom Sticky Action Dock & Android System Navigation -->
+<div class="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto z-40 bg-surface/95 backdrop-blur-lg border-t border-outline-variant/15 px-4 pt-3 pb-2">
+<!-- Quick Action: Ajouter d'autres épisodes -->
+<div class="w-full flex items-center space-x-3 mb-3">
+<button class="flex-1 h-12 rounded-full bg-surface-container-high hover:bg-surface-bright border border-white/10 active:scale-98 transition-all flex items-center justify-center space-x-2 text-on-surface font-semibold shadow-md" type="button">
+<span class="material-symbols-outlined text-primary text-xl">add_circle</span>
+<span class="text-label-lg font-label-lg">Ajouter d'autres épisodes</span>
+</button>
+<button aria-label="Historique" class="w-12 h-12 rounded-full bg-surface-container-high hover:bg-surface-bright border border-white/10 flex items-center justify-center text-on-surface active:scale-95 transition-transform shadow-md" type="button">
+<span class="material-symbols-outlined text-xl">history</span>
+</button>
+</div>
+<!-- Android Standard Gesture Bar / System Navigation -->
+<div class="w-full h-4 flex justify-center items-center select-none pt-1">
+<div class="w-32 h-1 bg-on-surface/40 rounded-full"></div>
+</div>
+</div>
+</div>
+</body></html>
