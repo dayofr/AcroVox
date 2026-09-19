@@ -10,7 +10,10 @@ import com.acrovox.feature.home.HomeActions
 import com.acrovox.feature.home.navigation.HomeRoute
 import com.acrovox.feature.home.navigation.homeScreen
 import com.acrovox.feature.inbox.navigation.inboxScreen
+import com.acrovox.feature.library.LibraryActions
+import com.acrovox.feature.library.navigation.EpisodeListRoute
 import com.acrovox.feature.library.navigation.OpmlImportRoute
+import com.acrovox.feature.library.navigation.episodeListScreen
 import com.acrovox.feature.library.navigation.libraryScreen
 import com.acrovox.feature.library.navigation.opmlImportScreen
 import com.acrovox.feature.podcast.navigation.EpisodeRoute
@@ -41,7 +44,20 @@ fun AcroVoxNavHost(
         inboxScreen(contentPadding)
         queueScreen(contentPadding)
         discoverScreen(contentPadding, onOpenFeed = { navController.navigate(PodcastPreviewRoute(it)) })
-        libraryScreen(contentPadding, onImportOpml = { navController.navigate(OpmlImportRoute(it)) })
+        libraryScreen(
+            contentPadding,
+            LibraryActions(
+                onOpenPodcast = { navController.navigate(PodcastRoute(it)) },
+                onOpenEpisodeList = { navController.navigate(EpisodeListRoute(it)) },
+                onImportOpml = { navController.navigate(OpmlImportRoute(it)) }
+            )
+        )
+        episodeListScreen(
+            contentPadding,
+            onBack = navController::popBackStack,
+            onOpenEpisode = { navController.navigate(EpisodeRoute(it)) },
+            onPlay = {}
+        )
         opmlImportScreen(contentPadding, onClose = navController::popBackStack)
         podcastPreviewScreen(
             contentPadding,

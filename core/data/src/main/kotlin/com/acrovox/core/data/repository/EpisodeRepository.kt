@@ -43,6 +43,13 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
     /** Épisode commencé le plus récemment écouté, pour « Reprendre l'écoute ». */
     fun observeResume(): Flow<EpisodeWithFeed?> = episodeDao.observeInProgress(1).map { it.firstOrNull() }
 
+    fun observeFavorites(): Flow<List<EpisodeWithFeed>> = episodeDao.observeFavorites()
+
+    /** Épisodes écoutés, du plus récent au plus ancien, un par ligne. */
+    fun observeHistory(): Flow<List<EpisodeWithFeed>> = db.playbackHistoryDao().observeHistory()
+
+    suspend fun clearHistory() = db.playbackHistoryDao().clear()
+
     fun observeQueuedIds(): Flow<Set<Long>> = queueDao.observeEpisodeIds().map { it.toSet() }
 
     /**

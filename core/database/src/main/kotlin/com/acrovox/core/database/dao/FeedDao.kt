@@ -10,14 +10,20 @@ import androidx.room.Update
 import com.acrovox.core.database.entity.FeedEntity
 import kotlinx.coroutines.flow.Flow
 
-/** Podcast et nombre d'épisodes dans la boîte de réception. */
-data class FeedWithNewCount(@Embedded val feed: FeedEntity, @ColumnInfo(name = "new_count") val newCount: Int)
+/** Podcast, nombre d'épisodes dans la boîte de réception et date du dernier épisode. */
+data class FeedWithNewCount(
+    @Embedded val feed: FeedEntity,
+    @ColumnInfo(name = "new_count") val newCount: Int,
+    @ColumnInfo(name = "last_pub_date") val lastPubDate: Long? = null
+)
 
 @Dao
 interface FeedDao {
     @Query(
         """
-        SELECT feed.*, (SELECT COUNT(*) FROM episode WHERE episode.feed_id = feed.id AND episode.state = 'NEW') AS new_count
+        SELECT feed.*,
+            (SELECT COUNT(*) FROM episode WHERE episode.feed_id = feed.id AND episode.state = 'NEW') AS new_count,
+            (SELECT MAX(pub_date) FROM episode WHERE episode.feed_id = feed.id) AS last_pub_date
         FROM feed ORDER BY title COLLATE NOCASE
         """
     )
