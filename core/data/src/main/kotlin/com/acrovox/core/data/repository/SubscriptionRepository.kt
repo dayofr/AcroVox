@@ -14,6 +14,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 
 @Singleton
 class SubscriptionRepository @Inject constructor(
@@ -26,8 +27,11 @@ class SubscriptionRepository @Inject constructor(
 
     fun observeSubscriptions(): Flow<List<FeedWithNewCount>> = feedDao.observeAllWithNewCount()
 
-    fun observeIsSubscribed(preview: FeedPreview): Flow<Boolean> =
-        combine(preview.knownUrls.map { feedDao.observeByUrl(it) }) { feeds -> feeds.any { it != null } }
+    fun observeIsSubscribed(preview: FeedPreview): Flow<Boolean> = observeSubscribedId(preview).map { it != null }
+
+    /** Identifiant du podcast s'il est suivi sous l'une des adresses du flux. */
+    fun observeSubscribedId(preview: FeedPreview): Flow<Long?> =
+        combine(preview.knownUrls.map { feedDao.observeByUrl(it) }) { feeds -> feeds.firstNotNullOfOrNull { it?.id } }
 
     /** Podcast déjà suivi sous l'une des adresses du flux, ou null. */
     suspend fun findSubscribed(preview: FeedPreview): FeedEntity? =
@@ -78,6 +82,11 @@ class SubscriptionRepository @Inject constructor(
         episodeDao.mergeFromFeed(feedId, episodes.drop(inboxCount), stateForNew = EpisodeState.AVAILABLE)
         feedId
     }
+
+    fun observeFeed(feedId: Long): Flow<FeedEntity?> = feedDao.observe(feedId)
+
+    /** Réglages propres au podcast : vitesse, saut d'intro et de fin, notifications. */
+    suspend fun updateSettings(feed: FeedEntity) = feedDao.update(feed)
 
     suspend fun unsubscribe(feedId: Long) = feedDao.delete(feedId)
 }

@@ -25,7 +25,8 @@ sealed interface PreviewUiState {
 
     data class Error(val message: String) : PreviewUiState
 
-    data class Loaded(val preview: FeedPreview, val isSubscribed: Boolean, val isSubscribing: Boolean) : PreviewUiState
+    data class Loaded(val preview: FeedPreview, val subscribedFeedId: Long?, val isSubscribing: Boolean) :
+        PreviewUiState
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -45,8 +46,8 @@ class PodcastPreviewViewModel @Inject constructor(
             result.isFailure -> flowOf(PreviewUiState.Error(result.exceptionOrNull()?.message ?: "Flux illisible"))
             else -> {
                 val preview = result.getOrThrow()
-                combine(repository.observeIsSubscribed(preview), subscribing) { subscribed, busy ->
-                    PreviewUiState.Loaded(preview, subscribed, busy)
+                combine(repository.observeSubscribedId(preview), subscribing) { feedId, busy ->
+                    PreviewUiState.Loaded(preview, feedId, busy)
                 }
             }
         }

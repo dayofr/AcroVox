@@ -47,6 +47,7 @@ import com.acrovox.core.designsystem.theme.Spacing
 fun PodcastPreviewScreen(
     contentPadding: PaddingValues,
     onBack: () -> Unit,
+    onOpenPodcast: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PodcastPreviewViewModel = hiltViewModel()
 ) {
@@ -75,6 +76,7 @@ fun PodcastPreviewScreen(
             is PreviewUiState.Loaded -> PreviewContent(
                 state = s,
                 onSubscribe = viewModel::subscribe,
+                onOpen = { s.subscribedFeedId?.let(onOpenPodcast) },
                 bottomPadding = contentPadding.calculateBottomPadding()
             )
         }
@@ -85,6 +87,7 @@ fun PodcastPreviewScreen(
 private fun PreviewContent(
     state: PreviewUiState.Loaded,
     onSubscribe: () -> Unit,
+    onOpen: () -> Unit,
     bottomPadding: androidx.compose.ui.unit.Dp
 ) {
     val colors = AcroVoxTheme.colors
@@ -131,7 +134,7 @@ private fun PreviewContent(
                 }
             }
         }
-        item { SubscribeButton(state.isSubscribed, state.isSubscribing, onSubscribe) }
+        item { SubscribeButton(state.subscribedFeedId != null, state.isSubscribing, onSubscribe, onOpen) }
         if (!description.isNullOrEmpty()) {
             item {
                 Text(
@@ -156,23 +159,23 @@ private fun PreviewContent(
 }
 
 @Composable
-private fun SubscribeButton(isSubscribed: Boolean, isSubscribing: Boolean, onSubscribe: () -> Unit) {
+private fun SubscribeButton(
+    isSubscribed: Boolean,
+    isSubscribing: Boolean,
+    onSubscribe: () -> Unit,
+    onOpen: () -> Unit
+) {
     val colors = AcroVoxTheme.colors
     val modifier = Modifier.fillMaxWidth().height(48.dp)
     if (isSubscribed) {
         OutlinedButton(
-            onClick = {
-            },
-            enabled = false,
+            onClick = onOpen,
             shape = AcroVoxShape.Pill,
-            border = BorderStroke(
-                1.dp,
-                colors.outlineSubtle
-            ),
+            border = BorderStroke(1.dp, colors.outlineSubtle),
             modifier = modifier
         ) {
             Icon(AcroVoxIcons.Check, contentDescription = null, tint = colors.accent, modifier = Modifier.size(18.dp))
-            Text("  Abonné", color = colors.textPrimary)
+            Text("  Abonné · Ouvrir", color = colors.textPrimary)
         }
     } else {
         Button(

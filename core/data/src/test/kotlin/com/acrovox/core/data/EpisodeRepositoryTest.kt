@@ -28,7 +28,7 @@ class EpisodeRepositoryTest {
         db = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AcroVoxDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        repository = EpisodeRepository(db)
+        repository = EpisodeRepository(db, java.time.Clock.systemUTC())
         val feedId = db.feedDao().insert(FeedEntity(feedUrl = "https://example.org/f", title = "P", subscribedAt = 0))
         fun ep(guid: String, date: Long) = EpisodeEntity(
             feedId = feedId,
@@ -65,5 +65,38 @@ class EpisodeRepositoryTest {
                 it.episode.guid
             }
         ).containsExactly("played", "new").inOrder()
+    }
+
+    @Test
+    fun ignore_recordsDeleteAction_andLeavesQueue_undoRestoresEverything() = runTest {
+        repository.addToQueue(listOf(ids[0]))
+
+        val actionIds = repository.ignore(listOf(ids[0], ids[2]))
+
+        assertThat(db.episodeDao().get(ids[0])!!.state).isEqualTo(EpisodeState.IGNORED)
+        assertThat(repository.observeQueuedIds().first()).isEmpty()
+        // ids[2] était déjà ignoré : une seule action.
+        assertThat(actionIds).hasSize(1)
+        val action = db.episodeActionDao().getPending(10).single()
+        assertThat(action.action).isEqualTo(com.acrovox.core.model.EpisodeActionType.DELETE)
+        assertThat(action.episodeUrl).isEqualTo("https://example.org/new.mp3")
+
+        repository.undoIgnore(mapOf(ids[0] to EpisodeState.UNPLAYED), actionIds)
+
+        assertThat(db.episodeDao().get(ids[0])!!.state).isEqualTo(EpisodeState.UNPLAYED)
+        assertThat(db.episodeActionDao().count()).isEqualTo(0)
+    }
+
+    @Test
+    fun restore_keepsEpisode_andRecordsNewAction() = runTest {
+        repository.restore(listOf(ids[2], ids[0]))
+
+        assertThat(db.episodeDao().get(ids[2])!!.state).isEqualTo(EpisodeState.UNPLAYED)
+        assertThat(db.episodeDao().get(ids[0])!!.state).isEqualTo(EpisodeState.NEW)
+        assertThat(
+            db.episodeActionDao().getPending(10).map {
+                it.action
+            }
+        ).containsExactly(com.acrovox.core.model.EpisodeActionType.NEW)
     }
 }
