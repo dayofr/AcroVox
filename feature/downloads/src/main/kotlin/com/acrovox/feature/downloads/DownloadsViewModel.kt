@@ -3,6 +3,7 @@ package com.acrovox.feature.downloads
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.acrovox.core.database.entity.DownloadWithEpisode
+import com.acrovox.core.download.CleanupDelay
 import com.acrovox.core.download.DownloadManager
 import com.acrovox.core.download.DownloadSettings
 import com.acrovox.core.download.DownloadSettingsRepository
@@ -84,6 +85,10 @@ class DownloadsViewModel @Inject constructor(
     }
 
     fun setWifiOnly(value: Boolean) = viewModelScope.launch { settingsRepository.setWifiOnly(value) }
+
+    fun setDeleteAfterPlayed(value: CleanupDelay) = viewModelScope.launch {
+        settingsRepository.setDeleteAfterPlayed(value)
+    }
 
     fun setDownloadedOnly(value: Boolean) = viewModelScope.launch { settingsRepository.setDownloadedOnly(value) }
 

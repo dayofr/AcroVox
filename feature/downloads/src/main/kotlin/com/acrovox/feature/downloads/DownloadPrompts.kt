@@ -33,7 +33,10 @@ class DownloadPromptViewModel @Inject constructor(private val downloads: Downloa
         downloads.request(listOf(id))
     }
 
-    fun delete(id: Long) = viewModelScope.launch { downloads.delete(listOf(id)) }
+    fun delete(id: Long) = viewModelScope.launch {
+        downloads.dismissPrompt()
+        downloads.delete(listOf(id))
+    }
 
     fun dismiss() = downloads.dismissPrompt()
 }

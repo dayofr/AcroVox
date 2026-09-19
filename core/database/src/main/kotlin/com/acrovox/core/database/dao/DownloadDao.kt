@@ -30,6 +30,10 @@ interface DownloadDao {
     fun observeWithEpisodes(): Flow<List<DownloadWithEpisode>>
 
     @Transaction
+    @Query("SELECT * FROM download")
+    suspend fun getWithEpisodes(): List<DownloadWithEpisode>
+
+    @Transaction
     @Query(
         """
         SELECT episode.* FROM episode

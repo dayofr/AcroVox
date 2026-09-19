@@ -2,6 +2,7 @@ package com.acrovox.feature.downloads
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +43,7 @@ import com.acrovox.core.designsystem.icon.AcroVoxIcons
 import com.acrovox.core.designsystem.theme.AcroVoxShape
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
 import com.acrovox.core.designsystem.theme.Spacing
+import com.acrovox.core.download.CleanupDelay
 import com.acrovox.core.model.DownloadStatus
 import com.acrovox.core.model.EpisodeState
 
@@ -76,7 +79,8 @@ fun DownloadsScreen(
                 SettingsCard(
                     state,
                     onWifiOnly = viewModel::setWifiOnly,
-                    onDownloadedOnly = viewModel::setDownloadedOnly
+                    onDownloadedOnly = viewModel::setDownloadedOnly,
+                    onDeleteAfterPlayed = viewModel::setDeleteAfterPlayed
                 )
             }
             if (state.active.isNotEmpty()) {
@@ -190,7 +194,13 @@ private fun StorageCard(state: DownloadsUiState) {
 }
 
 @Composable
-private fun SettingsCard(state: DownloadsUiState, onWifiOnly: (Boolean) -> Unit, onDownloadedOnly: (Boolean) -> Unit) {
+private fun SettingsCard(
+    state: DownloadsUiState,
+    onWifiOnly: (Boolean) -> Unit,
+    onDownloadedOnly: (Boolean) -> Unit,
+    onDeleteAfterPlayed: (CleanupDelay) -> Unit
+) {
+    val colors = AcroVoxTheme.colors
     Card {
         Column(Modifier.padding(horizontal = Spacing.gutter, vertical = Spacing.sm)) {
             SettingRow(
@@ -205,6 +215,27 @@ private fun SettingsCard(state: DownloadsUiState, onWifiOnly: (Boolean) -> Unit,
                 checked = state.settings.wifiOnly,
                 onChange = onWifiOnly
             )
+            Column(Modifier.padding(vertical = Spacing.sm), verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                Text("Supprimer après écoute", style = MaterialTheme.typography.titleSmall, color = colors.textPrimary)
+                Text(
+                    "Libère la place des épisodes écoutés. Les favoris sont gardés ; " +
+                        "le fichier d'un épisode ignoré est supprimé.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colors.textSecondary
+                )
+                Row(
+                    Modifier.horizontalScroll(rememberScrollState()).padding(top = Spacing.xs),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
+                ) {
+                    CleanupDelay.entries.forEach { delay ->
+                        AcroVoxFilterChip(
+                            delay.label,
+                            selected = state.settings.deleteAfterPlayed == delay,
+                            onClick = { onDeleteAfterPlayed(delay) }
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -391,3 +422,11 @@ private fun CompletedRow(item: DownloadWithEpisode, onOpen: () -> Unit, onPlay: 
         }
     )
 }
+
+private val CleanupDelay.label: String
+    get() = when (this) {
+        CleanupDelay.NEVER -> "Jamais"
+        CleanupDelay.IMMEDIATELY -> "Tout de suite"
+        CleanupDelay.ONE_DAY -> "Après 1 jour"
+        CleanupDelay.ONE_WEEK -> "Après 7 jours"
+    }

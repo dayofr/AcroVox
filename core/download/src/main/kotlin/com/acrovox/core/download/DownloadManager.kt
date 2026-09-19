@@ -114,7 +114,6 @@ class DownloadManager @Inject constructor(
      * aucune action gPodder n'est enregistrée.
      */
     suspend fun delete(episodeIds: List<Long>) {
-        dismissPrompt()
         dao.get(episodeIds).forEach { download ->
             scheduler.cancel(download.episodeId)
             download.localPath?.let { File(it).delete() }
