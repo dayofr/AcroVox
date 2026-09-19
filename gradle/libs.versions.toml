@@ -42,6 +42,9 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 junit = { module = "junit:junit", version.ref = "junit" }
 
+# build-logic
+android-gradleApiPlugin = { module = "com.android.tools.build:gradle-api", version.ref = "agp" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -51,3 +54,10 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 room = { id = "androidx.room", version.ref = "room" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+
+# Plugins de convention (build-logic)
+pulse-android-application = { id = "pulse.android.application" }
+pulse-android-library = { id = "pulse.android.library" }
+pulse-android-compose = { id = "pulse.android.compose" }
+pulse-android-feature = { id = "pulse.android.feature" }
+pulse-hilt = { id = "pulse.hilt" }
