@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.pulse.android.feature)
+    alias(libs.plugins.acrovox.android.feature)
 }
 
 android {
-    namespace = "com.pulseaudio.podcast.feature.library"
+    namespace = "com.acrovox.feature.library"
 }

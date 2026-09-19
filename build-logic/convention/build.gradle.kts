@@ -13,23 +13,23 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "pulse.android.application"
+            id = "acrovox.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidLibrary") {
-            id = "pulse.android.library"
+            id = "acrovox.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
         register("androidCompose") {
-            id = "pulse.android.compose"
+            id = "acrovox.android.compose"
             implementationClass = "AndroidComposeConventionPlugin"
         }
         register("hilt") {
-            id = "pulse.hilt"
+            id = "acrovox.hilt"
             implementationClass = "HiltConventionPlugin"
         }
         register("androidFeature") {
-            id = "pulse.android.feature"
+            id = "acrovox.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
     }

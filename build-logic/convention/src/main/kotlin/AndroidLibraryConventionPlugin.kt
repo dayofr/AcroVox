@@ -10,8 +10,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         pluginManager.apply("org.jlleitschuh.gradle.ktlint")
         extensions.configure<LibraryExtension> {
             configureAndroid()
-            testOptions.targetSdk = PulseSdk.TARGET
-            lint.targetSdk = PulseSdk.TARGET
+            testOptions.targetSdk = AcroVoxSdk.TARGET
+            lint.targetSdk = AcroVoxSdk.TARGET
         }
         dependencies {
             add("testImplementation", libs.library("junit"))

@@ -1,14 +1,14 @@
 plugins {
-    alias(libs.plugins.pulse.android.application)
-    alias(libs.plugins.pulse.android.compose)
-    alias(libs.plugins.pulse.hilt)
+    alias(libs.plugins.acrovox.android.application)
+    alias(libs.plugins.acrovox.android.compose)
+    alias(libs.plugins.acrovox.hilt)
 }
 
 android {
-    namespace = "com.pulseaudio.podcast"
+    namespace = "com.acrovox.app"
 
     defaultConfig {
-        applicationId = "com.pulseaudio.podcast"
+        applicationId = "com.acrovox.app"
         versionCode = 1
         versionName = "0.1.0"
     }

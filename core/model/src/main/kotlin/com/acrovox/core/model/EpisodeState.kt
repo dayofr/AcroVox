@@ -1,4 +1,4 @@
-package com.pulseaudio.podcast.core.model
+package com.acrovox.core.model
 
 /** Cycle de vie d'un épisode côté utilisateur. */
 enum class EpisodeState {

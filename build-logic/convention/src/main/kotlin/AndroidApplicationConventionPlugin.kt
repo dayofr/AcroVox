@@ -9,7 +9,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         pluginManager.apply("org.jlleitschuh.gradle.ktlint")
         extensions.configure<ApplicationExtension> {
             configureAndroid()
-            defaultConfig.targetSdk = PulseSdk.TARGET
+            defaultConfig.targetSdk = AcroVoxSdk.TARGET
         }
     }
 }

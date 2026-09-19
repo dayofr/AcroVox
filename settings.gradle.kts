@@ -15,7 +15,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "pulse"
+rootProject.name = "acrovox"
 
 include(":app")
 include(":core:model")

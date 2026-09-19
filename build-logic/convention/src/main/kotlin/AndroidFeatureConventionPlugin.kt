@@ -5,9 +5,9 @@ import org.gradle.kotlin.dsl.dependencies
 /** Module d'écran : bibliothèque Android + Compose + Hilt + ViewModel. */
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("pulse.android.library")
-        pluginManager.apply("pulse.android.compose")
-        pluginManager.apply("pulse.hilt")
+        pluginManager.apply("acrovox.android.library")
+        pluginManager.apply("acrovox.android.compose")
+        pluginManager.apply("acrovox.hilt")
         dependencies {
             add("implementation", project(":core:designsystem"))
             add("implementation", project(":core:model"))

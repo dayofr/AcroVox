@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.pulse.android.library)
-    alias(libs.plugins.pulse.android.compose)
+    alias(libs.plugins.acrovox.android.library)
+    alias(libs.plugins.acrovox.android.compose)
 }
 
 android {
-    namespace = "com.pulseaudio.podcast.core.designsystem"
+    namespace = "com.acrovox.core.designsystem"
 }

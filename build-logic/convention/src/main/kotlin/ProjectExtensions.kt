@@ -10,7 +10,7 @@ internal val Project.libs: VersionCatalog
 
 internal fun VersionCatalog.library(alias: String) = findLibrary(alias).get()
 
-internal object PulseSdk {
+internal object AcroVoxSdk {
     const val COMPILE = 37
     const val TARGET = 36
     const val MIN = 26
@@ -18,8 +18,8 @@ internal object PulseSdk {
 
 /** Réglages communs aux modules application et bibliothèque. */
 internal fun CommonExtension.configureAndroid() {
-    compileSdk = PulseSdk.COMPILE
-    defaultConfig.minSdk = PulseSdk.MIN
+    compileSdk = AcroVoxSdk.COMPILE
+    defaultConfig.minSdk = AcroVoxSdk.MIN
     compileOptions.sourceCompatibility = JavaVersion.VERSION_17
     compileOptions.targetCompatibility = JavaVersion.VERSION_17
 }

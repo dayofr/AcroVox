@@ -1,4 +1,4 @@
-package com.pulseaudio.podcast
+package com.acrovox.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -23,23 +23,23 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaterialTheme(colorScheme = darkColorScheme()) {
-                PulseApp()
+                AcroVoxApp()
             }
         }
     }
 }
 
 @Composable
-fun PulseApp() {
+fun AcroVoxApp() {
     Surface(modifier = Modifier.fillMaxSize()) {
         Box(contentAlignment = Alignment.Center) {
-            Text("Pulse")
+            Text("AcroVox")
         }
     }
 }
 
 @Preview
 @Composable
-private fun PulseAppPreview() {
-    PulseApp()
+private fun AcroVoxAppPreview() {
+    AcroVoxApp()
 }

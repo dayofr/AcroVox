@@ -1,4 +1,4 @@
-# Pulse
+# AcroVox
 
 Lecteur de podcasts Android, dans l'esprit d'AntennaPod. Suivi du projet dans Chantier (clé `PULSE`).
 
@@ -17,4 +17,4 @@ export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
 
 ## Maquettes
 
-`stitch_android_podcast_player_ui/` : écrans Stitch et DESIGN.md (thèmes sombre et clair).
+`stitch_android_podcast_player_ui/` : écrans Stitch et DESIGN.md du design system « Pulse Audio » (thèmes sombre et clair).
