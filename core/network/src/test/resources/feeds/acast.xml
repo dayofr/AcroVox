@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/global/feed/rss.xslt" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:podaccess="https://access.acast.com/schema/1.0/" xmlns:acast="https://schema.acast.com/1.0/">
+    <channel>
+		<ttl>60</ttl>
+		<generator>acast.com</generator>
+		<title>Underscore_</title>
+		<link>https://youtube.com/@Underscore_</link>
+		<atom:link href="https://feeds.acast.com/public/shows/43160adc-fadd-4764-b93f-aa1ca93f22bf" rel="self" type="application/rss+xml"/>
+		<language>fr</language>
+		<copyright>Micode</copyright>
+		<itunes:keywords>IA,Investissement,Nouvelles Technologies,Tech,Actu tech,Cybersécurité,Développement,Dev,Entreprenariat tech,IT,Robotique</itunes:keywords>
+		<itunes:author>Micode</itunes:author>
+		<itunes:subtitle>IA, Hacking, Robotique — Des conversations de terrain avec ceux qui construisent. 🥨</itunes:subtitle>
+		<itunes:summary><![CDATA[<p>IA, Hacking, Robotique — Des conversations de terrain avec ceux qui construisent. 🥨</p><br><p>Partenariats: underscore@micorp.fr</p><br><p>---</p><hr><p style='color:grey; font-size:0.75em;'> Hébergé par Acast. Visitez <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> pour plus d'informations.</p>]]></itunes:summary>
+		<description><![CDATA[<p>IA, Hacking, Robotique — Des conversations de terrain avec ceux qui construisent. 🥨</p><br><p>Partenariats: underscore@micorp.fr</p><br><p>---</p><hr><p style='color:grey; font-size:0.75em;'> Hébergé par Acast. Visitez <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> pour plus d'informations.</p>]]></description>
+		<itunes:explicit>false</itunes:explicit>
+		<itunes:owner>
+			<itunes:name>Micorp</itunes:name>
+			<itunes:email>info+43160adc-fadd-4764-b93f-aa1ca93f22bf@mg-eu.acast.com</itunes:email>
+		</itunes:owner>
+		<acast:showId>43160adc-fadd-4764-b93f-aa1ca93f22bf</acast:showId>
+		<acast:showUrl>micode-underscore</acast:showUrl>
+		<acast:signature key="EXAMPLE" algorithm="aes-256-cbc"><![CDATA[wbG1Z7+6h9QOi+CR1Dv0uQ==]]></acast:signature>
+		<acast:settings><![CDATA[FYjHyZbXWHZ7gmX8Pp1rmStkiTEE0CNxIPxmLPEYNwOPYEjva3g6uTTuD+shB98DXouQK8jj63xORPpUCF7tmR82YXA5gdesSEH4mug1NUKLh5HxL7hivXxh6KUxsPdmQP76F1xqrXXQvZzCVwiaug==]]></acast:settings>
+        <acast:network id="64186f42647e700011fe46ae" slug="micorp"><![CDATA[MICORP]]></acast:network>
+		<acast:importedFeed>https://rss.acast.com/micode-underscore</acast:importedFeed>
+		<itunes:type>episodic</itunes:type>
+			<itunes:image href="https://assets.pippa.io/shows/6139142f588d8c5deac642d6/1642094219356-8dadc17af98777924f2d95ac8858f3e2.jpeg"/>
+			<image>
+				<url>https://assets.pippa.io/shows/6139142f588d8c5deac642d6/1642094219356-8dadc17af98777924f2d95ac8858f3e2.jpeg</url>
+				<link>https://youtube.com/@Underscore_</link>
+				<title>Underscore_</title>
+			</image>
+			<itunes:new-feed-url>https://feeds.acast.com/public/shows/43160adc-fadd-4764-b93f-aa1ca93f22bf</itunes:new-feed-url>
+		<item>
+			<title><![CDATA[Comment une armée d'IA a percé le code de GTA — Salim Trouvé]]></title>
+			<itunes:title><![CDATA[Comment une armée d'IA a percé le code de GTA — Salim Trouvé]]></itunes:title>
+			<pubDate>Mon, 27 Jul 2026 05:00:00 GMT</pubDate>
+			<itunes:duration>27:25</itunes:duration>
+			<enclosure url="https://sphinx.acast.com/p/acast/s/micode-underscore/e/6a4769db04fac73b2495101d/media.mp3" length="26326831" type="audio/mpeg"/>
+			<guid isPermaLink="false">6a4769db04fac73b2495101d</guid>
+			<itunes:explicit>false</itunes:explicit>
+			<link>https://www.youtube.com/watch?v=XbKYW4Pg7QA</link>
+			<acast:episodeId>6a4769db04fac73b2495101d</acast:episodeId>
+			<acast:showId>43160adc-fadd-4764-b93f-aa1ca93f22bf</acast:showId>
+			<acast:settings><![CDATA[FYjHyZbXWHZ7gmX8Pp1rmRbkUlg2iR8fDtnl1O71B2N8B7jZZH+7YdsHlGFxMJ/JB5ewwSWwnDfITsERRlXnRPdjbJm7d4qQ2rUK1Oh2E65gYDhVAjVZ14DHwOhC8Pz9Fl/bcn1zSJYiWt3qMQn8rt+POSZQoTAgMCU/0T6TdJO10iXI77RviPpr/VuiTLR9emkQ/2qs9evm70BAP23Qf2KI8JhDqgjrmaCC+QyEn/BH6CggP7RqiFR4+JUFHkBcKvglbhNEIB/UpNt6kBUE5VSqjTQG3uKy8VCJJYt9lCw1gyaWtaMjJFiKOHDTwXw6eQr9WW6nhMD0zGWPJjFbxDs2Hv4C/Zu+QQ4x+jzBeiZGC5aTtw8wFBLpEDzhNJMe]]></acast:settings>
+			<itunes:image href="https://assets.pippa.io/shows/6139142f588d8c5deac642d6/c3bc4f41-598c-42b5-b5be-f7d567916f0d.jpg"/>
+			<description><![CDATA[<p>Rockstar verrouille ses jeux, pourtant une communauté tente depuis 2019 de reconstituer le code de GTA San Andreas. Invité de l’épisode, Salim Trouvé explique comment il a coordonné une armée d’agents IA (Codex, etc.) pour terminer en deux mois un travail qui traînait depuis des années. On détaille ce qu’est la rétro‑ingénierie d’un jeu, les méthodes et outils utilisés, et ce que cela change pour le modding, les ports natifs et la suite.</p><hr/><p><strong>En plateau</strong></p><ul>  <li>Michaël de Marliave — animateur</li>  <li>Tiffany Souterre — chroniqueuse</li>  <li>Salim Trouvé — invité</li></ul><p><strong>﻿</strong>➤ Pour découvrir Mammouth IA : https://mammouth.ai/</p><br><p>➤ Pour le Merch Micode et Underscore_ : <a href="https://www.youtube.com/redirect?event=video_description&amp;redir_token=QUFFLUhqbVRfTU9vNjFxdzVmdk9wVllEbU9GRVpjY2hxd3xBQ3Jtc0trN3ItTGwyMkhSUHRWR2JWaU1YaGJGTGJ4LVBReFcwVDhIdGpkQTduUEx6V1lZVnFRSXJLVjdSVVNwM3NFZkRjMmdpUzQ5V01hZGlVckoyd3huLV9NLXNWa19RTTljclhxNFIyOHBzNHk1LTJSLW5jcw&amp;q=https%3A%2F%2Ftraphic.fr%2Fcollections%2Fmicode&amp;v=5Oo0u5RZ7HA" rel="noopener noreferrer" target="_blank">https://traphic.fr/collections/micode</a></p><p>⚠️&nbsp;Précommandes avant le 15 Janvier !</p><hr><p style='color:grey; font-size:0.75em;'> Hébergé par Acast. Visitez <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> pour plus d'informations.</p>]]></description>
+			<itunes:summary><![CDATA[<p>Rockstar verrouille ses jeux, pourtant une communauté tente depuis 2019 de reconstituer le code de GTA San Andreas. Invité de l’épisode, Salim Trouvé explique comment il a coordonné une armée d’agents IA (Codex, etc.) pour terminer en deux mois un travail qui traînait depuis des années. On détaille ce qu’est la rétro‑ingénierie d’un jeu, les méthodes et outils utilisés, et ce que cela change pour le modding, les ports natifs et la suite.</p><hr/><p><strong>En plateau</strong></p><ul>  <li>Michaël de Marliave — animateur</li>  <li>Tiffany Souterre — chroniqueuse</li>  <li>Salim Trouvé — invité</li></ul><p><strong>﻿</strong>➤ Pour découvrir Mammouth IA : https://mammouth.ai/</p><br><p>➤ Pour le Merch Micode et Underscore_ : <a href="https://www.youtube.com/redirect?event=video_description&amp;redir_token=QUFFLUhqbVRfTU9vNjFxdzVmdk9wVllEbU9GRVpjY2hxd3xBQ3Jtc0trN3ItTGwyMkhSUHRWR2JWaU1YaGJGTGJ4LVBReFcwVDhIdGpkQTduUEx6V1lZVnFRSXJLVjdSVVNwM3NFZkRjMmdpUzQ5V01hZGlVckoyd3huLV9NLXNWa19RTTljclhxNFIyOHBzNHk1LTJSLW5jcw&amp;q=https%3A%2F%2Ftraphic.fr%2Fcollections%2Fmicode&amp;v=5Oo0u5RZ7HA" rel="noopener noreferrer" target="_blank">https://traphic.fr/collections/micode</a></p><p>⚠️&nbsp;Précommandes avant le 15 Janvier !</p><hr><p style='color:grey; font-size:0.75em;'> Hébergé par Acast. Visitez <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> pour plus d'informations.</p>]]></itunes:summary>
+		</item>
+		<item>
+			<title>Ils traquent les navires pirates qui tentent de disparaître — Clément Galic (Unseenlabs)</title>
+			<itunes:title>Ils traquent les navires pirates qui tentent de disparaître — Clément Galic (Unseenlabs)</itunes:title>
+			<pubDate>Mon, 20 Jul 2026 05:00:00 GMT</pubDate>
+			<itunes:duration>30:41</itunes:duration>
+			<enclosure url="https://sphinx.acast.com/p/acast/s/micode-underscore/e/6a476957ecd1239143193152/media.mp3" length="29457763" type="audio/mpeg"/>
+			<guid isPermaLink="false">6a476957ecd1239143193152</guid>
+			<itunes:explicit>false</itunes:explicit>
+			<link>https://www.youtube.com/watch?v=DQ8nEd9_zVA</link>
+			<acast:episodeId>6a476957ecd1239143193152</acast:episodeId>
+			<acast:showId>43160adc-fadd-4764-b93f-aa1ca93f22bf</acast:showId>
+			<acast:settings><![CDATA[FYjHyZbXWHZ7gmX8Pp1rmRbkUlg2iR8fDtnl1O71B2N8B7jZZH+7YdsHlGFxMJ/JB5ewwSWwnDfITsERRlXnRPdjbJm7d4qQ2rUK1Oh2E65gYDhVAjVZ14DHwOhC8Pz9qmOGktiNC6enkj+OCz8mrI3yhKCG0jvJkoyvAi68vdmYWDIRE4LvpBg+IIwVi6DS7xC1nOtxwMni5jYQIIiso0ZKs1qkEanMm66wVdI+mWoJz1OWJRnlPUhMrzZ9Gft4wGKoFxPnwbNfBf4o+dsDjobnaELhsASOVCU05VTF6u8HXCRgst9WeD6vcGAwqqtBnIOZHUUg9UPZT5XfIiJHcg9wmXh3QsrL3YLKjNfRa3Zx0C8zDIvnFSkZcqQUBh1ulwlrqCzpZdr8gPx6W06Q0g==]]></acast:settings>
+			<itunes:image href="https://assets.pippa.io/shows/6139142f588d8c5deac642d6/fe5c65f3-711e-4942-9bcb-172e3c7280e3.jpg"/>
+			<description><![CDATA[<p>Sur les océans, de nombreux navires coupent leur balise AIS pour disparaître des radars et mener pêche illégale, contournement d'embargos ou autres opérations discrètes. Clément Galic, cofondateur d'Unseenlabs, explique comment leurs petits satellites captent les signatures radio (RF) pour détecter et suivre ces bateaux « dark » depuis l'espace. On revient sur la genèse du projet, l'essor du New Space et les découvertes faites en pointant ces capteurs vers le trafic maritime invisible.</p><hr/><p><strong>En plateau</strong></p><ul>  <li>Michaël de Marliave — animateur</li>  <li>Tiffany Souterre — chroniqueuse</li>  <li>Guillaume Ayoub — invité</li>  <li>Clément Galic — invité (Unseenlabs)</li></ul><p><strong>﻿</strong>➤ Pour découvrir Mammouth IA : https://mammouth.ai/</p><br><p>➤ Pour le Merch Micode et Underscore_ : <a href="https://www.youtube.com/redirect?event=video_description&amp;redir_token=QUFFLUhqbVRfTU9vNjFxdzVmdk9wVllEbU9GRVpjY2hxd3xBQ3Jtc0trN3ItTGwyMkhSUHRWR2JWaU1YaGJGTGJ4LVBReFcwVDhIdGpkQTduUEx6V1lZVnFRSXJLVjdSVVNwM3NFZkRjMmdpUzQ5V01hZGlVckoyd3huLV9NLXNWa19RTTljclhxNFIyOHBzNHk1LTJSLW5jcw&amp;q=https%3A%2F%2Ftraphic.fr%2Fcollections%2Fmicode&amp;v=5Oo0u5RZ7HA" rel="noopener noreferrer" target="_blank">https://traphic.fr/collections/micode</a></p><p>⚠️&nbsp;Précommandes avant le 15 Janvier !</p><hr><p style='color:grey; font-size:0.75em;'> Hébergé par Acast. Visitez <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> pour plus d'informations.</p>]]></description>
+			<itunes:summary><![CDATA[<p>Sur les océans, de nombreux navires coupent leur balise AIS pour disparaître des radars et mener pêche illégale, contournement d'embargos ou autres opérations discrètes. Clément Galic, cofondateur d'Unseenlabs, explique comment leurs petits satellites captent les signatures radio (RF) pour détecter et suivre ces bateaux « dark » depuis l'espace. On revient sur la genèse du projet, l'essor du New Space et les découvertes faites en pointant ces capteurs vers le trafic maritime invisible.</p><hr/><p><strong>En plateau</strong></p><ul>  <li>Michaël de Marliave — animateur</li>  <li>Tiffany Souterre — chroniqueuse</li>  <li>Guillaume Ayoub — invité</li>  <li>Clément Galic — invité (Unseenlabs)</li></ul><p><strong>﻿</strong>➤ Pour découvrir Mammouth IA : https://mammouth.ai/</p><br><p>➤ Pour le Merch Micode et Underscore_ : <a href="https://www.youtube.com/redirect?event=video_description&amp;redir_token=QUFFLUhqbVRfTU9vNjFxdzVmdk9wVllEbU9GRVpjY2hxd3xBQ3Jtc0trN3ItTGwyMkhSUHRWR2JWaU1YaGJGTGJ4LVBReFcwVDhIdGpkQTduUEx6V1lZVnFRSXJLVjdSVVNwM3NFZkRjMmdpUzQ5V01hZGlVckoyd3huLV9NLXNWa19RTTljclhxNFIyOHBzNHk1LTJSLW5jcw&amp;q=https%3A%2F%2Ftraphic.fr%2Fcollections%2Fmicode&amp;v=5Oo0u5RZ7HA" rel="noopener noreferrer" target="_blank">https://traphic.fr/collections/micode</a></p><p>⚠️&nbsp;Précommandes avant le 15 Janvier !</p><hr><p style='color:grey; font-size:0.75em;'> Hébergé par Acast. Visitez <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> pour plus d'informations.</p>]]></itunes:summary>
+		</item>
+    	<itunes:category text="Technology"/>
+    </channel>
+</rss>

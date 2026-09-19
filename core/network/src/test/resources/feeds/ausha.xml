@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="rss.xslt" ?>
+<rss
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:spotify="http://www.spotify.com/ns/rss"
+    xmlns:psc="http://podlove.org/simple-chapters/"
+    xmlns:media="https://search.yahoo.com/mrss/"
+    xmlns:podcast="https://podcastindex.org/namespace/1.0"
+    version="2.0">
+    <channel>
+        <title>Le Pervers Narcissique par Pascal Couderc, Podcast sur la manipulation affective et les relations toxiques</title>
+                    <link>https://pervers-narcissique.com</link>
+                <atom:link rel="self" type="application/rss+xml" href="https://feed.ausha.co/OmmLJCjQE8RY"/>
+        <description>
+ Bienvenue dans le podcast "Le Pervers Narcissique" avec Pascal Couderc ! 
+
+
+Je suis ravi de vous accueillir dans cet espace dédié à la compréhension et à la sensibilisation des comportements des pervers narcissiques (https://www.pervers-narcissique.com/blog/). 
+Dans ce podcast, nous allons explorer le concept complexe des pervers narcissiques, des individus qui présentent des structures
+ narcissiques pathologiques et qui utilisent leur pouvoir et leur manipulation (https://www.pervers-narcissique.com/les-techniques-de-manipulation/) pour contrôler (https://www.pervers-narcissique.com/controle-coercitif/) et abuser les autres. 
+  
+Chaque épisode sera consacré à un aspect différent des pervers narcissiques, allant de leurs caractéristiques et de leurs techniques
+ de manipulation à leurs conséquences dévastatrices sur leurs victimes. Nous discuterons également des signes précurseurs qui peuvent aider à identifier un pervers narcissique (https://www.pervers-narcissique.com/reperer-au-premier-rdv/) dans notre entourage. 
+  
+Mon objectif est de fournir aux auditeurs des informations précieuses pour mieux comprendre les mécanismes psychologiques des pervers
+ narcissiques et de les aider à reconnaître les signaux d'alerte. En élevant notre niveau de conscience, nous pouvons contribuer à prévenir les abus et à soutenir les victimes. 
+  
+En plus des informations théoriques, nous aborderons également des histoires réelles de victimes  (https://www.pervers-narcissique.com/alienor/)de pervers narcissiques qui ont
+survécu à leurs expériences et se sont reconstruites. Le partage de ces récits peut offrir une source d'inspiration et d'espoir pour ceux qui ont vécu des relations toxiques  (https://www.pervers-narcissique.com/reconnaitre-une-relation-toxique/)avec des pervers narcissiques. 
+Je crois fermement qu'en éduquant et en sensibilisant les gens sur les pervers narcissiques, nous pouvons contribuer à créer un
+environnement plus sain et à protéger ceux qui sont vulnérables à leurs tactiques destructrices. 
+Je vous invite donc à vous joindre à moi dans cette découverte des pervers narcissiques et à la recherche de moyens pour les combattre.
+Préparez-vous à une exploration approfondie, des conversations stimulantes et des conseils pratiques pour vous aider à vous protéger et à vous rétablir. 
+Bienvenue dans "Le Pervers Narcissique" avec Pascal Couderc, le podcast qui vous aidera à reconnaître, comprendre et surmonter les abus des pervers narcissiques.  
+Hébergé par Ausha. Visitez ausha.co/fr/politique-de-confidentialite pour plus d'informations.</description>
+        <language>fr</language>
+        <copyright>Pascal Couderc</copyright>
+        <lastBuildDate>Fri, 18 Sep 2026 09:31:33 +0000</lastBuildDate>
+        <pubDate>Fri, 18 Sep 2026 09:31:33 +0000</pubDate>
+        <webMaster>feeds@ausha.co (Ausha)</webMaster>
+        <generator>Ausha (https://www.ausha.co)</generator>
+                    <spotify:countryOfOrigin>fr</spotify:countryOfOrigin>
+        
+        <itunes:author>Le Pervers Narcissique - Podcast par Pascal Couderc</itunes:author>
+        <itunes:owner>
+            <itunes:name>Pascal Couderc</itunes:name>
+            <itunes:email>psyparis@hotmail.fr</itunes:email>
+        </itunes:owner>
+        <itunes:summary>
+ Bienvenue dans le podcast "Le Pervers Narcissique" avec Pascal Couderc ! 
+
+
+Je suis ravi de vous accueillir dans cet espace dédié à la compréhension et à la sensibilisation des comportements des pervers narcissiques (https://www.pervers-narcissique.com/blog/). 
+Dans ce podcast, nous allons explorer le concept complexe des pervers narcissiques, des individus qui présentent des structures
+ narcissiques pathologiques et qui utilisent leur pouvoir et leur manipulation (https://www.pervers-narcissique.com/les-techniques-de-manipulation/) pour contrôler (https://www.pervers-narcissique.com/controle-coercitif/) et abuser les autres. 
+  
+Chaque épisode sera consacré à un aspect différent des pervers narcissiques, allant de leurs caractéristiques et de leurs techniques
+ de manipulation à leurs conséquences dévastatrices sur leurs victimes. Nous discuterons également des signes précurseurs qui peuvent aider à identifier un pervers narcissique (https://www.pervers-narcissique.com/reperer-au-premier-rdv/) dans notre entourage. 
+  
+Mon objectif est de fournir aux auditeurs des informations précieuses pour mieux comprendre les mécanismes psychologiques des pervers
+ narcissiques et de les aider à reconnaître les signaux d'alerte. En élevant notre niveau de conscience, nous pouvons contribuer à prévenir les abus et à soutenir les victimes. 
+  
+En plus des informations théoriques, nous aborderons également des histoires réelles de victimes  (https://www.pervers-narcissique.com/alienor/)de pervers narcissiques qui ont
+survécu à leurs expériences et se sont reconstruites. Le partage de ces récits peut offrir une source d'inspiration et d'espoir pour ceux qui ont vécu des relations toxiques  (https://www.pervers-narcissique.com/reconnaitre-une-relation-toxique/)avec des pervers narcissiques. 
+Je crois fermement qu'en éduquant et en sensibilisant les gens sur les pervers narcissiques, nous pouvons contribuer à créer un
+environnement plus sain et à protéger ceux qui sont vulnérables à leurs tactiques destructrices. 
+Je vous invite donc à vous joindre à moi dans cette découverte des pervers narcissiques et à la recherche de moyens pour les combattre.
+Préparez-vous à une exploration approfondie, des conversations stimulantes et des conseils pratiques pour vous aider à vous protéger et à vous rétablir. 
+Bienvenue dans "Le Pervers Narcissique" avec Pascal Couderc, le podcast qui vous aidera à reconnaître, comprendre et surmonter les abus des pervers narcissiques.  
+Hébergé par Ausha. Visitez ausha.co/fr/politique-de-confidentialite pour plus d'informations.</itunes:summary>
+        <itunes:explicit>false</itunes:explicit>
+        <itunes:block>no</itunes:block>
+        <podcast:block>no</podcast:block>
+        <podcast:locked>yes</podcast:locked>
+        <itunes:type>episodic</itunes:type>
+                    <itunes:subtitle>Par Pascal Couderc</itunes:subtitle>
+                
+        <googleplay:author>Le Pervers Narcissique - Podcast par Pascal Couderc</googleplay:author>
+        <googleplay:email>psyparis@hotmail.fr</googleplay:email>
+        <googleplay:description>
+ Bienvenue dans le podcast "Le Pervers Narcissique" avec Pascal Couderc ! 
+
+
+Je suis ravi de vous accueillir dans cet espace dédié à la compréhension et à la sensibilisation des comportements des pervers narcissiques (https://www.pervers-narcissique.com/blog/). 
+Dans ce podcast, nous allons explorer le concept complexe des pervers narcissiques, des individus qui présentent des structures
+ narcissiques pathologiques et qui utilisent leur pouvoir et leur manipulation (https://www.pervers-narcissique.com/les-techniques-de-manipulation/) pour contrôler (https://www.pervers-narcissique.com/controle-coercitif/) et abuser les autres. 
+  
+Chaque épisode sera consacré à un aspect différent des pervers narcissiques, allant de leurs caractéristiques et de leurs techniques
+ de manipulation à leurs conséquences dévastatrices sur leurs victimes. Nous discuterons également des signes précurseurs qui peuvent aider à identifier un pervers narcissique (https://www.pervers-narcissique.com/reperer-au-premier-rdv/) dans notre entourage. 
+  
+Mon objectif est de fournir aux auditeurs des informations précieuses pour mieux comprendre les mécanismes psychologiques des pervers
+ narcissiques et de les aider à reconnaître les signaux d'alerte. En élevant notre niveau de conscience, nous pouvons contribuer à prévenir les abus et à soutenir les victimes. 
+  
+En plus des informations théoriques, nous aborderons également des histoires réelles de victimes  (https://www.pervers-narcissique.com/alienor/)de pervers narcissiques qui ont
+survécu à leurs expériences et se sont reconstruites. Le partage de ces récits peut offrir une source d'inspiration et d'espoir pour ceux qui ont vécu des relations toxiques  (https://www.pervers-narcissique.com/reconnaitre-une-relation-toxique/)avec des pervers narcissiques. 
+Je crois fermement qu'en éduquant et en sensibilisant les gens sur les pervers narcissiques, nous pouvons contribuer à créer un
+environnement plus sain et à protéger ceux qui sont vulnérables à leurs tactiques destructrices. 
+Je vous invite donc à vous joindre à moi dans cette découverte des pervers narcissiques et à la recherche de moyens pour les combattre.
+Préparez-vous à une exploration approfondie, des conversations stimulantes et des conseils pratiques pour vous aider à vous protéger et à vous rétablir. 
+Bienvenue dans "Le Pervers Narcissique" avec Pascal Couderc, le podcast qui vous aidera à reconnaître, comprendre et surmonter les abus des pervers narcissiques.  
+Hébergé par Ausha. Visitez ausha.co/fr/politique-de-confidentialite pour plus d'informations.</googleplay:description>
+        <googleplay:explicit>false</googleplay:explicit>
+
+                    <podcast:funding url="">Support us!</podcast:funding>
+        
+        <category>Health &amp; Fitness</category>
+    
+        <itunes:category text="Health &amp; Fitness">
+                    <itunes:category text="Mental Health"/>
+            </itunes:category>
+    
+                    <image>
+                <url>https://image.ausha.co/qpOpNrubjvz2BmVXrJWpwv36nhusNblo57RvRlsg_1400x1400.jpeg?t=1786825864</url>
+                <title>Le Pervers Narcissique par Pascal Couderc, Podcast sur la manipulation affective et les relations toxiques</title>
+                                    <link>https://pervers-narcissique.com</link>
+                            </image>
+            <itunes:image href="https://image.ausha.co/qpOpNrubjvz2BmVXrJWpwv36nhusNblo57RvRlsg_1400x1400.jpeg?t=1786825864"/>
+            <googleplay:image href="https://image.ausha.co/qpOpNrubjvz2BmVXrJWpwv36nhusNblo57RvRlsg_1400x1400.jpeg?t=1786825864"/>
+        
+                    <item>
+                <title>SE RECONSTRUIRE APRÈS UN PERVERS NARCISSIQUE à 50 ans et au-delà</title>
+                <guid isPermaLink="false">0562924fc02bf7cce55c5f53935a4b1f74573781</guid>
+                <description><![CDATA[<p><br></p><p>Dans cet épisode, Pascal Couderc pose une question cruciale : comment se reconstruire après avoir été piégé dans les filets d'un pervers narcissique ?  En se concentrant sur les défis uniques rencontrés par les personnes de plus de 50 ans, cet épisode est une véritable bouffée d'air frais pour ceux qui se sentent désorientés et épuisés après des années de manipulation affective.  La reconstruction après une relation toxique est un parcours semé d'embûches, mais il est essentiel de comprendre que ce chemin, bien que long et non linéaire, est possible. </p><p><br></p><p><br></p><p>Pascal Couderc aborde les spécificités de cette reconstruction, en soulignant l'importance de faire le deuil de la vie que l'on aurait pu avoir.  Il met en lumière la nécessité de prendre soin de son corps, souvent négligé durant les années d'emprise, et de reconstruire un réseau social appauvri.  Ces étapes sont cruciales pour retrouver une identité nouvelle et épanouissante.  Les obstacles, tels que la honte liée à la durée de l'emprise et la dépression post-emprise, sont également abordés, offrant une perspective réaliste mais encourageante. </p><p><br></p><p><br></p><p>À travers des exemples cliniques poignants, Pascal Couderc montre que chaque étape de la reconstruction peut être un pas vers la liberté et l'épanouissement personnel.  Les auditeurs apprendront comment accepter les hauts et les bas de ce processus, tout en découvrant des stratégies pour surmonter les défis qui se présentent à eux.  Ce podcast n'est pas seulement un guide, mais un véritable soutien pour ceux qui cherchent à se libérer des chaînes de la manipulation affective. </p><p><br></p><p><br></p><p>Rejoignez-nous pour explorer des thèmes essentiels tels que la résilience, la guérison, et la redécouverte de soi.  Cet épisode de "Le Pervers Narcissique" est une invitation à la réflexion et à l'action, à travers le prisme de l'expérience et de la compréhension.  Si vous ou un proche avez été affecté par une relation toxique, cet épisode est fait pour vous.  Ne laissez pas le passé définir votre avenir ; écoutez, apprenez et commencez votre chemin vers la reconstruction avec Pascal Couderc. </p><p><br></p><p><br></p><p>Retrouvez-nous sur pervers-narcissique. com"&gt;www. pervers-narcissique. com&lt;/a&gt; et sur notre &lt;a target="_blank" rel="noopener noreferrer nofollow" href="https://www. facebook. com/PerversNarcissiqueparPascalCouderc"&gt;page Facebook </p><p><br></p><br/><p>Hébergé par Ausha. Visitez <a href="https://ausha.co/politique-de-confidentialite">ausha.co/politique-de-confidentialite</a> pour plus d'informations.</p>]]></description>
+                <content:encoded><![CDATA[<p><br></p><p>Dans cet épisode, Pascal Couderc pose une question cruciale : comment se reconstruire après avoir été piégé dans les filets d'un pervers narcissique ?  En se concentrant sur les défis uniques rencontrés par les personnes de plus de 50 ans, cet épisode est une véritable bouffée d'air frais pour ceux qui se sentent désorientés et épuisés après des années de manipulation affective.  La reconstruction après une relation toxique est un parcours semé d'embûches, mais il est essentiel de comprendre que ce chemin, bien que long et non linéaire, est possible. </p><p><br></p><p><br></p><p>Pascal Couderc aborde les spécificités de cette reconstruction, en soulignant l'importance de faire le deuil de la vie que l'on aurait pu avoir.  Il met en lumière la nécessité de prendre soin de son corps, souvent négligé durant les années d'emprise, et de reconstruire un réseau social appauvri.  Ces étapes sont cruciales pour retrouver une identité nouvelle et épanouissante.  Les obstacles, tels que la honte liée à la durée de l'emprise et la dépression post-emprise, sont également abordés, offrant une perspective réaliste mais encourageante. </p><p><br></p><p><br></p><p>À travers des exemples cliniques poignants, Pascal Couderc montre que chaque étape de la reconstruction peut être un pas vers la liberté et l'épanouissement personnel.  Les auditeurs apprendront comment accepter les hauts et les bas de ce processus, tout en découvrant des stratégies pour surmonter les défis qui se présentent à eux.  Ce podcast n'est pas seulement un guide, mais un véritable soutien pour ceux qui cherchent à se libérer des chaînes de la manipulation affective. </p><p><br></p><p><br></p><p>Rejoignez-nous pour explorer des thèmes essentiels tels que la résilience, la guérison, et la redécouverte de soi.  Cet épisode de "Le Pervers Narcissique" est une invitation à la réflexion et à l'action, à travers le prisme de l'expérience et de la compréhension.  Si vous ou un proche avez été affecté par une relation toxique, cet épisode est fait pour vous.  Ne laissez pas le passé définir votre avenir ; écoutez, apprenez et commencez votre chemin vers la reconstruction avec Pascal Couderc. </p><p><br></p><p><br></p><p>Retrouvez-nous sur pervers-narcissique. com"&gt;www. pervers-narcissique. com&lt;/a&gt; et sur notre &lt;a target="_blank" rel="noopener noreferrer nofollow" href="https://www. facebook. com/PerversNarcissiqueparPascalCouderc"&gt;page Facebook </p><p><br></p><br/><p>Hébergé par Ausha. Visitez <a href="https://ausha.co/politique-de-confidentialite">ausha.co/politique-de-confidentialite</a> pour plus d'informations.</p>]]></content:encoded>
+                <pubDate>Fri, 18 Sep 2026 09:30:00 +0000</pubDate>
+                <enclosure url="https://audio.ausha.co/B6xLYtLdw2ky.mp3?t=1787206403" length="25794002" type="audio/mpeg"/>
+                                    <link>https://podcast.ausha.co/le-pervers-narcissique-podcast-1/se-reconstruire-apres-un-pervers-narcissique-a-50-ans-et-au-dela</link>
+                
+                                <itunes:author>Le Pervers Narcissique - Podcast par Pascal Couderc</itunes:author>
+                <itunes:explicit>false</itunes:explicit>
+                                    <itunes:keywords>pervers narcissique,épanouissement personnel,prendre soin de soi,réseau social,relations toxiques,emprise psychologique,épuisement émotionnel,soutien social,relations abusives,manipulation affective,reconstruction personnelle,acceptation du deuil,Honte et culpabilité,Chemin de la reconstruction,Défis après 50 ans,Dépression post-emprise,Identité nouvelle,Exemples cliniques,Résilience après la manipulation,Processus non linéaire</itunes:keywords>
+                                <itunes:duration>26:52</itunes:duration>
+                <itunes:episodeType>full</itunes:episodeType>
+                                <itunes:subtitle>
+
+
+Dans cet épisode, Pascal Couderc pose une question cruciale : comment se reconstruire après avoir été piégé dans les filets d'un pervers narcissique ?  En se concentrant sur les défis uniques rencontrés par les personnes de plus de 50 ans, cet épiso...</itunes:subtitle>
+
+                                    <podcast:transcript type="text/vtt" url="https://transcriptfiles.ausha.co/B6xLYtLdw2ky.vtt"></podcast:transcript>
+                
+                <googleplay:author>Le Pervers Narcissique - Podcast par Pascal Couderc</googleplay:author>
+                                <googleplay:explicit>false</googleplay:explicit>
+
+                                    <itunes:image href="https://image.ausha.co/lRkf6N7gHT1J8mfs5z7Y6tqehhI1GVuJY0bu8J1A_1400x1400.jpeg?t=1788672016"/>
+                    <googleplay:image href="https://image.ausha.co/lRkf6N7gHT1J8mfs5z7Y6tqehhI1GVuJY0bu8J1A_1400x1400.jpeg?t=1788672016"/>
+                
+                                    <psc:chapters version="1.1">
+                                                    <psc:chapter
+                                start="0"
+                                title="Introduction à la reconstruction après un pervers narcissique"
+                                                                                            />
+                                                    <psc:chapter
+                                start="57"
+                                title="Spécificités de la reconstruction à 50 ans"
+                                                                                            />
+                                                    <psc:chapter
+                                start="135"
+                                title="Le temps perdu et ses implications"
+                                                                                            />
+                                                    <psc:chapter
+                                start="276"
+                                title="Le corps et ses effets sur la reconstruction"
+                                                                                            />
+                                                    <psc:chapter
+                                start="367"
+                                title="Le réseau social appauvri et la solitude"
+                                                                                            />
+                                                    <psc:chapter
+                                start="452"
+                                title="L&#039;impact de l&#039;emprise sur l&#039;identité"
+                                                                                            />
+                                                    <psc:chapter
+                                start="544"
+                                title="La honte de l&#039;âge et de la durée de l&#039;emprise"
+                                                                                            />
+                                                    <psc:chapter
+                                start="645"
+                                title="La reconstruction professionnelle après 50 ans"
+                                                                                            />
+                                                    <psc:chapter
+                                start="718"
+                                title="Les possibilités de croissance après 50 ans"
+                                                                                            />
+                                                    <psc:chapter
+                                start="878"
+                                title="La relation à soi et la reconnexion"
+                                                                                            />
+                                                    <psc:chapter
+                                start="947"
+                                title="Les obstacles invisibles à la reconstruction"
+                                                                                            />
+                                                    <psc:chapter
+                                start="1203"
+                                title="Le travail thérapeutique et ses exigences"
+                                                                                            />
+                                                    <psc:chapter
+                                start="1327"
+                                title="La question de la sexualité et des relations après 50 ans"
+                                                                                            />
+                                                    <psc:chapter
+                                start="1403"
+                                title="Conclusion : ce qui reste et ce qui peut s&#039;en aller"
+                                                                                            />
+                                            </psc:chapters>
+                
+                            </item>
+                    <item>
+                <title>DIVORCER D'UN PERVERS NARCISSIQUE : le guide complet</title>
+                <guid isPermaLink="false">f8a318eedf48d5293692ef8f456e2232289efcfc</guid>
+                <description><![CDATA[<p>Êtes-vous prêt à découvrir les vérités cachées derrière le divorce avec un pervers narcissique ?  Dans cet épisode, Pascal Couderc aborde la complexité du divorce avec un pervers narcissique, un processus qui va bien au-delà de la simple séparation légale.  Divorcer d'un tel individu n'est pas seulement mettre fin à un mariage, mais plutôt une extraction d'une emprise psychologique à travers une procédure judiciaire.  Cette lutte pour la liberté émotionnelle et la sécurité personnelle nécessite une préparation minutieuse et une stratégie bien pensée. </p><p><br></p><p>Pascal Couderc souligne l'importance de la préparation avant l'annonce du divorce, la sélection d'un avocat compétent, et la gestion des interactions pendant la procédure.  Il met en lumière cinq pièges classiques que les victimes doivent éviter, notamment le mirage du divorce à l'amiable, la médiation familiale, l'usure procédurale, la guerre économique, et l'utilisation des enfants comme levier.  Ces pièges peuvent transformer un processus déjà difficile en un véritable parcours du combattant.  Il est essentiel de rester vigilant et informé pour ne pas tomber dans ces pièges. </p><p><br></p><p>L'épisode insiste sur la nécessité d'une documentation rigoureuse et d'une communication contrôlée avec le pervers narcissique.  Chaque mot, chaque interaction peut être manipulé contre vous.  En préparant une stratégie solide pour faire face à la procédure, vous vous donnez les meilleures chances de sortir de cette relation toxique.  Pascal Couderc rappelle que l'objectif n'est pas de gagner contre le pervers narcissique, mais de sortir avec sa sécurité et celle de ses enfants, tout en construisant sa propre reconnaissance en dehors des jugements. </p><p><br></p><p>Ce podcast est une véritable bouffée d'air frais pour toutes celles et ceux qui se sentent piégés dans une relation toxique.  Avec des conseils pratiques et des témoignages poignants, cet épisode vous offre des outils pour naviguer dans le labyrinthe émotionnel d'un divorce avec un pervers narcissique.  Ne laissez pas la manipulation affective dicter votre vie.  Écoutez cet épisode pour apprendre à reprendre le contrôle et à bâtir un avenir serein, loin des relations toxiques. </p><p><br></p><p>Rejoignez-nous pour un voyage révélateur dans l'univers des relations toxiques, où chaque mot de Pascal Couderc résonne avec la force de l'expérience et la sagesse du vécu.  Ne manquez pas cette occasion d'apprendre et de vous libérer. </p><p><br></p><p>Retrouvez-nous sur pervers-narcissique. com"&gt;www. pervers-narcissique. com&lt;/a&gt; et sur notre &lt;a target="_blank" rel="noopener noreferrer nofollow" href="https://www. facebook. com/PerversNarcissiqueparPascalCouderc"&gt;page Facebook </p><p><br></p><br/><p>Hébergé par Ausha. Visitez <a href="https://ausha.co/politique-de-confidentialite">ausha.co/politique-de-confidentialite</a> pour plus d'informations.</p>]]></description>
+                <content:encoded><![CDATA[<p>Êtes-vous prêt à découvrir les vérités cachées derrière le divorce avec un pervers narcissique ?  Dans cet épisode, Pascal Couderc aborde la complexité du divorce avec un pervers narcissique, un processus qui va bien au-delà de la simple séparation légale.  Divorcer d'un tel individu n'est pas seulement mettre fin à un mariage, mais plutôt une extraction d'une emprise psychologique à travers une procédure judiciaire.  Cette lutte pour la liberté émotionnelle et la sécurité personnelle nécessite une préparation minutieuse et une stratégie bien pensée. </p><p><br></p><p>Pascal Couderc souligne l'importance de la préparation avant l'annonce du divorce, la sélection d'un avocat compétent, et la gestion des interactions pendant la procédure.  Il met en lumière cinq pièges classiques que les victimes doivent éviter, notamment le mirage du divorce à l'amiable, la médiation familiale, l'usure procédurale, la guerre économique, et l'utilisation des enfants comme levier.  Ces pièges peuvent transformer un processus déjà difficile en un véritable parcours du combattant.  Il est essentiel de rester vigilant et informé pour ne pas tomber dans ces pièges. </p><p><br></p><p>L'épisode insiste sur la nécessité d'une documentation rigoureuse et d'une communication contrôlée avec le pervers narcissique.  Chaque mot, chaque interaction peut être manipulé contre vous.  En préparant une stratégie solide pour faire face à la procédure, vous vous donnez les meilleures chances de sortir de cette relation toxique.  Pascal Couderc rappelle que l'objectif n'est pas de gagner contre le pervers narcissique, mais de sortir avec sa sécurité et celle de ses enfants, tout en construisant sa propre reconnaissance en dehors des jugements. </p><p><br></p><p>Ce podcast est une véritable bouffée d'air frais pour toutes celles et ceux qui se sentent piégés dans une relation toxique.  Avec des conseils pratiques et des témoignages poignants, cet épisode vous offre des outils pour naviguer dans le labyrinthe émotionnel d'un divorce avec un pervers narcissique.  Ne laissez pas la manipulation affective dicter votre vie.  Écoutez cet épisode pour apprendre à reprendre le contrôle et à bâtir un avenir serein, loin des relations toxiques. </p><p><br></p><p>Rejoignez-nous pour un voyage révélateur dans l'univers des relations toxiques, où chaque mot de Pascal Couderc résonne avec la force de l'expérience et la sagesse du vécu.  Ne manquez pas cette occasion d'apprendre et de vous libérer. </p><p><br></p><p>Retrouvez-nous sur pervers-narcissique. com"&gt;www. pervers-narcissique. com&lt;/a&gt; et sur notre &lt;a target="_blank" rel="noopener noreferrer nofollow" href="https://www. facebook. com/PerversNarcissiqueparPascalCouderc"&gt;page Facebook </p><p><br></p><br/><p>Hébergé par Ausha. Visitez <a href="https://ausha.co/politique-de-confidentialite">ausha.co/politique-de-confidentialite</a> pour plus d'informations.</p>]]></content:encoded>
+                <pubDate>Fri, 11 Sep 2026 09:30:00 +0000</pubDate>
+                <enclosure url="https://audio.ausha.co/oZYn0I1AKmJg.mp3?t=1786710567" length="21791207" type="audio/mpeg"/>
+                                    <link>https://podcast.ausha.co/le-pervers-narcissique-podcast-1/divorcer-d-un-pervers-narcissique-le-guide-complet</link>
+                
+                                <itunes:author>Le Pervers Narcissique - Podcast par Pascal Couderc</itunes:author>
+                <itunes:explicit>false</itunes:explicit>
+                                    <itunes:keywords>pervers narcissique,relations toxiques,procédure judiciaire,Guerre économique,médiation familiale,emprise psychologique,divorce difficile,manipulation affective,Pièges à éviter,Reconnaissance personnelle,gestion des interactions,Stratégie de divorce,Avocat compétent,Mirage du divorce à l'amiable,Usure procédurale,Enfants comme levier,Documentation rigoureuse,Communication contrôlée,Sécurité des enfants,Préparation au divorce</itunes:keywords>
+                                <itunes:duration>22:41</itunes:duration>
+                <itunes:episodeType>full</itunes:episodeType>
+                                <itunes:subtitle>
+Êtes-vous prêt à découvrir les vérités cachées derrière le divorce avec un pervers narcissique ?  Dans cet épisode, Pascal Couderc aborde la complexité du divorce avec un pervers narcissique, un processus qui va bien au-delà de la simple séparation lé...</itunes:subtitle>
+
+                                    <podcast:transcript type="text/vtt" url="https://transcriptfiles.ausha.co/oZYn0I1AKmJg.vtt"></podcast:transcript>
+                
+                <googleplay:author>Le Pervers Narcissique - Podcast par Pascal Couderc</googleplay:author>
+                                <googleplay:explicit>false</googleplay:explicit>
+
+                                    <itunes:image href="https://image.ausha.co/Shc8mk7TWUmlPOgxKeYA4bAXowjX34cEGl9Q4Ztl_1400x1400.jpeg?t=1786595073"/>
+                    <googleplay:image href="https://image.ausha.co/Shc8mk7TWUmlPOgxKeYA4bAXowjX34cEGl9Q4Ztl_1400x1400.jpeg?t=1786595073"/>
+                
+                                    <psc:chapters version="1.1">
+                                                    <psc:chapter
+                                start="18"
+                                title="Introduction au divorce avec un pervers narcissique"
+                                                                                            />
+                                                    <psc:chapter
+                                start="31"
+                                title="Comprendre le divorce comme une extraction d&#039;emprise"
+                                                                                            />
+                                                    <psc:chapter
+                                start="44"
+                                title="Les spécificités d&#039;un divorce avec un pervers narcissique"
+                                                                                            />
+                                                    <psc:chapter
+                                start="69"
+                                title="Les pièges classiques de la procédure de divorce"
+                                                                                            />
+                                                    <psc:chapter
+                                start="212"
+                                title="Les cinq pièges à éviter lors du divorce"
+                                                                                            />
+                                                    <psc:chapter
+                                start="488"
+                                title="Préparation silencieuse avant l&#039;annonce"
+                                                                                            />
+                                                    <psc:chapter
+                                start="759"
+                                title="Choisir le bon avocat pour son dossier"
+                                                                                            />
+                                                    <psc:chapter
+                                start="834"
+                                title="Stratégies pour tenir la ligne pendant la procédure"
+                                                                                            />
+                                                    <psc:chapter
+                                start="1001"
+                                title="L&#039;audience et la gestion des émotions"
+                                                                                            />
+                                                    <psc:chapter
+                                start="1252"
+                                title="Conclusion et conseils clés pour l&#039;après-jugement"
+                                                                                            />
+                                            </psc:chapters>
+                
+                            </item>
+            </channel>
+</rss>

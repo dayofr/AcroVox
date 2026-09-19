@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/stylesheet.xsl" type="text/xsl"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0">
+  <channel>
+    <atom:link rel="self" type="application/rss+xml" href="https://feeds.transistor.fm/e096750c-c57f-489d-8aee-e55a1e835d6e" title="MP3 Audio"/>
+    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com/"/>
+    <podcast:podping usesPodping="true"/>
+    <title>Почему мы еще живы</title>
+    <generator>Transistor (https://transistor.fm)</generator>
+    <itunes:new-feed-url>https://feeds.transistor.fm/e096750c-c57f-489d-8aee-e55a1e835d6e</itunes:new-feed-url>
+    <description>Подкаст о медицинских открытиях, которые изменили мир. 
+
+Как врачи учились лечить болезни, которые раньше считались приговором, решались на новые операции и открывали — иногда случайно — лекарства, без которых мы не представляем себе современную жизнь.
+
+Новые эпизоды — по средам раз в две недели. 
+
+Это подкаст студии «Либо/Либо»
+Instagram студии: @libolibostudio
+Telegram студии: @libolibostudio
+YouTube канал студии: ЛибоЛибо</description>
+    <copyright>libo/libo</copyright>
+    <podcast:guid>892a905e-16ab-56e8-91bd-4dd7de9113f6</podcast:guid>
+    <podcast:locked owner="kirill@libolibo.me">no</podcast:locked>
+    <podcast:trailer pubdate="Thu, 26 Jan 2023 15:20:00 +0300" url="https://media.transistor.fm/502e11a9/ff353e66.mp3" length="2834184" type="audio/mpeg" season="4">Почему они еще живы: трейлер подкаста «Студия»</podcast:trailer>
+    <language>ru-ru</language>
+    <pubDate>Wed, 09 Sep 2026 17:27:50 +0300</pubDate>
+    <lastBuildDate>Wed, 09 Sep 2026 17:28:18 +0300</lastBuildDate>
+    <link>https://whyarewestillalive.transistor.fm/</link>
+    <image>
+      <url>https://img.transistorcdn.com/kZ2fRte-aVSrL67fiUHXSs-sj23mDC5waIL1NoPkP7Q/rs:fill:0:0:1/w:1400/h:1400/q:60/mb:500000/aHR0cHM6Ly9pbWct/dXBsb2FkLXByb2R1/Y3Rpb24udHJhbnNp/c3Rvci5mbS8zMGI1/ZTQyNjgwZGNlZTVm/MjhkMDAyYWJjN2Rh/ZTZhMi5wbmc.jpg</url>
+      <title>Почему мы еще живы</title>
+      <link>https://whyarewestillalive.transistor.fm/</link>
+    </image>
+    <itunes:category text="Science"/>
+    <itunes:category text="Education"/>
+    <itunes:type>episodic</itunes:type>
+    <itunes:author>libo/libo</itunes:author>
+    <itunes:image href="https://img.transistorcdn.com/kZ2fRte-aVSrL67fiUHXSs-sj23mDC5waIL1NoPkP7Q/rs:fill:0:0:1/w:1400/h:1400/q:60/mb:500000/aHR0cHM6Ly9pbWct/dXBsb2FkLXByb2R1/Y3Rpb24udHJhbnNp/c3Rvci5mbS8zMGI1/ZTQyNjgwZGNlZTVm/MjhkMDAyYWJjN2Rh/ZTZhMi5wbmc.jpg"/>
+    <itunes:summary>Подкаст о медицинских открытиях, которые изменили мир. 
+
+Как врачи учились лечить болезни, которые раньше считались приговором, решались на новые операции и открывали — иногда случайно — лекарства, без которых мы не представляем себе современную жизнь.
+
+Новые эпизоды — по средам раз в две недели. 
+
+Это подкаст студии «Либо/Либо»
+Instagram студии: @libolibostudio
+Telegram студии: @libolibostudio
+YouTube канал студии: ЛибоЛибо</itunes:summary>
+    <itunes:subtitle>Подкаст о медицинских открытиях, которые изменили мир.</itunes:subtitle>
+    <itunes:keywords>Science,history,medicine</itunes:keywords>
+    <itunes:owner>
+      <itunes:name>LIBO LIBO SIA</itunes:name>
+      <itunes:email>kirill@libolibo.me</itunes:email>
+    </itunes:owner>
+    <itunes:complete>No</itunes:complete>
+    <itunes:explicit>No</itunes:explicit>
+    <item>
+      <title>Как посмотреть: история коррекции зрения от очков до лазеров</title>
+      <itunes:season>8</itunes:season>
+      <podcast:season>8</podcast:season>
+      <itunes:episode>5</itunes:episode>
+      <podcast:episode>5</podcast:episode>
+      <itunes:title>Как посмотреть: история коррекции зрения от очков до лазеров</itunes:title>
+      <itunes:episodeType>full</itunes:episodeType>
+      <guid isPermaLink="false">11bbb58e-0c91-44f8-897e-4d629d629e06</guid>
+      <link>https://share.transistor.fm/s/e131287c</link>
+      <description>
+        <![CDATA[<p>Сегодня близорукость, дальнозоркость и астигматизм можно исправить операцией, которая длится меньше получаса. Но еще тысячу лет назад люди даже примерно не понимали, как устроено зрение. Предполагалось, что из глаз исходят лучи, ощупывающие окружающий мир. Как мы пришли от одного к другому? Кто придумал контактные линзы? И почему лазерная коррекция подходит далеко не всем? Разбираемся в новом эпизоде.</p><p>Эксперт эпизода: Александр Родин, врач-офтальмолог, кандидат медицинских наук <a href="https://www.instagram.com/dr.rodin/">https://www.instagram.com/dr.rodin/</a></p><p>Эпизод «Совсем не больно: как появилась анестезия»: <a href="https://podcast.ru/e/863Glftlrqp">https://podcast.ru/e/863Glftlrqp</a><br>Эпизод «Я все вижу: как мы научились пересаживать искусственный хрусталик глаза»: <a href="https://podcast.ru/e/.LanjRmE634">https://podcast.ru/e/.LanjRmE634</a></p><p>Реклама. ООО «Олимп» ИНН 7724417578 erid: 2SDnjcxVr35<br>Партнер выпуска — сервис Elementaree, который доставляет наборы для домашних ужинов с рецептами и заготовками. Промокод POCHEMU дает скидку 40% на первый заказ и 20% на повторный заказ. Минимальная стоимость заказа — 3000₽, не суммируется со скидкой по подписке. Первая доставка — бесплатно. Ужины за 15 минут ждут вас здесь: <a href="https://elmntr.ee/POCHEMU">https://elmntr.ee/POCHEMU</a></p><p>Скидка 10% на десятый поток разговорного курса от Либо/Либо про промокоду <strong>ПОЧЕМУ</strong>! Сайт с программой и всеми деталями: <a href="https://course.libolibo.ru/podcast-course">https://course.libolibo.ru/podcast-course</a></p><p>Подписывайтесь на Либо/Либо+ и слушайте все наши выпуски, включая бонусы, раньше остальных и без рекламы полгода бесплатно в приложении «Подкасты» от Apple <a href="https://cutt.ly/poc0209epap">https://cutt.ly/poc0209epap</a> или в телеграме <a href="https://cutt.ly/poc0209eptg">https://cutt.ly/poc0209eptg</a> </p><p>_________<br>Авторка сценария Арина Гундырева<br>Редакторка сценария и ведущая Лена Чеснокова<br>Медицинская редакторка Даша Гельфман<br>Медицинский консультант Женя Пинелис<br>Продюсерка Настя Медведева<br>Звукорежиссер Юра Шустицкий и саунд-дизайнер Сережа Христолюбов <br>а также отдельное спасибо Лике Кремер, Ксении Красильниковой и Андрею Борзенко<br>музыку и звуки для этого подкаста мы берем из библиотек Blue Dot Sessions и Epidemic Sound, используется по лицензии</p><p>Подписывайтесь на наш телеграм — <a href="https://t.me/libolibostudio/">https://t.me/libolibostudio/</a><br>И на наш инстаграм —<a href="https://instagram.com/libolibostudio/"> https://instagram.com/libolibostudio/</a></p>]]>
+      </description>
+      <content:encoded>
+        <![CDATA[<p>Сегодня близорукость, дальнозоркость и астигматизм можно исправить операцией, которая длится меньше получаса. Но еще тысячу лет назад люди даже примерно не понимали, как устроено зрение. Предполагалось, что из глаз исходят лучи, ощупывающие окружающий мир. Как мы пришли от одного к другому? Кто придумал контактные линзы? И почему лазерная коррекция подходит далеко не всем? Разбираемся в новом эпизоде.</p><p>Эксперт эпизода: Александр Родин, врач-офтальмолог, кандидат медицинских наук <a href="https://www.instagram.com/dr.rodin/">https://www.instagram.com/dr.rodin/</a></p><p>Эпизод «Совсем не больно: как появилась анестезия»: <a href="https://podcast.ru/e/863Glftlrqp">https://podcast.ru/e/863Glftlrqp</a><br>Эпизод «Я все вижу: как мы научились пересаживать искусственный хрусталик глаза»: <a href="https://podcast.ru/e/.LanjRmE634">https://podcast.ru/e/.LanjRmE634</a></p><p>Реклама. ООО «Олимп» ИНН 7724417578 erid: 2SDnjcxVr35<br>Партнер выпуска — сервис Elementaree, который доставляет наборы для домашних ужинов с рецептами и заготовками. Промокод POCHEMU дает скидку 40% на первый заказ и 20% на повторный заказ. Минимальная стоимость заказа — 3000₽, не суммируется со скидкой по подписке. Первая доставка — бесплатно. Ужины за 15 минут ждут вас здесь: <a href="https://elmntr.ee/POCHEMU">https://elmntr.ee/POCHEMU</a></p><p>Скидка 10% на десятый поток разговорного курса от Либо/Либо про промокоду <strong>ПОЧЕМУ</strong>! Сайт с программой и всеми деталями: <a href="https://course.libolibo.ru/podcast-course">https://course.libolibo.ru/podcast-course</a></p><p>Подписывайтесь на Либо/Либо+ и слушайте все наши выпуски, включая бонусы, раньше остальных и без рекламы полгода бесплатно в приложении «Подкасты» от Apple <a href="https://cutt.ly/poc0209epap">https://cutt.ly/poc0209epap</a> или в телеграме <a href="https://cutt.ly/poc0209eptg">https://cutt.ly/poc0209eptg</a> </p><p>_________<br>Авторка сценария Арина Гундырева<br>Редакторка сценария и ведущая Лена Чеснокова<br>Медицинская редакторка Даша Гельфман<br>Медицинский консультант Женя Пинелис<br>Продюсерка Настя Медведева<br>Звукорежиссер Юра Шустицкий и саунд-дизайнер Сережа Христолюбов <br>а также отдельное спасибо Лике Кремер, Ксении Красильниковой и Андрею Борзенко<br>музыку и звуки для этого подкаста мы берем из библиотек Blue Dot Sessions и Epidemic Sound, используется по лицензии</p><p>Подписывайтесь на наш телеграм — <a href="https://t.me/libolibostudio/">https://t.me/libolibostudio/</a><br>И на наш инстаграм —<a href="https://instagram.com/libolibostudio/"> https://instagram.com/libolibostudio/</a></p>]]>
+      </content:encoded>
+      <pubDate>Wed, 09 Sep 2026 02:17:50 +0300</pubDate>
+      <author>libo/libo</author>
+      <enclosure url="https://media.transistor.fm/e131287c/d9fdd433.mp3" length="58891143" type="audio/mpeg"/>
+      <itunes:author>libo/libo</itunes:author>
+      <itunes:image href="https://img.transistorcdn.com/_x5LP-rAuxP2BibTxMG2C4O-V7L6Uc93EEyTutKVSa8/rs:fill:0:0:1/w:1400/h:1400/q:60/mb:500000/aHR0cHM6Ly9pbWct/dXBsb2FkLXByb2R1/Y3Rpb24udHJhbnNp/c3Rvci5mbS9iZjA2/Yjk2YzczNjc5ODc5/Zjc3MjY4MmZkMzA1/MjU1My5wbmc.jpg"/>
+      <itunes:duration>2990</itunes:duration>
+      <itunes:summary>
+        <![CDATA[<p>Сегодня близорукость, дальнозоркость и астигматизм можно исправить операцией, которая длится меньше получаса. Но еще тысячу лет назад люди даже примерно не понимали, как устроено зрение. Предполагалось, что из глаз исходят лучи, ощупывающие окружающий мир. Как мы пришли от одного к другому? Кто придумал контактные линзы? И почему лазерная коррекция подходит далеко не всем? Разбираемся в новом эпизоде.</p><p>Эксперт эпизода: Александр Родин, врач-офтальмолог, кандидат медицинских наук <a href="https://www.instagram.com/dr.rodin/">https://www.instagram.com/dr.rodin/</a></p><p>Эпизод «Совсем не больно: как появилась анестезия»: <a href="https://podcast.ru/e/863Glftlrqp">https://podcast.ru/e/863Glftlrqp</a><br>Эпизод «Я все вижу: как мы научились пересаживать искусственный хрусталик глаза»: <a href="https://podcast.ru/e/.LanjRmE634">https://podcast.ru/e/.LanjRmE634</a></p><p>Реклама. ООО «Олимп» ИНН 7724417578 erid: 2SDnjcxVr35<br>Партнер выпуска — сервис Elementaree, который доставляет наборы для домашних ужинов с рецептами и заготовками. Промокод POCHEMU дает скидку 40% на первый заказ и 20% на повторный заказ. Минимальная стоимость заказа — 3000₽, не суммируется со скидкой по подписке. Первая доставка — бесплатно. Ужины за 15 минут ждут вас здесь: <a href="https://elmntr.ee/POCHEMU">https://elmntr.ee/POCHEMU</a></p><p>Скидка 10% на десятый поток разговорного курса от Либо/Либо про промокоду <strong>ПОЧЕМУ</strong>! Сайт с программой и всеми деталями: <a href="https://course.libolibo.ru/podcast-course">https://course.libolibo.ru/podcast-course</a></p><p>Подписывайтесь на Либо/Либо+ и слушайте все наши выпуски, включая бонусы, раньше остальных и без рекламы полгода бесплатно в приложении «Подкасты» от Apple <a href="https://cutt.ly/poc0209epap">https://cutt.ly/poc0209epap</a> или в телеграме <a href="https://cutt.ly/poc0209eptg">https://cutt.ly/poc0209eptg</a> </p><p>_________<br>Авторка сценария Арина Гундырева<br>Редакторка сценария и ведущая Лена Чеснокова<br>Медицинская редакторка Даша Гельфман<br>Медицинский консультант Женя Пинелис<br>Продюсерка Настя Медведева<br>Звукорежиссер Юра Шустицкий и саунд-дизайнер Сережа Христолюбов <br>а также отдельное спасибо Лике Кремер, Ксении Красильниковой и Андрею Борзенко<br>музыку и звуки для этого подкаста мы берем из библиотек Blue Dot Sessions и Epidemic Sound, используется по лицензии</p><p>Подписывайтесь на наш телеграм — <a href="https://t.me/libolibostudio/">https://t.me/libolibostudio/</a><br>И на наш инстаграм —<a href="https://instagram.com/libolibostudio/"> https://instagram.com/libolibostudio/</a></p>]]>
+      </itunes:summary>
+      <itunes:keywords>Science,history,medicine</itunes:keywords>
+      <itunes:explicit>No</itunes:explicit>
+    </item>
+    <item>
+      <title>Это на всю жизнь: что мы знаем о вирусе ветряной оспы</title>
+      <itunes:season>8</itunes:season>
+      <podcast:season>8</podcast:season>
+      <itunes:episode>4</itunes:episode>
+      <podcast:episode>4</podcast:episode>
+      <itunes:title>Это на всю жизнь: что мы знаем о вирусе ветряной оспы</itunes:title>
+      <itunes:episodeType>full</itunes:episodeType>
+      <guid isPermaLink="false">3b8103b4-e17f-425f-ba5f-c6a2eb7552a1</guid>
+      <link>https://share.transistor.fm/s/3c661292</link>
+      <description>
+        <![CDATA[<p>Многие думают, что ветрянка — что-то детское и несерьезное, но, к сожалению, это не всегда так. Её вызывает вирус герпеса третьего типа, и если вы однажды переболели, он останется в вашем теле навсегда. С возрастом и при снижении иммунитета он может вызвать другую неприятную штуку — опоясывающий лишай. Что делать, чтобы не столкнуться со страшными осложнениями, кому и когда прививаться, и отправлять ли своего ребенка на ветряночную вечеринку, рассказываем в новом эпизоде. </p><p>Экспертка эпизода: Ирина Сливинская, врач-инфекционист клиник Домек и К+31</p><p><strong>Реклама.</strong> АНО ПО «Креативный Колледж». erid: 2SDnjerEv75<br>Партнер эпизода — Московский креативный техникум. Специально для слушателей скидка по промокоду МКТ50 — 50 000 рублей на первый год* обучения в Московском Креативном Техникуме (*при поступлении в 2026 году) <a href="https://mctechnicum.ru/?utm_source=pochemu_my_eshe_zhivy&amp;utm_medium=podcast&amp;utm_campaign=mkt_admissions_2026&amp;utm_content=episode_01_jingle">https://mctechnicum.ru/?utm_source=pochemu_my_eshe_zhivy&amp;utm_medium=podcast&amp;utm_campaign=mkt_admissions_2026&amp;utm_content=episode_01_jingle</a> </p><p><strong>Реклама.</strong> ООО «НПФ «ХЕЛИКС» ИНН 7802122535 erid: 2SDnjeRAWqH<br>Партнер эпизода — сеть медицинских лабораторий «Хеликс». По промокоду ЛИБО ЛИБО действует скидка 15% скидка на все анализы. Промокод действует с 26 августа по 31 октября. Переходите по ссылке: <a href="https://helix.ru/promotions/?utm_source=podcast&amp;utm_medium=audio&amp;utm_campaign=libo_libo">https://helix.ru/promotions/?utm_source=podcast&amp;utm_medium=audio&amp;utm_campaign=libo_libo</a></p><p><em>Акция действует только в диагностических центрах, не распространяется на вызов специалистов на дом и забор материала. Не суммируется с другими скидками.</em></p><p>Слушайте все наши выпуски, включая бонусы, раньше остальных и без рекламы полгода бесплатно в приложении «Подкасты» от Apple <a href="https://cutt.ly/poc2608epap">https://cutt.ly/poc2608epap</a> или в телеграме <a href="https://cutt.ly/poc2608eptg">https://cutt.ly/poc2608eptg</a> </p><p>_________<br>Авторка сценария Лиза Симбирская<br>Редакторка сценария и ведущая Лена Чеснокова<br>Медицинская редакторка Даша Гельфман<br>Медицинский консультант Женя Пинелис<br>Продюсерка Настя Медведева<br>Звукорежиссер и саунд-дизайнер Юра Шустицкий<br>а также отдельное спасибо Лике Кремер, Ксении Красильниковой и Андрею Борзенко<br>музыку и звуки для этого подкаста мы берем из библиотек Blue Dot Sessions и Epidemic Sound, используется по лицензии</p><p>Подписывайтесь на наш телеграм — <a href="https://t.me/libolibostudio/">https://t.me/libolibostudio/</a><br>И на наш инстаграм — <a href="https://instagram.com/libolibostudio/">https://instagram.com/libolibostudio/</a></p>]]>
+      </description>
+      <content:encoded>
+        <![CDATA[<p>Многие думают, что ветрянка — что-то детское и несерьезное, но, к сожалению, это не всегда так. Её вызывает вирус герпеса третьего типа, и если вы однажды переболели, он останется в вашем теле навсегда. С возрастом и при снижении иммунитета он может вызвать другую неприятную штуку — опоясывающий лишай. Что делать, чтобы не столкнуться со страшными осложнениями, кому и когда прививаться, и отправлять ли своего ребенка на ветряночную вечеринку, рассказываем в новом эпизоде. </p><p>Экспертка эпизода: Ирина Сливинская, врач-инфекционист клиник Домек и К+31</p><p><strong>Реклама.</strong> АНО ПО «Креативный Колледж». erid: 2SDnjerEv75<br>Партнер эпизода — Московский креативный техникум. Специально для слушателей скидка по промокоду МКТ50 — 50 000 рублей на первый год* обучения в Московском Креативном Техникуме (*при поступлении в 2026 году) <a href="https://mctechnicum.ru/?utm_source=pochemu_my_eshe_zhivy&amp;utm_medium=podcast&amp;utm_campaign=mkt_admissions_2026&amp;utm_content=episode_01_jingle">https://mctechnicum.ru/?utm_source=pochemu_my_eshe_zhivy&amp;utm_medium=podcast&amp;utm_campaign=mkt_admissions_2026&amp;utm_content=episode_01_jingle</a> </p><p><strong>Реклама.</strong> ООО «НПФ «ХЕЛИКС» ИНН 7802122535 erid: 2SDnjeRAWqH<br>Партнер эпизода — сеть медицинских лабораторий «Хеликс». По промокоду ЛИБО ЛИБО действует скидка 15% скидка на все анализы. Промокод действует с 26 августа по 31 октября. Переходите по ссылке: <a href="https://helix.ru/promotions/?utm_source=podcast&amp;utm_medium=audio&amp;utm_campaign=libo_libo">https://helix.ru/promotions/?utm_source=podcast&amp;utm_medium=audio&amp;utm_campaign=libo_libo</a></p><p><em>Акция действует только в диагностических центрах, не распространяется на вызов специалистов на дом и забор материала. Не суммируется с другими скидками.</em></p><p>Слушайте все наши выпуски, включая бонусы, раньше остальных и без рекламы полгода бесплатно в приложении «Подкасты» от Apple <a href="https://cutt.ly/poc2608epap">https://cutt.ly/poc2608epap</a> или в телеграме <a href="https://cutt.ly/poc2608eptg">https://cutt.ly/poc2608eptg</a> </p><p>_________<br>Авторка сценария Лиза Симбирская<br>Редакторка сценария и ведущая Лена Чеснокова<br>Медицинская редакторка Даша Гельфман<br>Медицинский консультант Женя Пинелис<br>Продюсерка Настя Медведева<br>Звукорежиссер и саунд-дизайнер Юра Шустицкий<br>а также отдельное спасибо Лике Кремер, Ксении Красильниковой и Андрею Борзенко<br>музыку и звуки для этого подкаста мы берем из библиотек Blue Dot Sessions и Epidemic Sound, используется по лицензии</p><p>Подписывайтесь на наш телеграм — <a href="https://t.me/libolibostudio/">https://t.me/libolibostudio/</a><br>И на наш инстаграм — <a href="https://instagram.com/libolibostudio/">https://instagram.com/libolibostudio/</a></p>]]>
+      </content:encoded>
+      <pubDate>Wed, 26 Aug 2026 02:43:52 +0300</pubDate>
+      <author>libo/libo</author>
+      <enclosure url="https://media.transistor.fm/3c661292/d045503d.mp3" length="49472226" type="audio/mpeg"/>
+      <itunes:author>libo/libo</itunes:author>
+      <itunes:image href="https://img.transistorcdn.com/rN3g5kcuUQDQq9MIypb2RunsVcXwrNL5LlhYl6-I2zc/rs:fill:0:0:1/w:1400/h:1400/q:60/mb:500000/aHR0cHM6Ly9pbWct/dXBsb2FkLXByb2R1/Y3Rpb24udHJhbnNp/c3Rvci5mbS82YWQw/NGI1OWU1MWUxYjY4/MDE2ZDBlZDcwNmQy/NzgzOC5wbmc.jpg"/>
+      <itunes:duration>3044</itunes:duration>
+      <itunes:summary>
+        <![CDATA[<p>Многие думают, что ветрянка — что-то детское и несерьезное, но, к сожалению, это не всегда так. Её вызывает вирус герпеса третьего типа, и если вы однажды переболели, он останется в вашем теле навсегда. С возрастом и при снижении иммунитета он может вызвать другую неприятную штуку — опоясывающий лишай. Что делать, чтобы не столкнуться со страшными осложнениями, кому и когда прививаться, и отправлять ли своего ребенка на ветряночную вечеринку, рассказываем в новом эпизоде. </p><p>Экспертка эпизода: Ирина Сливинская, врач-инфекционист клиник Домек и К+31</p><p><strong>Реклама.</strong> АНО ПО «Креативный Колледж». erid: 2SDnjerEv75<br>Партнер эпизода — Московский креативный техникум. Специально для слушателей скидка по промокоду МКТ50 — 50 000 рублей на первый год* обучения в Московском Креативном Техникуме (*при поступлении в 2026 году) <a href="https://mctechnicum.ru/?utm_source=pochemu_my_eshe_zhivy&amp;utm_medium=podcast&amp;utm_campaign=mkt_admissions_2026&amp;utm_content=episode_01_jingle">https://mctechnicum.ru/?utm_source=pochemu_my_eshe_zhivy&amp;utm_medium=podcast&amp;utm_campaign=mkt_admissions_2026&amp;utm_content=episode_01_jingle</a> </p><p><strong>Реклама.</strong> ООО «НПФ «ХЕЛИКС» ИНН 7802122535 erid: 2SDnjeRAWqH<br>Партнер эпизода — сеть медицинских лабораторий «Хеликс». По промокоду ЛИБО ЛИБО действует скидка 15% скидка на все анализы. Промокод действует с 26 августа по 31 октября. Переходите по ссылке: <a href="https://helix.ru/promotions/?utm_source=podcast&amp;utm_medium=audio&amp;utm_campaign=libo_libo">https://helix.ru/promotions/?utm_source=podcast&amp;utm_medium=audio&amp;utm_campaign=libo_libo</a></p><p><em>Акция действует только в диагностических центрах, не распространяется на вызов специалистов на дом и забор материала. Не суммируется с другими скидками.</em></p><p>Слушайте все наши выпуски, включая бонусы, раньше остальных и без рекламы полгода бесплатно в приложении «Подкасты» от Apple <a href="https://cutt.ly/poc2608epap">https://cutt.ly/poc2608epap</a> или в телеграме <a href="https://cutt.ly/poc2608eptg">https://cutt.ly/poc2608eptg</a> </p><p>_________<br>Авторка сценария Лиза Симбирская<br>Редакторка сценария и ведущая Лена Чеснокова<br>Медицинская редакторка Даша Гельфман<br>Медицинский консультант Женя Пинелис<br>Продюсерка Настя Медведева<br>Звукорежиссер и саунд-дизайнер Юра Шустицкий<br>а также отдельное спасибо Лике Кремер, Ксении Красильниковой и Андрею Борзенко<br>музыку и звуки для этого подкаста мы берем из библиотек Blue Dot Sessions и Epidemic Sound, используется по лицензии</p><p>Подписывайтесь на наш телеграм — <a href="https://t.me/libolibostudio/">https://t.me/libolibostudio/</a><br>И на наш инстаграм — <a href="https://instagram.com/libolibostudio/">https://instagram.com/libolibostudio/</a></p>]]>
+      </itunes:summary>
+      <itunes:keywords>Science,history,medicine</itunes:keywords>
+      <itunes:explicit>No</itunes:explicit>
+    </item>
+  </channel>
+</rss>
