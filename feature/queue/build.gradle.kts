@@ -5,3 +5,8 @@ plugins {
 android {
     namespace = "com.acrovox.feature.queue"
 }
+
+dependencies {
+    implementation(project(":core:player"))
+    implementation(libs.reorderable)
+}

@@ -38,7 +38,7 @@ class AcroVoxAppTest {
     fun eachTabShowsItsScreen() {
         val texts = mapOf(
             TopLevelDestination.INBOX to "Boîte de réception",
-            TopLevelDestination.QUEUE to "File de lecture",
+            TopLevelDestination.QUEUE to "Lecture continue",
             TopLevelDestination.DISCOVER to "Nom du podcast ou adresse du flux",
             TopLevelDestination.LIBRARY to "Favoris",
             TopLevelDestination.HOME to "Aucun podcast suivi"

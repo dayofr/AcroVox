@@ -9,6 +9,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object QueueRoute
 
-fun NavGraphBuilder.queueScreen(contentPadding: PaddingValues) {
-    composable<QueueRoute> { QueueScreen(contentPadding) }
+fun NavGraphBuilder.queueScreen(contentPadding: PaddingValues, onOpenEpisode: (Long) -> Unit) {
+    composable<QueueRoute> { QueueScreen(contentPadding, onOpenEpisode) }
 }

@@ -45,7 +45,7 @@ fun AcroVoxNavHost(
             )
         )
         inboxScreen(contentPadding)
-        queueScreen(contentPadding)
+        queueScreen(contentPadding, onOpenEpisode = { navController.navigate(EpisodeRoute(it)) })
         discoverScreen(contentPadding, onOpenFeed = { navController.navigate(PodcastPreviewRoute(it)) })
         libraryScreen(
             contentPadding,
