@@ -94,7 +94,7 @@ class SubscriptionRepositoryTest {
 
         assertThat(second).isEqualTo(first)
         assertThat(db.feedDao().getAll()).hasSize(1)
-        assertThat(repository.observeIsSubscribed(preview.feedUrl).first()).isTrue()
+        assertThat(repository.observeIsSubscribed(preview).first()).isTrue()
     }
 
     @Test
@@ -105,5 +105,29 @@ class SubscriptionRepositoryTest {
 
         assertThat(preview.latestEpisodes.map { it.title }).containsExactly("Récent", "Moyen", "Ancien").inOrder()
         assertThat(db.feedDao().getAll()).isEmpty()
+    }
+
+    @Test
+    fun newFeedUrl_isStored_andOldAddressIsRecognised() = runTest {
+        val moved = rss.replace(
+            "<title>Podcast</title>",
+            "<title>Podcast</title><itunes:new-feed-url>https://cdn.example.org/new.xml</itunes:new-feed-url>"
+        )
+            .replace(
+                "<rss version=\"2.0\">",
+                "<rss version=\"2.0\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\">"
+            )
+        repeat(2) {
+            server.enqueue(MockResponse.Builder().body(moved).addHeader("Content-Type", "application/rss+xml").build())
+        }
+        val oldUrl = server.url("/old.xml").toString()
+
+        val first = repository.subscribe(repository.preview(oldUrl))
+        val again = repository.preview(oldUrl)
+
+        assertThat(db.feedDao().get(first)!!.feedUrl).isEqualTo("https://cdn.example.org/new.xml")
+        assertThat(repository.findSubscribed(again)?.id).isEqualTo(first)
+        assertThat(repository.subscribe(again)).isEqualTo(first)
+        assertThat(db.feedDao().getAll()).hasSize(1)
     }
 }

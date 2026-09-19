@@ -13,7 +13,7 @@ import java.time.Clock
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 
 @Singleton
 class SubscriptionRepository @Inject constructor(
@@ -26,7 +26,12 @@ class SubscriptionRepository @Inject constructor(
 
     fun observeSubscriptions(): Flow<List<FeedWithNewCount>> = feedDao.observeAllWithNewCount()
 
-    fun observeIsSubscribed(feedUrl: String): Flow<Boolean> = feedDao.observeByUrl(feedUrl).map { it != null }
+    fun observeIsSubscribed(preview: FeedPreview): Flow<Boolean> =
+        combine(preview.knownUrls.map { feedDao.observeByUrl(it) }) { feeds -> feeds.any { it != null } }
+
+    /** Podcast déjà suivi sous l'une des adresses du flux, ou null. */
+    suspend fun findSubscribed(preview: FeedPreview): FeedEntity? =
+        preview.knownUrls.firstNotNullOfOrNull { feedDao.getByUrl(it) }
 
     /**
      * Lit un flux sans l'enregistrer.
@@ -44,15 +49,16 @@ class SubscriptionRepository @Inject constructor(
      * Enregistre le podcast et ses épisodes. Seul le plus récent entre dans la boîte de réception ;
      * les autres restent au catalogue ([EpisodeState.AVAILABLE]).
      *
+     * @param inboxLatest faux : aucun épisode dans la boîte (import en masse).
      * @return identifiant du podcast, existant si déjà abonné.
      */
-    suspend fun subscribe(preview: FeedPreview): Long = db.withTransaction {
-        feedDao.getByUrl(preview.feedUrl)?.let { return@withTransaction it.id }
+    suspend fun subscribe(preview: FeedPreview, inboxLatest: Boolean = true): Long = db.withTransaction {
+        findSubscribed(preview)?.let { return@withTransaction it.id }
         val now = clock.millis()
         val feed = preview.feed
         val feedId = feedDao.insert(
             FeedEntity(
-                feedUrl = preview.feedUrl,
+                feedUrl = preview.canonicalUrl,
                 title = feed.title,
                 author = feed.author,
                 description = feed.description,
@@ -67,8 +73,9 @@ class SubscriptionRepository @Inject constructor(
             )
         )
         val episodes = feed.episodes.map { it.toEntity(feedId, fallbackDate = now) }.sortedByDescending { it.pubDate }
-        episodeDao.mergeFromFeed(feedId, episodes.take(1), stateForNew = EpisodeState.NEW)
-        episodeDao.mergeFromFeed(feedId, episodes.drop(1), stateForNew = EpisodeState.AVAILABLE)
+        val inboxCount = if (inboxLatest) 1 else 0
+        episodeDao.mergeFromFeed(feedId, episodes.take(inboxCount), stateForNew = EpisodeState.NEW)
+        episodeDao.mergeFromFeed(feedId, episodes.drop(inboxCount), stateForNew = EpisodeState.AVAILABLE)
         feedId
     }
 

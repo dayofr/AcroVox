@@ -40,7 +40,7 @@ class AcroVoxAppTest {
             TopLevelDestination.INBOX to "Boîte de réception",
             TopLevelDestination.QUEUE to "File de lecture",
             TopLevelDestination.DISCOVER to "Nom du podcast ou adresse du flux",
-            TopLevelDestination.LIBRARY to "Abonnements, téléchargements, historique et réglages.",
+            TopLevelDestination.LIBRARY to "Importer des abonnements",
             TopLevelDestination.HOME to "Vos podcasts suivis et les derniers épisodes."
         )
         texts.forEach { (destination, text) ->

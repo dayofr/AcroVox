@@ -45,7 +45,7 @@ class PodcastPreviewViewModel @Inject constructor(
             result.isFailure -> flowOf(PreviewUiState.Error(result.exceptionOrNull()?.message ?: "Flux illisible"))
             else -> {
                 val preview = result.getOrThrow()
-                combine(repository.observeIsSubscribed(preview.feedUrl), subscribing) { subscribed, busy ->
+                combine(repository.observeIsSubscribed(preview), subscribing) { subscribed, busy ->
                     PreviewUiState.Loaded(preview, subscribed, busy)
                 }
             }

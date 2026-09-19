@@ -10,6 +10,16 @@ class FeedPreview internal constructor(
     internal val etag: String?,
     internal val lastModified: String?
 ) {
+    /**
+     * Adresse à enregistrer : `itunes:new-feed-url` si le flux annonce un déménagement,
+     * sinon [feedUrl]. Le rafraîchissement suit la même règle.
+     */
+    val canonicalUrl: String
+        get() = feed.newFeedUrl?.takeIf { it.startsWith("http://") || it.startsWith("https://") } ?: feedUrl
+
+    /** Toutes les adresses sous lesquelles ce podcast peut déjà être suivi. */
+    val knownUrls: Set<String> get() = setOf(feedUrl, canonicalUrl)
+
     val title: String get() = feed.title
     val author: String? get() = feed.author
     val description: String? get() = feed.description
