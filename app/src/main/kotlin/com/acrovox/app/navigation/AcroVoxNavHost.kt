@@ -10,6 +10,8 @@ import com.acrovox.feature.home.navigation.HomeRoute
 import com.acrovox.feature.home.navigation.homeScreen
 import com.acrovox.feature.inbox.navigation.inboxScreen
 import com.acrovox.feature.library.navigation.libraryScreen
+import com.acrovox.feature.podcast.navigation.PodcastPreviewRoute
+import com.acrovox.feature.podcast.navigation.podcastPreviewScreen
 import com.acrovox.feature.queue.navigation.queueScreen
 
 @Composable
@@ -18,7 +20,8 @@ fun AcroVoxNavHost(navController: NavHostController, contentPadding: PaddingValu
         homeScreen(contentPadding)
         inboxScreen(contentPadding)
         queueScreen(contentPadding)
-        discoverScreen(contentPadding)
+        discoverScreen(contentPadding, onOpenFeed = { navController.navigate(PodcastPreviewRoute(it)) })
         libraryScreen(contentPadding)
+        podcastPreviewScreen(contentPadding, onBack = navController::popBackStack)
     }
 }

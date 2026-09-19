@@ -1,6 +1,7 @@
 package com.acrovox.core.designsystem.icon
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.PlaylistAdd
 import androidx.compose.material.icons.automirrored.rounded.QueueMusic
 import androidx.compose.material.icons.rounded.Bedtime
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Inbox
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.LibraryMusic
+import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Pause
@@ -61,6 +63,8 @@ object AcroVoxIcons {
     val Check: ImageVector = Icons.Rounded.CheckCircle
     val More: ImageVector = Icons.Rounded.MoreVert
     val ExpandMore: ImageVector = Icons.Rounded.KeyboardArrowDown
+    val Back: ImageVector = Icons.AutoMirrored.Rounded.ArrowBack
+    val Link: ImageVector = Icons.Rounded.Link
 
     val Home: ImageVector = Icons.Rounded.Home
     val Inbox: ImageVector = Icons.Rounded.Inbox

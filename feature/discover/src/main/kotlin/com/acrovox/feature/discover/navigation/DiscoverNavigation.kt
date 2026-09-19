@@ -9,6 +9,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object DiscoverRoute
 
-fun NavGraphBuilder.discoverScreen(contentPadding: PaddingValues) {
-    composable<DiscoverRoute> { DiscoverScreen(contentPadding) }
+fun NavGraphBuilder.discoverScreen(contentPadding: PaddingValues, onOpenFeed: (String) -> Unit) {
+    composable<DiscoverRoute> { DiscoverScreen(contentPadding, onOpenFeed) }
 }

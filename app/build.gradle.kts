@@ -37,10 +37,13 @@ dependencies {
     implementation(project(":feature:queue"))
     implementation(project(":feature:discover"))
     implementation(project(":feature:library"))
+    implementation(project(":feature:podcast"))
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.androidx.navigation.testing)
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.compiler)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

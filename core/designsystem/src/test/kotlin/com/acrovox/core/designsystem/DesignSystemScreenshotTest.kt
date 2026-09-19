@@ -3,7 +3,7 @@ package com.acrovox.core.designsystem
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.acrovox.core.designsystem.component.ComponentsCatalog
 import com.acrovox.core.designsystem.theme.AcroVoxTheme

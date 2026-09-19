@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -34,6 +37,9 @@ fun AcroVoxApp(
     val current = TopLevelDestination.entries.firstOrNull { destination ->
         backStackEntry?.destination?.hierarchy?.any { it.hasRoute(destination.route::class) } == true
     }
+    // Sur un écran secondaire (aperçu d'un podcast…), l'onglet d'origine reste sélectionné.
+    var lastTopLevel by rememberSaveable { mutableStateOf(TopLevelDestination.HOME) }
+    if (current != null) lastTopLevel = current
     Scaffold(
         containerColor = AcroVoxTheme.colors.canvas,
         // Le bas est déjà réservé par la barre de navigation, qui gère son propre encart.
@@ -43,7 +49,7 @@ fun AcroVoxApp(
                 if (miniPlayer != null) {
                     Column(Modifier.padding(horizontal = 12.dp).padding(bottom = 8.dp)) { miniPlayer() }
                 }
-                AcroVoxBottomBar(selected = current, onSelect = navController::navigateToTopLevel)
+                AcroVoxBottomBar(selected = lastTopLevel, onSelect = navController::navigateToTopLevel)
             }
         }
     ) { innerPadding ->
