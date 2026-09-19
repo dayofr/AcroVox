@@ -64,6 +64,31 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
 
     suspend fun removeFromQueue(episodeIds: List<Long>) = queueDao.remove(episodeIds)
 
+    fun observeQueue(): Flow<List<EpisodeWithFeed>> = queueDao.observeQueue()
+
+    /** Réordonne toute la file (après un glisser-déposer). */
+    suspend fun reorderQueue(episodeIds: List<Long>) = queueDao.replace(episodeIds)
+
+    suspend fun clearQueue() = queueDao.clear()
+
+    suspend fun shuffleQueue() = queueDao.replace(queueDao.getEpisodeIds().shuffled())
+
+    // Boîte de réception
+
+    fun observeInbox(): Flow<List<EpisodeWithFeed>> = episodeDao.observeInbox()
+
+    fun observeInboxCount(): Flow<Int> = episodeDao.observeInbox().map { it.size }
+
+    /** États actuels, pour pouvoir annuler une action. */
+    suspend fun statesOf(episodeIds: List<Long>): Map<Long, EpisodeState> =
+        episodeDao.getWithFeed(episodeIds).associate { it.episode.id to it.episode.state }
+
+    /** Annule un « garder » : l'épisode quitte la file et reprend son état d'avant. */
+    suspend fun undoKeep(previous: Map<Long, EpisodeState>) = db.withTransaction {
+        queueDao.remove(previous.keys.toList())
+        previous.entries.groupBy({ it.value }, { it.key }).forEach { (state, ids) -> episodeDao.setState(ids, state) }
+    }
+
     /**
      * Écarte des épisodes : état [EpisodeState.IGNORED], retirés de la file, action gPodder `delete`
      * enregistrée pour la synchronisation.
@@ -121,7 +146,7 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
      * Segment d'écoute terminé (pause, arrêt, changement d'épisode) : action gPodder `play`
      * de [startedMs] à [positionMs].
      */
-    suspend fun recordListening(episodeId: Long, startedMs: Long, positionMs: Long) {
+    suspend fun recordListening(episodeId: Long, startedMs: Long, positionMs: Long, totalMs: Long? = null) {
         if (positionMs <= startedMs) return
         val item = getWithFeed(episodeId) ?: return
         val (episode, feed) = item
@@ -135,7 +160,7 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
                     timestamp = clock.millis(),
                     started = (startedMs / 1000).toInt(),
                     position = (positionMs / 1000).toInt(),
-                    total = episode.durationMs?.div(1000)?.toInt()
+                    total = (totalMs ?: episode.durationMs)?.div(1000)?.toInt()
                 )
             )
         )

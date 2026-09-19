@@ -207,6 +207,21 @@ class PlaybackService : MediaSessionService() {
             }
         }
 
+        /** Un saut termine le segment écouté : sauter la fin ne compte pas comme l'avoir écoutée. */
+        override fun onPositionDiscontinuity(
+            oldPosition: Player.PositionInfo,
+            newPosition: Player.PositionInfo,
+            reason: Int
+        ) {
+            if (reason != Player.DISCONTINUITY_REASON_SEEK) return
+            val id = currentEpisodeId ?: return
+            val start = segmentStartMs ?: return
+            val end = oldPosition.positionMs
+            val total = playerDuration()
+            scope.launch { episodes.recordListening(id, start, end, total) }
+            segmentStartMs = newPosition.positionMs
+        }
+
         override fun onPlaybackStateChanged(playbackState: Int) {
             if (playbackState == Player.STATE_ENDED) currentEpisodeId?.let(::onEpisodeEnded)
         }
@@ -234,7 +249,8 @@ class PlaybackService : MediaSessionService() {
         val start = segmentStartMs ?: return
         segmentStartMs = null
         val position = player.currentPosition
-        scope.launch { episodes.recordListening(id, start, position) }
+        val total = playerDuration()
+        scope.launch { episodes.recordListening(id, start, position, total) }
     }
 
     /** Fin d'épisode : écouté, retiré de la file, suivant de la file si la lecture continue est active. */
@@ -244,7 +260,7 @@ class PlaybackService : MediaSessionService() {
         segmentStartMs = null
         val end = player.duration.takeIf { it != C.TIME_UNSET } ?: player.currentPosition
         scope.launch {
-            if (start != null) episodes.recordListening(episodeId, start, end)
+            if (start != null) episodes.recordListening(episodeId, start, end, playerDuration())
             val next = if (settings.current().continuousPlayback) episodes.nextInQueue(episodeId) else null
             episodes.complete(episodeId)
             if (sleepTimer.consumeEndOfEpisode()) {
@@ -261,6 +277,8 @@ class PlaybackService : MediaSessionService() {
             }
         }
     }
+
+    private fun playerDuration(): Long? = player.duration.takeIf { it != C.TIME_UNSET && it > 0 }
 
     private companion object {
         const val SAVE_INTERVAL_MS = 5_000L

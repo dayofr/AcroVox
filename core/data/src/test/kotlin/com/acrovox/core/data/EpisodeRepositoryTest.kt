@@ -120,7 +120,7 @@ class EpisodeRepositoryTest {
     fun listening_recordsPlayAction_savesPositionAndHistory() = runTest {
         repository.onPlaybackStarted(ids[0], 0)
         repository.savePosition(ids[0], 125_000)
-        repository.recordListening(ids[0], startedMs = 5_000, positionMs = 125_000)
+        repository.recordListening(ids[0], startedMs = 5_000, positionMs = 125_000, totalMs = 3_600_000)
         repository.recordListening(ids[0], startedMs = 10_000, positionMs = 10_000)
 
         assertThat(db.episodeDao().get(ids[0])!!.state).isEqualTo(EpisodeState.IN_PROGRESS)
@@ -129,6 +129,7 @@ class EpisodeRepositoryTest {
         assertThat(action.action).isEqualTo(com.acrovox.core.model.EpisodeActionType.PLAY)
         assertThat(action.started).isEqualTo(5)
         assertThat(action.position).isEqualTo(125)
+        assertThat(action.total).isEqualTo(3600)
         assertThat(repository.observeHistory().first().map { it.episode.id }).containsExactly(ids[0])
     }
 }
