@@ -1,5 +1,6 @@
 package com.acrovox.core.database.dao
 
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,6 +11,8 @@ import com.acrovox.core.database.entity.EpisodeEntity
 import com.acrovox.core.database.entity.EpisodeWithFeed
 import com.acrovox.core.model.EpisodeState
 import kotlinx.coroutines.flow.Flow
+
+data class EpisodeIdentity(val guid: String, @ColumnInfo(name = "media_url") val mediaUrl: String)
 
 @Dao
 abstract class EpisodeDao {
@@ -56,6 +59,10 @@ abstract class EpisodeDao {
 
     @Query("SELECT * FROM episode WHERE media_url = :mediaUrl")
     abstract suspend fun getByMediaUrl(mediaUrl: String): List<EpisodeEntity>
+
+    /** guid et URL média des épisodes d'un podcast, pour reconnaître un épisode dont le guid a changé. */
+    @Query("SELECT guid, media_url FROM episode WHERE feed_id = :feedId")
+    abstract suspend fun getIdentities(feedId: Long): List<EpisodeIdentity>
 
     @Query("SELECT id FROM episode WHERE state = 'NEW'")
     abstract suspend fun getInboxIds(): List<Long>

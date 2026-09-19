@@ -14,6 +14,10 @@ dependencies {
     api(project(":core:database"))
     implementation(project(":core:network"))
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.work.runtime)
+    implementation(libs.androidx.hilt.work)
+    implementation(libs.androidx.core.ktx)
+    ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.robolectric)
     testImplementation(libs.truth)

@@ -47,6 +47,27 @@ interface FeedDao {
     @Query("UPDATE feed SET last_refresh_at = :at, etag = :etag, last_modified = :lastModified WHERE id = :id")
     suspend fun updateRefresh(id: Long, at: Long, etag: String?, lastModified: String?)
 
+    @Query(
+        """
+        UPDATE feed SET title = :title, author = :author, description = :description, image_url = :imageUrl,
+            link = :link, language = :language, categories = :categories
+        WHERE id = :id
+        """
+    )
+    suspend fun updateMetadata(
+        id: Long,
+        title: String,
+        author: String?,
+        description: String?,
+        imageUrl: String?,
+        link: String?,
+        language: String?,
+        categories: String?
+    )
+
+    @Query("UPDATE feed SET feed_url = :url WHERE id = :id")
+    suspend fun updateUrl(id: Long, url: String)
+
     @Query("DELETE FROM feed WHERE id = :id")
     suspend fun delete(id: Long)
 }
