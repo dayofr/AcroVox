@@ -37,6 +37,7 @@ fun AcroVoxApp(
 ) {
     val player = appViewModel.player
     val playerState by player.state.collectAsStateWithLifecycle()
+    val inboxCount by appViewModel.inboxCount.collectAsStateWithLifecycle()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val destination = backStackEntry?.destination
     val current = TopLevelDestination.entries.firstOrNull { top ->
@@ -70,7 +71,11 @@ fun AcroVoxApp(
                             modifier = Modifier.padding(horizontal = 12.dp).padding(bottom = 8.dp)
                         )
                     }
-                    AcroVoxBottomBar(selected = lastTopLevel, onSelect = navController::navigateToTopLevel)
+                    AcroVoxBottomBar(
+                        selected = lastTopLevel,
+                        onSelect = navController::navigateToTopLevel,
+                        badgeCounts = mapOf(TopLevelDestination.INBOX to inboxCount)
+                    )
                 }
             }
         }

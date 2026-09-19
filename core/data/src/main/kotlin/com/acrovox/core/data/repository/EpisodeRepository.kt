@@ -83,6 +83,8 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
     suspend fun statesOf(episodeIds: List<Long>): Map<Long, EpisodeState> =
         episodeDao.getWithFeed(episodeIds).associate { it.episode.id to it.episode.state }
 
+    suspend fun setStates(episodeIds: List<Long>, state: EpisodeState) = episodeDao.setState(episodeIds, state)
+
     /** Annule un « garder » : l'épisode quitte la file et reprend son état d'avant. */
     suspend fun undoKeep(previous: Map<Long, EpisodeState>) = db.withTransaction {
         queueDao.remove(previous.keys.toList())

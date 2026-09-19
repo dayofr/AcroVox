@@ -44,7 +44,9 @@ fun AcroVoxNavHost(
                 onExplore = { onSelectTab(TopLevelDestination.DISCOVER) }
             )
         )
-        inboxScreen(contentPadding)
+        inboxScreen(contentPadding, onOpenEpisode = {
+            navController.navigate(EpisodeRoute(it))
+        }, onPlay = { onPlay(it, null) })
         queueScreen(contentPadding, onOpenEpisode = { navController.navigate(EpisodeRoute(it)) })
         discoverScreen(contentPadding, onOpenFeed = { navController.navigate(PodcastPreviewRoute(it)) })
         libraryScreen(

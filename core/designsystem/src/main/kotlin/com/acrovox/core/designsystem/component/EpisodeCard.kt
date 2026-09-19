@@ -2,6 +2,7 @@ package com.acrovox.core.designsystem.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,18 +55,24 @@ fun EpisodeCard(
     isPlaying: Boolean = false,
     progress: Float? = null,
     badges: @Composable RowScope.() -> Unit = {},
-    actions: @Composable RowScope.() -> Unit = {}
+    actions: @Composable RowScope.() -> Unit = {},
+    onLongClick: (() -> Unit)? = null,
+    selected: Boolean = false
 ) {
     val colors = AcroVoxTheme.colors
     val type = MaterialTheme.typography
     Surface(
-        onClick = onClick,
         shape = CardShape,
-        color = colors.surfaceCard,
-        border = BorderStroke(1.dp, colors.outlineSubtle),
+        color = if (selected) colors.surfaceFloating else colors.surfaceCard,
+        border = BorderStroke(if (selected) 2.dp else 1.dp, if (selected) colors.brand else colors.outlineSubtle),
         modifier = modifier.fillMaxWidth()
     ) {
-        Row(Modifier.padding(14.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+        Row(
+            Modifier
+                .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+                .padding(14.dp),
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
             Box(Modifier.size(64.dp)) {
                 Artwork(
                     url = artworkUrl,
@@ -73,6 +80,19 @@ fun EpisodeCard(
                     shape = AcroVoxShape.ArtworkSmall,
                     modifier = Modifier.size(64.dp)
                 )
+                if (selected) {
+                    Box(
+                        Modifier.size(64.dp).background(colors.scrim, AcroVoxShape.ArtworkSmall),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            AcroVoxIcons.Check,
+                            contentDescription = "Sélectionné",
+                            tint = colors.brand,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                }
                 if (durationLabel != null) {
                     DurationBadge(durationLabel, Modifier.align(Alignment.BottomCenter).padding(bottom = 4.dp))
                 }

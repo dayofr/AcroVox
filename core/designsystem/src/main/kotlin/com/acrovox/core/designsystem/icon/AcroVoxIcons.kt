@@ -54,6 +54,7 @@ object AcroVoxIcons {
     val RemoveFromQueue: ImageVector = Icons.Rounded.RemoveCircleOutline
     val DragHandle: ImageVector = Icons.Rounded.DragIndicator
     val Ignore: ImageVector = Icons.Rounded.Close
+    val Close: ImageVector = Icons.Rounded.Close
     val Share: ImageVector = Icons.Rounded.Share
     val Favorite: ImageVector = Icons.Rounded.Favorite
     val FavoriteBorder: ImageVector = Icons.Rounded.FavoriteBorder

@@ -9,6 +9,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object InboxRoute
 
-fun NavGraphBuilder.inboxScreen(contentPadding: PaddingValues) {
-    composable<InboxRoute> { InboxScreen(contentPadding) }
+fun NavGraphBuilder.inboxScreen(contentPadding: PaddingValues, onOpenEpisode: (Long) -> Unit, onPlay: (Long) -> Unit) {
+    composable<InboxRoute> { InboxScreen(contentPadding, onOpenEpisode, onPlay) }
 }
