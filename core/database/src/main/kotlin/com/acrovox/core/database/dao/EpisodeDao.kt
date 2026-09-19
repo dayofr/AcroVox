@@ -1,0 +1,118 @@
+package com.acrovox.core.database.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
+import com.acrovox.core.database.entity.EpisodeEntity
+import com.acrovox.core.database.entity.EpisodeWithFeed
+import com.acrovox.core.model.EpisodeState
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+abstract class EpisodeDao {
+    @Transaction
+    @Query("SELECT * FROM episode WHERE state = 'NEW' ORDER BY pub_date DESC")
+    abstract fun observeInbox(): Flow<List<EpisodeWithFeed>>
+
+    @Transaction
+    @Query("SELECT * FROM episode WHERE state = 'NEW' AND feed_id = :feedId ORDER BY pub_date DESC")
+    abstract fun observeInboxForFeed(feedId: Long): Flow<List<EpisodeWithFeed>>
+
+    @Transaction
+    @Query("SELECT * FROM episode WHERE state != 'IGNORED' ORDER BY pub_date DESC LIMIT :limit")
+    abstract fun observeLatest(limit: Int): Flow<List<EpisodeWithFeed>>
+
+    @Query("SELECT * FROM episode WHERE feed_id = :feedId ORDER BY pub_date DESC")
+    abstract fun observeByFeed(feedId: Long): Flow<List<EpisodeEntity>>
+
+    @Query("SELECT * FROM episode WHERE feed_id = :feedId AND state IN (:states) ORDER BY pub_date DESC")
+    abstract fun observeByFeedAndStates(feedId: Long, states: List<EpisodeState>): Flow<List<EpisodeEntity>>
+
+    /** Épisodes commencés, pour la carte « Reprendre l'écoute ». */
+    @Transaction
+    @Query("SELECT * FROM episode WHERE state = 'IN_PROGRESS' ORDER BY last_played_at DESC LIMIT :limit")
+    abstract fun observeInProgress(limit: Int): Flow<List<EpisodeWithFeed>>
+
+    @Transaction
+    @Query("SELECT * FROM episode WHERE is_favorite = 1 ORDER BY pub_date DESC")
+    abstract fun observeFavorites(): Flow<List<EpisodeWithFeed>>
+
+    @Transaction
+    @Query("SELECT * FROM episode WHERE id = :id")
+    abstract fun observe(id: Long): Flow<EpisodeWithFeed?>
+
+    @Query("SELECT * FROM episode WHERE id = :id")
+    abstract suspend fun get(id: Long): EpisodeEntity?
+
+    @Transaction
+    @Query("SELECT * FROM episode WHERE id IN (:ids)")
+    abstract suspend fun getWithFeed(ids: List<Long>): List<EpisodeWithFeed>
+
+    @Query("SELECT * FROM episode WHERE feed_id = :feedId AND guid = :guid")
+    abstract suspend fun getByGuid(feedId: Long, guid: String): EpisodeEntity?
+
+    @Query("SELECT * FROM episode WHERE media_url = :mediaUrl")
+    abstract suspend fun getByMediaUrl(mediaUrl: String): List<EpisodeEntity>
+
+    @Query("SELECT id FROM episode WHERE state = 'NEW'")
+    abstract suspend fun getInboxIds(): List<Long>
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    protected abstract suspend fun insert(episode: EpisodeEntity): Long
+
+    @Update
+    protected abstract suspend fun update(episode: EpisodeEntity)
+
+    /**
+     * Fusionne les épisodes lus dans le flux.
+     *
+     * Un épisode inconnu est inséré en [EpisodeState.NEW]. Un épisode connu voit ses
+     * métadonnées mises à jour, sans toucher à l'état, la position ni le favori.
+     *
+     * @return identifiants des épisodes insérés.
+     */
+    @Transaction
+    open suspend fun mergeFromFeed(feedId: Long, episodes: List<EpisodeEntity>): List<Long> {
+        val inserted = mutableListOf<Long>()
+        for (parsed in episodes) {
+            val existing = getByGuid(feedId, parsed.guid)
+            if (existing == null) {
+                inserted += insert(parsed.copy(id = 0, feedId = feedId, state = EpisodeState.NEW))
+            } else {
+                update(
+                    parsed.copy(
+                        id = existing.id,
+                        feedId = feedId,
+                        state = existing.state,
+                        positionMs = existing.positionMs,
+                        lastPlayedAt = existing.lastPlayedAt,
+                        completedAt = existing.completedAt,
+                        isFavorite = existing.isFavorite
+                    )
+                )
+            }
+        }
+        return inserted
+    }
+
+    @Query("UPDATE episode SET state = :state WHERE id IN (:ids)")
+    abstract suspend fun setState(ids: List<Long>, state: EpisodeState)
+
+    @Query(
+        """
+        UPDATE episode SET position_ms = :positionMs, last_played_at = :at,
+            state = CASE WHEN state = 'PLAYED' THEN state ELSE 'IN_PROGRESS' END
+        WHERE id = :id
+        """
+    )
+    abstract suspend fun updatePosition(id: Long, positionMs: Long, at: Long)
+
+    @Query("UPDATE episode SET state = 'PLAYED', position_ms = 0, completed_at = :at WHERE id = :id")
+    abstract suspend fun markPlayed(id: Long, at: Long)
+
+    @Query("UPDATE episode SET is_favorite = :favorite WHERE id = :id")
+    abstract suspend fun setFavorite(id: Long, favorite: Boolean)
+}
