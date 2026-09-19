@@ -16,6 +16,7 @@ import com.acrovox.feature.library.navigation.OpmlImportRoute
 import com.acrovox.feature.library.navigation.episodeListScreen
 import com.acrovox.feature.library.navigation.libraryScreen
 import com.acrovox.feature.library.navigation.opmlImportScreen
+import com.acrovox.feature.player.navigation.playerScreen
 import com.acrovox.feature.podcast.navigation.EpisodeRoute
 import com.acrovox.feature.podcast.navigation.PodcastPreviewRoute
 import com.acrovox.feature.podcast.navigation.PodcastRoute
@@ -29,6 +30,7 @@ fun AcroVoxNavHost(
     navController: NavHostController,
     contentPadding: PaddingValues,
     onSelectTab: (TopLevelDestination) -> Unit,
+    onPlay: (episodeId: Long, positionMs: Long?) -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(navController = navController, startDestination = HomeRoute, modifier = modifier) {
@@ -37,6 +39,7 @@ fun AcroVoxNavHost(
             HomeActions(
                 onOpenPodcast = { navController.navigate(PodcastRoute(it)) },
                 onOpenEpisode = { navController.navigate(EpisodeRoute(it)) },
+                onPlay = { onPlay(it, null) },
                 onSeeAllSubscriptions = { onSelectTab(TopLevelDestination.LIBRARY) },
                 onExplore = { onSelectTab(TopLevelDestination.DISCOVER) }
             )
@@ -56,7 +59,7 @@ fun AcroVoxNavHost(
             contentPadding,
             onBack = navController::popBackStack,
             onOpenEpisode = { navController.navigate(EpisodeRoute(it)) },
-            onPlay = {}
+            onPlay = { onPlay(it, null) }
         )
         opmlImportScreen(contentPadding, onClose = navController::popBackStack)
         podcastPreviewScreen(
@@ -68,14 +71,17 @@ fun AcroVoxNavHost(
             contentPadding,
             onBack = navController::popBackStack,
             onOpenEpisode = { navController.navigate(EpisodeRoute(it)) },
-            // Lecture : PULSE-13.
-            onPlay = {}
+            onPlay = { onPlay(it, null) }
+        )
+        playerScreen(
+            onClose = navController::popBackStack,
+            onOpenEpisode = { navController.navigate(EpisodeRoute(it)) }
         )
         episodeScreen(
             contentPadding,
             onBack = navController::popBackStack,
             onOpenPodcast = { navController.navigate(PodcastRoute(it)) },
-            onPlay = { _, _ -> }
+            onPlay = onPlay
         )
     }
 }

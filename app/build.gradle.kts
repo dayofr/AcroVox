@@ -33,6 +33,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(project(":core:data"))
+    implementation(project(":core:player"))
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.work.runtime)
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)
@@ -42,6 +44,7 @@ dependencies {
     implementation(project(":feature:discover"))
     implementation(project(":feature:library"))
     implementation(project(":feature:podcast"))
+    implementation(project(":feature:player"))
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
