@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.acrovox.feature.settings"
 }
+
+dependencies {
+    implementation(project(":core:sync"))
+}

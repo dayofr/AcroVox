@@ -36,6 +36,7 @@ import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.Stop
+import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -82,5 +83,6 @@ object AcroVoxIcons {
     val Search: ImageVector = Icons.Rounded.Search
     val Notifications: ImageVector = Icons.Rounded.Notifications
     val Settings: ImageVector = Icons.Rounded.Settings
+    val Sync: ImageVector = Icons.Rounded.Sync
     val Podcast: ImageVector = Icons.Rounded.Podcasts
 }

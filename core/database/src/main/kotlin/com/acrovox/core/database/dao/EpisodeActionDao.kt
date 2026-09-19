@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.acrovox.core.database.entity.EpisodeActionEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EpisodeActionDao {
@@ -15,6 +16,9 @@ interface EpisodeActionDao {
 
     @Query("SELECT COUNT(*) FROM episode_action")
     suspend fun count(): Int
+
+    @Query("SELECT COUNT(*) FROM episode_action")
+    fun observeCount(): Flow<Int>
 
     /** Retire des actions envoyées, ou annulées par « Annuler ». */
     @Query("DELETE FROM episode_action WHERE id IN (:ids)")

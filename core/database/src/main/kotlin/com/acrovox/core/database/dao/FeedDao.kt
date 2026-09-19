@@ -32,6 +32,13 @@ interface FeedDao {
     @Query("SELECT * FROM feed ORDER BY title COLLATE NOCASE")
     suspend fun getAll(): List<FeedEntity>
 
+    /** Adresses des abonnements, pour la synchronisation. */
+    @Query("SELECT feed_url FROM feed")
+    fun observeUrls(): Flow<List<String>>
+
+    @Query("SELECT feed_url FROM feed")
+    suspend fun getUrls(): List<String>
+
     @Query("SELECT * FROM feed WHERE id = :id")
     fun observe(id: Long): Flow<FeedEntity?>
 

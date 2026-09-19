@@ -6,6 +6,7 @@ import androidx.work.Configuration
 import com.acrovox.core.data.refresh.RefreshWorker
 import com.acrovox.core.download.CleanupWorker
 import com.acrovox.core.download.DownloadCleaner
+import com.acrovox.core.sync.SyncScheduler
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -17,6 +18,8 @@ class AcroVoxApplication :
 
     @Inject lateinit var downloadCleaner: DownloadCleaner
 
+    @Inject lateinit var syncScheduler: SyncScheduler
+
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder().setWorkerFactory(workerFactory).build()
 
@@ -25,5 +28,6 @@ class AcroVoxApplication :
         RefreshWorker.schedule(this)
         CleanupWorker.schedule(this)
         downloadCleaner.start()
+        syncScheduler.start()
     }
 }

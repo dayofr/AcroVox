@@ -47,6 +47,8 @@ dependencies {
     implementation(project(":feature:player"))
     implementation(project(":feature:downloads"))
     implementation(project(":core:download"))
+    implementation(project(":core:sync"))
+    implementation(project(":feature:settings"))
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)

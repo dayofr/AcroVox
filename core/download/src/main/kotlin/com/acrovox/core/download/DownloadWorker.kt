@@ -5,7 +5,9 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.acrovox.core.database.AcroVoxDatabase
+import com.acrovox.core.database.entity.EpisodeActionEntity
 import com.acrovox.core.model.DownloadStatus
+import com.acrovox.core.model.EpisodeActionType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.io.IOException
@@ -51,6 +53,7 @@ class DownloadWorker @AssistedInject constructor(
                 val target = files.finalFile(id, episode.mediaUrl, episode.mediaType)
                 if (!part.renameTo(target)) throw IOException("Impossible d'enregistrer le fichier")
                 dao.complete(id, target.path, bytes, clock.millis())
+                recordDownloadAction(id)
                 Result.success()
             } catch (e: CancellationException) {
                 // Arrêt par le système ou annulation : on attend la prochaine exécution.
@@ -71,6 +74,22 @@ class DownloadWorker @AssistedInject constructor(
                 notifications.cancel(id)
             }
         }
+    }
+
+    /** Action gPodder `download`, envoyée à la prochaine synchronisation. */
+    private suspend fun recordDownloadAction(episodeId: Long) {
+        val (episode, feed) = db.episodeDao().getWithFeed(listOf(episodeId)).firstOrNull() ?: return
+        db.episodeActionDao().insertAll(
+            listOf(
+                EpisodeActionEntity(
+                    podcastUrl = feed.feedUrl,
+                    episodeUrl = episode.mediaUrl,
+                    guid = episode.guid,
+                    action = EpisodeActionType.DOWNLOAD,
+                    timestamp = clock.millis()
+                )
+            )
+        )
     }
 
     companion object {

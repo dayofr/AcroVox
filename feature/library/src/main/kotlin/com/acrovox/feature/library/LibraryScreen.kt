@@ -60,7 +60,8 @@ data class LibraryActions(
     val onOpenPodcast: (Long) -> Unit = {},
     val onOpenEpisodeList: (EpisodeListKind) -> Unit = {},
     val onImportOpml: (String) -> Unit = {},
-    val onOpenDownloads: () -> Unit = {}
+    val onOpenDownloads: () -> Unit = {},
+    val onOpenSync: () -> Unit = {}
 )
 
 @Composable
@@ -165,6 +166,11 @@ fun LibraryScreen(
                         "Exporter mes abonnements",
                         "Fichier OPML lisible par toutes les apps de podcast"
                     ) { exportLauncher.launch(EXPORT_FILE_NAME) }
+                    LibraryAction(
+                        AcroVoxIcons.Sync,
+                        "Synchronisation gPodder",
+                        "Envoyer abonnements et écoute vers un serveur gPodder"
+                    ) { actions.onOpenSync() }
                 }
             }
         }
