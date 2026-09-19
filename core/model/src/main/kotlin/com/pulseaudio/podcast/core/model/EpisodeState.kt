@@ -13,5 +13,5 @@ enum class EpisodeState {
     PLAYED,
 
     /** Écarté volontairement depuis la boîte de réception. Synchronisé en `delete` gPodder. */
-    IGNORED,
+    IGNORED
 }
