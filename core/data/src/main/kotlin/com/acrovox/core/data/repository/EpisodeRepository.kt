@@ -131,6 +131,8 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
 
     // Lecture
 
+    suspend fun getLastPlayed(): EpisodeWithFeed? = episodeDao.getLastPlayed()
+
     suspend fun getWithFeed(episodeId: Long): EpisodeWithFeed? = episodeDao.getWithFeed(listOf(episodeId)).firstOrNull()
 
     /** Début d'écoute : entrée d'historique. */

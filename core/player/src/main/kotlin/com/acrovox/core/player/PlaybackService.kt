@@ -15,11 +15,17 @@ import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.session.CommandButton
+import androidx.media3.session.LibraryResult
+import androidx.media3.session.MediaLibraryService
+import androidx.media3.session.MediaLibraryService.LibraryParams
+import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import androidx.media3.session.MediaSession
-import androidx.media3.session.MediaSessionService
+import androidx.media3.session.SessionError
 import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.data.settings.PlaybackSettingsRepository
 import com.acrovox.core.download.DownloadManager
+import com.google.common.collect.ImmutableList
+import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -41,7 +47,7 @@ import okhttp3.OkHttpClient
  */
 @OptIn(UnstableApi::class)
 @AndroidEntryPoint
-class PlaybackService : MediaSessionService() {
+class PlaybackService : MediaLibraryService() {
     @Inject lateinit var episodes: EpisodeRepository
 
     @Inject lateinit var settings: PlaybackSettingsRepository
@@ -54,9 +60,11 @@ class PlaybackService : MediaSessionService() {
 
     @Inject lateinit var downloads: DownloadManager
 
+    @Inject lateinit var library: MediaLibraryTree
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private lateinit var player: ExoPlayer
-    private var session: MediaSession? = null
+    private var session: MediaLibrarySession? = null
     private var tracker: Job? = null
 
     /** Début du segment d'écoute en cours, pour l'action gPodder `play`. */
@@ -94,8 +102,7 @@ class PlaybackService : MediaSessionService() {
                 PendingIntent.FLAG_IMMUTABLE
             )
         }
-        session = MediaSession.Builder(this, player)
-            .setCallback(callback)
+        session = MediaLibrarySession.Builder(this, player, callback)
             .apply { sessionActivity?.let(::setSessionActivity) }
             .setMediaButtonPreferences(
                 listOf(
@@ -121,7 +128,7 @@ class PlaybackService : MediaSessionService() {
         sleepTimer.attach(player, scope)
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = session
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession? = session
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         if (!player.playWhenReady || player.mediaItemCount == 0) stopSelf()
@@ -143,8 +150,11 @@ class PlaybackService : MediaSessionService() {
         super.onDestroy()
     }
 
-    private val callback = object : MediaSession.Callback {
-        /** L'interface envoie des identifiants d'épisode ; le service fournit l'URL et les métadonnées. */
+    private val callback = object : MediaLibrarySession.Callback {
+        /**
+         * L'interface envoie des identifiants d'épisode ; le service fournit l'URL et les métadonnées.
+         * Une demande vocale arrive sans identifiant, avec une recherche.
+         */
         override fun onSetMediaItems(
             mediaSession: MediaSession,
             controller: MediaSession.ControllerInfo,
@@ -152,7 +162,7 @@ class PlaybackService : MediaSessionService() {
             startIndex: Int,
             startPositionMs: Long
         ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> = scope.future {
-            val id = mediaItems.firstNotNullOfOrNull { episodeIdOf(it) }
+            val id = mediaItems.firstNotNullOfOrNull { requestedEpisode(it) }
             val resolved = id?.let { resolve(it, startPositionMs) }
             if (resolved == null) {
                 MediaSession.MediaItemsWithStartPosition(emptyList(), 0, 0)
@@ -160,6 +170,92 @@ class PlaybackService : MediaSessionService() {
                 MediaSession.MediaItemsWithStartPosition(listOf(resolved.first), 0, resolved.second)
             }
         }
+
+        override fun onAddMediaItems(
+            mediaSession: MediaSession,
+            controller: MediaSession.ControllerInfo,
+            mediaItems: MutableList<MediaItem>
+        ): ListenableFuture<MutableList<MediaItem>> = scope.future {
+            mediaItems.mapNotNull { requestedEpisode(it)?.let { id -> resolve(id, C.TIME_UNSET)?.first } }
+                .toMutableList()
+        }
+
+        /** Reprise depuis la voiture, un casque Bluetooth ou le système : le dernier épisode écouté. */
+        override fun onPlaybackResumption(
+            mediaSession: MediaSession,
+            controller: MediaSession.ControllerInfo,
+            isForPlayback: Boolean
+        ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> = scope.future {
+            val last = episodes.getLastPlayed()?.episode?.id
+            val resolved = last?.let { resolve(it, C.TIME_UNSET) }
+                ?: throw UnsupportedOperationException("Aucun épisode à reprendre")
+            MediaSession.MediaItemsWithStartPosition(listOf(resolved.first), 0, resolved.second)
+        }
+
+        override fun onGetLibraryRoot(
+            session: MediaLibrarySession,
+            browser: MediaSession.ControllerInfo,
+            params: LibraryParams?
+        ): ListenableFuture<LibraryResult<MediaItem>> =
+            Futures.immediateFuture(LibraryResult.ofItem(library.root(), params))
+
+        override fun onGetChildren(
+            session: MediaLibrarySession,
+            browser: MediaSession.ControllerInfo,
+            parentId: String,
+            page: Int,
+            pageSize: Int,
+            params: LibraryParams?
+        ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> = scope.future {
+            val children = library.children(parentId)
+            if (children == null) {
+                LibraryResult.ofError(SessionError.ERROR_BAD_VALUE)
+            } else {
+                LibraryResult.ofItemList(children.page(page, pageSize), params)
+            }
+        }
+
+        override fun onGetItem(
+            session: MediaLibrarySession,
+            browser: MediaSession.ControllerInfo,
+            mediaId: String
+        ): ListenableFuture<LibraryResult<MediaItem>> = scope.future {
+            library.item(mediaId)?.let { LibraryResult.ofItem(it, null) }
+                ?: LibraryResult.ofError(SessionError.ERROR_BAD_VALUE)
+        }
+
+        override fun onSearch(
+            session: MediaLibrarySession,
+            browser: MediaSession.ControllerInfo,
+            query: String,
+            params: LibraryParams?
+        ): ListenableFuture<LibraryResult<Void>> = scope.future {
+            session.notifySearchResultChanged(browser, query, library.search(query).size, params)
+            LibraryResult.ofVoid()
+        }
+
+        override fun onGetSearchResult(
+            session: MediaLibrarySession,
+            browser: MediaSession.ControllerInfo,
+            query: String,
+            page: Int,
+            pageSize: Int,
+            params: LibraryParams?
+        ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> = scope.future {
+            LibraryResult.ofItemList(library.search(query).page(page, pageSize), params)
+        }
+    }
+
+    /** Épisode demandé : par identifiant, ou par recherche vocale (« lis Underscore sur AcroVox »). */
+    private suspend fun requestedEpisode(item: MediaItem): Long? = episodeIdOf(item) ?: if (item.mediaId.isEmpty()) {
+        library.episodeForVoice(item.requestMetadata.searchQuery)
+    } else {
+        null
+    }
+
+    private fun List<MediaItem>.page(page: Int, pageSize: Int): List<MediaItem> {
+        if (pageSize <= 0 || pageSize == Int.MAX_VALUE) return this
+        return drop(page * pageSize).take(pageSize)
     }
 
     /**

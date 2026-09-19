@@ -34,6 +34,27 @@ abstract class EpisodeDao {
     @Query("SELECT * FROM episode WHERE feed_id = :feedId AND state IN (:states) ORDER BY pub_date DESC")
     abstract fun observeByFeedAndStates(feedId: Long, states: List<EpisodeState>): Flow<List<EpisodeEntity>>
 
+    /** Recherche dans les titres d'épisodes et de podcasts, épisodes ignorés exclus. */
+    @Transaction
+    @Query(
+        """
+        SELECT episode.* FROM episode INNER JOIN feed ON feed.id = episode.feed_id
+        WHERE episode.state != 'IGNORED'
+        AND (episode.title LIKE '%' || :query || '%' OR feed.title LIKE '%' || :query || '%')
+        ORDER BY episode.pub_date DESC LIMIT :limit
+        """
+    )
+    abstract suspend fun search(query: String, limit: Int): List<EpisodeWithFeed>
+
+    @Transaction
+    @Query("SELECT * FROM episode WHERE feed_id = :feedId AND state != 'IGNORED' ORDER BY pub_date DESC LIMIT :limit")
+    abstract suspend fun getRecentForFeed(feedId: Long, limit: Int): List<EpisodeWithFeed>
+
+    /** Dernier épisode écouté, pour reprendre la lecture depuis la voiture ou un casque. */
+    @Transaction
+    @Query("SELECT * FROM episode WHERE last_played_at IS NOT NULL ORDER BY last_played_at DESC LIMIT 1")
+    abstract suspend fun getLastPlayed(): EpisodeWithFeed?
+
     /** Épisodes commencés, pour la carte « Reprendre l'écoute ». */
     @Transaction
     @Query("SELECT * FROM episode WHERE state = 'IN_PROGRESS' ORDER BY last_played_at DESC LIMIT :limit")

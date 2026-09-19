@@ -22,6 +22,8 @@ internal fun EpisodeWithFeed.toMediaItem(localPath: String? = null): MediaItem =
             .setAlbumTitle(feed.title)
             .setArtworkUri((episode.imageUrl ?: feed.imageUrl)?.let(Uri::parse))
             .setDurationMs(episode.durationMs)
+            .setIsBrowsable(false)
+            .setIsPlayable(true)
             .setMediaType(MediaMetadata.MEDIA_TYPE_PODCAST_EPISODE)
             .build()
     )
