@@ -11,6 +11,7 @@ android {
 }
 
 dependencies {
+    api(project(":core:model"))
     api(libs.androidx.compose.material.icons)
     api(libs.coil.compose)
     implementation(libs.androidx.core.ktx)

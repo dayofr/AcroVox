@@ -5,6 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
 import com.acrovox.core.database.entity.DownloadEntity
+import com.acrovox.core.database.entity.DownloadWithEpisode
 import com.acrovox.core.database.entity.EpisodeWithFeed
 import com.acrovox.core.model.DownloadStatus
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,14 @@ interface DownloadDao {
 
     @Query("SELECT * FROM download WHERE episode_id = :episodeId")
     suspend fun get(episodeId: Long): DownloadEntity?
+
+    @Query("SELECT * FROM download WHERE episode_id IN (:episodeIds)")
+    suspend fun get(episodeIds: List<Long>): List<DownloadEntity>
+
+    /** Téléchargements avec leur épisode, du plus récent au plus ancien. */
+    @Transaction
+    @Query("SELECT * FROM download ORDER BY COALESCE(completed_at, created_at) DESC")
+    fun observeWithEpisodes(): Flow<List<DownloadWithEpisode>>
 
     @Transaction
     @Query(
@@ -41,6 +50,17 @@ interface DownloadDao {
         "UPDATE download SET status = :status, bytes_downloaded = :bytes, total_bytes = :total WHERE episode_id = :episodeId"
     )
     suspend fun updateProgress(episodeId: Long, status: DownloadStatus, bytes: Long, total: Long?)
+
+    @Query("UPDATE download SET status = :status, error = :error WHERE episode_id = :episodeId")
+    suspend fun setStatus(episodeId: Long, status: DownloadStatus, error: String? = null)
+
+    @Query(
+        """
+        UPDATE download SET status = 'COMPLETED', local_path = :path, bytes_downloaded = :bytes,
+        total_bytes = :bytes, error = NULL, completed_at = :completedAt WHERE episode_id = :episodeId
+        """
+    )
+    suspend fun complete(episodeId: Long, path: String, bytes: Long, completedAt: Long)
 
     @Query("DELETE FROM download WHERE episode_id = :episodeId")
     suspend fun delete(episodeId: Long)

@@ -9,6 +9,7 @@ android {
 
 dependencies {
     api(project(":core:data"))
+    api(project(":core:download"))
     implementation(project(":core:network"))
     api(libs.androidx.media3.exoplayer)
     api(libs.androidx.media3.session)

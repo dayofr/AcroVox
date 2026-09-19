@@ -11,6 +11,7 @@ import androidx.compose.material.icons.rounded.DeleteOutline
 import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.DownloadDone
 import androidx.compose.material.icons.rounded.DragIndicator
+import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.Explore
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
@@ -27,12 +28,15 @@ import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Podcasts
 import androidx.compose.material.icons.rounded.RemoveCircleOutline
 import androidx.compose.material.icons.rounded.Replay10
+import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
 import androidx.compose.material.icons.rounded.Speed
+import androidx.compose.material.icons.rounded.Stop
+import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -60,6 +64,10 @@ object AcroVoxIcons {
     val FavoriteBorder: ImageVector = Icons.Rounded.FavoriteBorder
     val Download: ImageVector = Icons.Rounded.Download
     val Downloaded: ImageVector = Icons.Rounded.DownloadDone
+    val WaitingForWifi: ImageVector = Icons.Rounded.Wifi
+    val Pending: ImageVector = Icons.Rounded.Schedule
+    val Stop: ImageVector = Icons.Rounded.Stop
+    val Error: ImageVector = Icons.Rounded.ErrorOutline
     val Delete: ImageVector = Icons.Rounded.DeleteOutline
     val Check: ImageVector = Icons.Rounded.CheckCircle
     val More: ImageVector = Icons.Rounded.MoreVert

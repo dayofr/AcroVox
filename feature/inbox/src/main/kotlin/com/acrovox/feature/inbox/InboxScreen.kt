@@ -82,6 +82,7 @@ fun InboxScreen(
             onFilter = viewModel::setFeedFilter,
             onKeep = { viewModel.keep(listOf(it)) },
             onIgnore = { viewModel.ignore(listOf(it)) },
+            onDownload = { viewModel.keepAndDownload(listOf(it)) },
             onOpen = onOpenEpisode,
             onPlay = onPlay,
             onToggleSelection = viewModel::toggleSelection,
@@ -93,6 +94,7 @@ fun InboxScreen(
                     onSelectAll = viewModel::selectAll,
                     onKeep = { viewModel.keep(state.selection.toList()) },
                     onIgnore = { viewModel.ignore(state.selection.toList()) },
+                    onDownload = { viewModel.keepAndDownload(state.selection.toList()) },
                     onPlayed = { viewModel.markPlayed(state.selection.toList()) }
                 )
             }
@@ -142,7 +144,8 @@ internal fun InboxContent(
     onPlay: (Long) -> Unit,
     onToggleSelection: (Long) -> Unit,
     onIgnoreRest: () -> Unit,
-    selectionBar: @Composable () -> Unit
+    selectionBar: @Composable () -> Unit,
+    onDownload: (Long) -> Unit = {}
 ) {
     val colors = AcroVoxTheme.colors
     Column(Modifier.fillMaxSize()) {
@@ -209,6 +212,7 @@ internal fun InboxContent(
                         selecting = state.selecting,
                         onKeep = { onKeep(item.episode.id) },
                         onIgnore = { onIgnore(item.episode.id) },
+                        onDownload = { onDownload(item.episode.id) },
                         onOpen = { onOpen(item.episode.id) },
                         onPlay = { onPlay(item.episode.id) },
                         onToggleSelection = { onToggleSelection(item.episode.id) },
@@ -227,6 +231,7 @@ private fun SwipeableInboxItem(
     selecting: Boolean,
     onKeep: () -> Unit,
     onIgnore: () -> Unit,
+    onDownload: () -> Unit,
     onOpen: () -> Unit,
     onPlay: () -> Unit,
     onToggleSelection: () -> Unit,
@@ -262,6 +267,7 @@ private fun SwipeableInboxItem(
             onPlayClick = onPlay,
             actions = {
                 EpisodeActionButton(AcroVoxIcons.Ignore, "Ignorer", onClick = onIgnore)
+                EpisodeActionButton(AcroVoxIcons.Download, "Garder et télécharger", onClick = onDownload)
                 EpisodeActionButton(AcroVoxIcons.AddToQueue, "Garder dans la file", onClick = onKeep)
             }
         )
@@ -312,6 +318,7 @@ private fun SelectionBar(
     onSelectAll: () -> Unit,
     onKeep: () -> Unit,
     onIgnore: () -> Unit,
+    onDownload: () -> Unit,
     onPlayed: () -> Unit
 ) {
     val colors = AcroVoxTheme.colors
@@ -333,6 +340,9 @@ private fun SelectionBar(
         TextButton(onClick = onSelectAll) { Text("Tout", color = colors.textSecondary) }
         IconButton(onClick = onKeep) {
             Icon(AcroVoxIcons.AddToQueue, contentDescription = "Garder la sélection", tint = colors.brand)
+        }
+        IconButton(onClick = onDownload) {
+            Icon(AcroVoxIcons.Download, contentDescription = "Garder et télécharger la sélection", tint = colors.brand)
         }
         IconButton(onClick = onIgnore) {
             Icon(AcroVoxIcons.Ignore, contentDescription = "Ignorer la sélection", tint = colors.textPrimary)

@@ -39,6 +39,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acrovox.core.database.entity.EpisodeWithFeed
 import com.acrovox.core.designsystem.component.Artwork
+import com.acrovox.core.designsystem.component.DownloadButton
 import com.acrovox.core.designsystem.component.DurationBadge
 import com.acrovox.core.designsystem.component.EqualizerIndicator
 import com.acrovox.core.designsystem.format.formatDuration
@@ -47,6 +48,7 @@ import com.acrovox.core.designsystem.theme.AcroVoxShape
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
 import com.acrovox.core.designsystem.theme.HeadlineLargeMobile
 import com.acrovox.core.designsystem.theme.Spacing
+import com.acrovox.core.model.DownloadState
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
@@ -127,6 +129,8 @@ fun QueueScreen(
                     onClick = { viewModel.play(item.episode.id) },
                     onOpen = { onOpenEpisode(item.episode.id) },
                     onRemove = { viewModel.remove(item.episode.id) },
+                    download = state.downloads[item.episode.id] ?: DownloadState.None,
+                    onDownload = { viewModel.toggleDownload(item.episode.id) },
                     handle = {
                         IconButton(
                             onClick = {},
@@ -192,6 +196,8 @@ private fun QueueRow(
     onClick: () -> Unit,
     onOpen: () -> Unit,
     onRemove: () -> Unit,
+    download: DownloadState,
+    onDownload: () -> Unit,
     handle: @Composable () -> Unit
 ) {
     val colors = AcroVoxTheme.colors
@@ -248,6 +254,7 @@ private fun QueueRow(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+            DownloadButton(download, onClick = onDownload)
             IconButton(onClick = onRemove) {
                 Icon(
                     AcroVoxIcons.RemoveFromQueue,

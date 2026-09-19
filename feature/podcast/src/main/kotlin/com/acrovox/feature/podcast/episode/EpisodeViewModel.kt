@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.database.entity.EpisodeWithFeed
+import com.acrovox.core.download.DownloadManager
+import com.acrovox.core.model.DownloadState
 import com.acrovox.feature.podcast.navigation.EpisodeRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,19 +17,25 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-data class EpisodeUiState(val item: EpisodeWithFeed? = null, val queued: Boolean = false)
+data class EpisodeUiState(
+    val item: EpisodeWithFeed? = null,
+    val queued: Boolean = false,
+    val download: DownloadState = DownloadState.None
+)
 
 @HiltViewModel
 class EpisodeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val episodes: EpisodeRepository
+    private val episodes: EpisodeRepository,
+    private val downloads: DownloadManager
 ) : ViewModel() {
     private val episodeId = savedStateHandle.toRoute<EpisodeRoute>().episodeId
 
     val uiState: StateFlow<EpisodeUiState> = combine(
         episodes.observeEpisode(episodeId),
-        episodes.observeQueuedIds()
-    ) { item, queued -> EpisodeUiState(item, episodeId in queued) }
+        episodes.observeQueuedIds(),
+        downloads.observeState(episodeId)
+    ) { item, queued, download -> EpisodeUiState(item, episodeId in queued, download) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), EpisodeUiState())
 
     fun toggleQueue() = viewModelScope.launch {
@@ -39,6 +47,8 @@ class EpisodeViewModel @Inject constructor(
             episodes.addToQueue(listOf(episodeId))
         }
     }
+
+    fun toggleDownload() = viewModelScope.launch { downloads.toggle(episodeId) }
 
     fun ignore() = viewModelScope.launch { episodes.ignore(listOf(episodeId)) }
 

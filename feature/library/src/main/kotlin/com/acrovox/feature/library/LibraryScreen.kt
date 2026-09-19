@@ -59,7 +59,8 @@ private const val EXPORT_FILE_NAME = "acrovox-abonnements.opml"
 data class LibraryActions(
     val onOpenPodcast: (Long) -> Unit = {},
     val onOpenEpisodeList: (EpisodeListKind) -> Unit = {},
-    val onImportOpml: (String) -> Unit = {}
+    val onImportOpml: (String) -> Unit = {},
+    val onOpenDownloads: () -> Unit = {}
 )
 
 @Composable
@@ -101,6 +102,9 @@ fun LibraryScreen(
             fullWidth { Text("Bibliothèque", style = HeadlineLargeMobile, color = colors.textPrimary) }
             fullWidth {
                 Column {
+                    LibraryAction(AcroVoxIcons.Downloaded, "Téléchargements", "Épisodes disponibles hors connexion") {
+                        actions.onOpenDownloads()
+                    }
                     LibraryAction(AcroVoxIcons.Favorite, "Favoris", null) {
                         actions.onOpenEpisodeList(EpisodeListKind.FAVORITES)
                     }

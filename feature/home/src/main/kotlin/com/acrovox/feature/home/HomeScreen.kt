@@ -47,6 +47,7 @@ import com.acrovox.core.database.dao.FeedWithNewCount
 import com.acrovox.core.database.entity.EpisodeWithFeed
 import com.acrovox.core.designsystem.component.AcroVoxProgressBar
 import com.acrovox.core.designsystem.component.Artwork
+import com.acrovox.core.designsystem.component.DownloadButton
 import com.acrovox.core.designsystem.component.EpisodeActionButton
 import com.acrovox.core.designsystem.component.EpisodeCard
 import com.acrovox.core.designsystem.component.PlayButtonSize
@@ -58,6 +59,7 @@ import com.acrovox.core.designsystem.icon.AcroVoxIcons
 import com.acrovox.core.designsystem.theme.AcroVoxShape
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
 import com.acrovox.core.designsystem.theme.Spacing
+import com.acrovox.core.model.DownloadState
 import java.time.LocalTime
 
 /** Actions de l'accueil vers le reste de l'app. */
@@ -83,6 +85,7 @@ fun HomeScreen(
         onRefresh = viewModel::refresh,
         onToggleSort = viewModel::toggleSort,
         onToggleQueue = viewModel::toggleQueue,
+        onToggleDownload = viewModel::toggleDownload,
         contentPadding = contentPadding,
         modifier = modifier
     )
@@ -97,6 +100,7 @@ internal fun HomeContent(
     onToggleSort: () -> Unit,
     onToggleQueue: (Long) -> Unit,
     contentPadding: PaddingValues,
+    onToggleDownload: (Long) -> Unit = {},
     modifier: Modifier = Modifier,
     now: Long = System.currentTimeMillis()
 ) {
@@ -145,6 +149,10 @@ internal fun HomeContent(
                             icon = if (queued) AcroVoxIcons.RemoveFromQueue else AcroVoxIcons.AddToQueue,
                             contentDescription = if (queued) "Retirer de la file" else "Ajouter à la file",
                             onClick = { onToggleQueue(episode.id) }
+                        )
+                        DownloadButton(
+                            state.downloads[episode.id] ?: DownloadState.None,
+                            onClick = { onToggleDownload(episode.id) }
                         )
                         EpisodeActionButton(AcroVoxIcons.Share, "Partager", onClick = { context.shareEpisode(item) })
                     },

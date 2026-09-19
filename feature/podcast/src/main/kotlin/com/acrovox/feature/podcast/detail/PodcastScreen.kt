@@ -45,6 +45,7 @@ import com.acrovox.core.data.repository.EpisodeFilter
 import com.acrovox.core.database.entity.FeedEntity
 import com.acrovox.core.designsystem.component.AcroVoxFilterChip
 import com.acrovox.core.designsystem.component.Artwork
+import com.acrovox.core.designsystem.component.DownloadButton
 import com.acrovox.core.designsystem.component.EpisodeActionButton
 import com.acrovox.core.designsystem.component.EpisodeCard
 import com.acrovox.core.designsystem.format.formatDuration
@@ -53,6 +54,7 @@ import com.acrovox.core.designsystem.format.htmlToPlainText
 import com.acrovox.core.designsystem.icon.AcroVoxIcons
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
 import com.acrovox.core.designsystem.theme.Spacing
+import com.acrovox.core.model.DownloadState
 import com.acrovox.core.model.EpisodeState
 
 private val filterLabels = listOf(
@@ -134,6 +136,10 @@ fun PodcastScreen(
                                 if (queued) AcroVoxIcons.RemoveFromQueue else AcroVoxIcons.AddToQueue,
                                 if (queued) "Retirer de la file" else "Ajouter à la file",
                                 onClick = { viewModel.toggleQueue(episode.id) }
+                            )
+                            DownloadButton(
+                                state.downloads[episode.id] ?: DownloadState.None,
+                                onClick = { viewModel.toggleDownload(episode.id) }
                             )
                             EpisodeActionButton(AcroVoxIcons.Ignore, "Ignorer", onClick = {
                                 viewModel.ignore(episode.id)

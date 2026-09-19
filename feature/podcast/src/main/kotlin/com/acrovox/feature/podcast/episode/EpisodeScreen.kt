@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.acrovox.core.designsystem.component.Artwork
+import com.acrovox.core.designsystem.component.DownloadButton
 import com.acrovox.core.designsystem.component.PlayButtonSize
 import com.acrovox.core.designsystem.component.PlayPauseButton
 import com.acrovox.core.designsystem.format.formatDuration
@@ -33,6 +34,7 @@ import com.acrovox.core.designsystem.format.formatRelativeDate
 import com.acrovox.core.designsystem.icon.AcroVoxIcons
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
 import com.acrovox.core.designsystem.theme.Spacing
+import com.acrovox.core.model.DownloadState
 import com.acrovox.core.model.EpisodeState
 
 @Composable
@@ -91,6 +93,7 @@ fun EpisodeScreen(
             ) {
                 PlayPauseButton(isPlaying = false, onClick = { onPlay(episode.id, null) }, size = PlayButtonSize.Medium)
                 Row(Modifier.weight(1f)) {}
+                DownloadButton(state.download, onClick = viewModel::toggleDownload)
                 if (episode.state == EpisodeState.IGNORED) {
                     TextButton(onClick = viewModel::restore) { Text("Reprendre", color = colors.brand) }
                 } else {
@@ -122,6 +125,9 @@ fun EpisodeScreen(
                     }
                 }
             }
+            downloadLabel(state.download)?.let {
+                Text(it, style = MaterialTheme.typography.labelMedium, color = colors.textSecondary)
+            }
             HorizontalDivider(color = colors.outlineSubtle)
             if (notes != null) {
                 Text(
@@ -139,4 +145,16 @@ fun EpisodeScreen(
             }
         }
     }
+}
+
+private fun downloadLabel(state: DownloadState): String? = when (state) {
+    DownloadState.None -> null
+    is DownloadState.Queued -> if (state.waitingForWifi) {
+        "Téléchargement en attente du Wi-Fi"
+    } else {
+        "Téléchargement en attente"
+    }
+    is DownloadState.Running -> state.progress?.let { "Téléchargement : ${(it * 100).toInt()} %" } ?: "Téléchargement…"
+    DownloadState.Completed -> "Téléchargé : lisible hors connexion"
+    is DownloadState.Failed -> "Échec du téléchargement" + (state.reason?.let { " : $it" } ?: "")
 }

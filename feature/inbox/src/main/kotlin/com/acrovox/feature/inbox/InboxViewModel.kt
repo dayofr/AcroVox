@@ -6,6 +6,7 @@ import com.acrovox.core.data.refresh.RefreshRepository
 import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.database.entity.EpisodeWithFeed
 import com.acrovox.core.database.entity.FeedEntity
+import com.acrovox.core.download.DownloadManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,12 +36,13 @@ data class UndoableAction(val id: Long, val message: String, internal val undo: 
 
 /**
  * Tri de la boîte de réception : garder (va dans la file) ou ignorer (action gPodder `delete`).
- * Rien n'est téléchargé.
+ * Rien n'est téléchargé sans le bouton « Télécharger ».
  */
 @HiltViewModel
 class InboxViewModel @Inject constructor(
     private val episodes: EpisodeRepository,
-    private val refresher: RefreshRepository
+    private val refresher: RefreshRepository,
+    private val downloads: DownloadManager
 ) : ViewModel() {
     private val feedFilter = MutableStateFlow<Long?>(null)
     private val selection = MutableStateFlow<Set<Long>>(emptySet())
@@ -95,6 +97,25 @@ class InboxViewModel @Inject constructor(
         val previous = episodes.statesOf(episodeIds)
         episodes.addToQueue(episodeIds)
         suspend { episodes.undoKeep(previous) }
+    }
+
+    /** Garder et télécharger : l'épisode va dans la file, le téléchargement est demandé. */
+    fun keepAndDownload(episodeIds: List<Long>) = launchUndoable(
+        if (episodeIds.size ==
+            1
+        ) {
+            "Gardé, téléchargement demandé"
+        } else {
+            "${episodeIds.size} épisodes gardés et téléchargés"
+        }
+    ) {
+        val previous = episodes.statesOf(episodeIds)
+        episodes.addToQueue(episodeIds)
+        downloads.request(episodeIds)
+        suspend {
+            downloads.cancel(episodeIds)
+            episodes.undoKeep(previous)
+        }
     }
 
     fun ignore(episodeIds: List<Long>) = launchUndoable(

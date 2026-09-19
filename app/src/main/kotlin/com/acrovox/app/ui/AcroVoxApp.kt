@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.acrovox.app.navigation.AcroVoxNavHost
 import com.acrovox.app.navigation.TopLevelDestination
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
+import com.acrovox.feature.downloads.DownloadPrompts
 import com.acrovox.feature.player.MiniPlayer
 import com.acrovox.feature.player.navigation.PlayerRoute
 
@@ -87,6 +88,7 @@ fun AcroVoxApp(
             onPlay = { id, position -> player.play(id, position) }
         )
     }
+    DownloadPrompts()
 }
 
 /** Change d'onglet en gardant l'état de chaque onglet, sans empiler les onglets. */

@@ -8,6 +8,8 @@ import com.acrovox.core.data.repository.EpisodeSort
 import com.acrovox.core.data.repository.SubscriptionRepository
 import com.acrovox.core.database.dao.FeedWithNewCount
 import com.acrovox.core.database.entity.EpisodeWithFeed
+import com.acrovox.core.download.DownloadManager
+import com.acrovox.core.model.DownloadState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +28,8 @@ data class HomeUiState(
     val latest: List<EpisodeWithFeed> = emptyList(),
     val queuedIds: Set<Long> = emptySet(),
     val sort: EpisodeSort = EpisodeSort.NEWEST_FIRST,
-    val isRefreshing: Boolean = false
+    val isRefreshing: Boolean = false,
+    val downloads: Map<Long, DownloadState> = emptyMap()
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -34,7 +37,8 @@ data class HomeUiState(
 class HomeViewModel @Inject constructor(
     subscriptions: SubscriptionRepository,
     private val episodes: EpisodeRepository,
-    private val refresher: RefreshRepository
+    private val refresher: RefreshRepository,
+    private val downloadManager: DownloadManager
 ) : ViewModel() {
     private val sort = MutableStateFlow(EpisodeSort.NEWEST_FIRST)
 
@@ -43,9 +47,9 @@ class HomeViewModel @Inject constructor(
         episodes.observeResume(),
         sort.flatMapLatest { s -> episodes.observeLatest(s) },
         episodes.observeQueuedIds(),
-        combine(sort, refresher.isRefreshing, ::Pair)
-    ) { feeds, resume, latest, queued, (currentSort, refreshing) ->
-        HomeUiState(false, feeds, resume, latest, queued, currentSort, refreshing)
+        combine(sort, refresher.isRefreshing, downloadManager.observeStates(), ::Triple)
+    ) { feeds, resume, latest, queued, (currentSort, refreshing, downloads) ->
+        HomeUiState(false, feeds, resume, latest, queued, currentSort, refreshing, downloads)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeUiState())
 
     fun refresh() {
@@ -54,6 +58,10 @@ class HomeViewModel @Inject constructor(
 
     fun toggleSort() {
         sort.value = if (sort.value == EpisodeSort.NEWEST_FIRST) EpisodeSort.OLDEST_FIRST else EpisodeSort.NEWEST_FIRST
+    }
+
+    fun toggleDownload(episodeId: Long) {
+        viewModelScope.launch { downloadManager.toggle(episodeId) }
     }
 
     fun toggleQueue(episodeId: Long) {

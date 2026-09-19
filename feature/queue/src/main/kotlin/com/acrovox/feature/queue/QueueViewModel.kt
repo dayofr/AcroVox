@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.data.settings.PlaybackSettingsRepository
 import com.acrovox.core.database.entity.EpisodeWithFeed
+import com.acrovox.core.download.DownloadManager
+import com.acrovox.core.model.DownloadState
 import com.acrovox.core.player.PlayerController
 import com.acrovox.core.player.PlayerState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +21,8 @@ data class QueueUiState(
     val loading: Boolean = true,
     val queue: List<EpisodeWithFeed> = emptyList(),
     val player: PlayerState = PlayerState(),
-    val continuousPlayback: Boolean = true
+    val continuousPlayback: Boolean = true,
+    val downloads: Map<Long, DownloadState> = emptyMap()
 ) {
     /** Durée restante de la file, épisodes commencés comptés pour ce qu'il en reste. */
     val remainingMs: Long get() = queue.sumOf { (episode, _) ->
@@ -31,16 +34,22 @@ data class QueueUiState(
 class QueueViewModel @Inject constructor(
     private val episodes: EpisodeRepository,
     private val settings: PlaybackSettingsRepository,
-    val player: PlayerController
+    val player: PlayerController,
+    private val downloadManager: DownloadManager
 ) : ViewModel() {
     val uiState: StateFlow<QueueUiState> = combine(
         episodes.observeQueue(),
         player.state,
-        settings.settings
-    ) { queue, playerState, s -> QueueUiState(false, queue, playerState, s.continuousPlayback) }
+        settings.settings,
+        downloadManager.observeStates()
+    ) { queue, playerState, s, downloads ->
+        QueueUiState(false, queue, playerState, s.continuousPlayback, downloads)
+    }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), QueueUiState())
 
     fun play(episodeId: Long) = player.play(episodeId)
+
+    fun toggleDownload(episodeId: Long) = viewModelScope.launch { downloadManager.toggle(episodeId) }
 
     fun remove(episodeId: Long) = viewModelScope.launch { episodes.removeFromQueue(listOf(episodeId)) }
 

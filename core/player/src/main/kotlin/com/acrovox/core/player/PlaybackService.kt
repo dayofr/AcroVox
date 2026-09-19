@@ -19,6 +19,7 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.data.settings.PlaybackSettingsRepository
+import com.acrovox.core.download.DownloadManager
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -51,6 +52,8 @@ class PlaybackService : MediaSessionService() {
 
     @Inject lateinit var sleepTimer: SleepTimer
 
+    @Inject lateinit var downloads: DownloadManager
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private lateinit var player: ExoPlayer
     private var session: MediaSession? = null
@@ -63,10 +66,11 @@ class PlaybackService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
-        val httpFactory = OkHttpDataSource.Factory(okHttpClient)
-        val dataSourceFactory = CacheDataSource.Factory()
+        // Seul le streaming passe par le cache ; les fichiers téléchargés sont lus directement.
+        val streamFactory = CacheDataSource.Factory()
             .setCache(streamCache)
-            .setUpstreamDataSourceFactory(DefaultDataSource.Factory(this, httpFactory))
+            .setUpstreamDataSourceFactory(OkHttpDataSource.Factory(okHttpClient))
+        val dataSourceFactory = DefaultDataSource.Factory(this, streamFactory)
         player = ExoPlayer.Builder(this)
             .setMediaSourceFactory(DefaultMediaSourceFactory(dataSourceFactory))
             .setAudioAttributes(
@@ -158,8 +162,13 @@ class PlaybackService : MediaSessionService() {
         }
     }
 
-    /** MediaItem complet et position de départ ; applique vitesse et saut d'intro du podcast. */
+    /**
+     * MediaItem complet et position de départ ; applique vitesse et saut d'intro du podcast.
+     * Lit le fichier téléchargé s'il existe. Null si l'épisode n'est pas téléchargé et que le
+     * streaming est désactivé.
+     */
     private suspend fun resolve(episodeId: Long, requestedPositionMs: Long): Pair<MediaItem, Long>? {
+        if (downloads.isBlocked(episodeId)) return null
         val item = episodes.getWithFeed(episodeId) ?: return null
         val (episode, feed) = item
         val start = if (requestedPositionMs != C.TIME_UNSET && requestedPositionMs >= 0) {
@@ -176,7 +185,7 @@ class PlaybackService : MediaSessionService() {
         val global = settings.current()
         player.setPlaybackSpeed(feed.playbackSpeed ?: global.speed)
         skipOutroMs = feed.skipOutroMs
-        return item.toMediaItem() to start
+        return item.toMediaItem(downloads.localFile(episodeId)?.path) to start
     }
 
     private val listener = object : Player.Listener {
@@ -261,7 +270,7 @@ class PlaybackService : MediaSessionService() {
         val end = player.duration.takeIf { it != C.TIME_UNSET } ?: player.currentPosition
         scope.launch {
             if (start != null) episodes.recordListening(episodeId, start, end, playerDuration())
-            val next = if (settings.current().continuousPlayback) episodes.nextInQueue(episodeId) else null
+            val next = if (settings.current().continuousPlayback) nextPlayable(episodeId) else null
             episodes.complete(episodeId)
             if (sleepTimer.consumeEndOfEpisode()) {
                 player.pause()
@@ -276,6 +285,17 @@ class PlaybackService : MediaSessionService() {
                 player.pause()
             }
         }
+    }
+
+    /** Suivant de la file, en sautant les épisodes non téléchargés si le streaming est désactivé. */
+    private suspend fun nextPlayable(episodeId: Long): Long? {
+        var candidate = episodes.nextInQueue(episodeId)
+        val seen = mutableSetOf(episodeId)
+        while (candidate != null && candidate !in seen && downloads.isBlocked(candidate)) {
+            seen += candidate
+            candidate = episodes.nextInQueue(candidate)
+        }
+        return candidate?.takeIf { it !in seen }
     }
 
     private fun playerDuration(): Long? = player.duration.takeIf { it != C.TIME_UNSET && it > 0 }

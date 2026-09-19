@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.acrovox.core.designsystem.icon.AcroVoxIcons
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
 import com.acrovox.core.designsystem.theme.Spacing
+import com.acrovox.core.model.DownloadState
 
 /**
  * Planche des composants partagés, dans des états figés.
@@ -59,8 +60,16 @@ fun ComponentsCatalog(modifier: Modifier = Modifier) {
             progress = 0.65f,
             onClick = {},
             onPlayClick = {},
-            actions = { EpisodeActionButton(AcroVoxIcons.Download, "Télécharger", onClick = {}) }
+            actions = { DownloadButton(DownloadState.Running(0.4f), onClick = {}) }
         )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            DownloadButton(DownloadState.None, onClick = {})
+            DownloadButton(DownloadState.Queued(waitingForWifi = true), onClick = {})
+            DownloadButton(DownloadState.Queued(waitingForWifi = false), onClick = {})
+            DownloadButton(DownloadState.Running(null), onClick = {})
+            DownloadButton(DownloadState.Completed, onClick = {})
+            DownloadButton(DownloadState.Failed("404"), onClick = {})
+        }
         Row(
             horizontalArrangement = Arrangement.spacedBy(Spacing.gutter),
             verticalAlignment = Alignment.CenterVertically

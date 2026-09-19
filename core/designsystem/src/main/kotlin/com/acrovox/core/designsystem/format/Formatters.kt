@@ -58,3 +58,15 @@ fun htmlToPlainText(html: String?): String? {
         .trim()
         .ifEmpty { null }
 }
+
+/** « 850 Ko », « 45 Mo », « 1,2 Go ». */
+fun formatBytes(bytes: Long): String {
+    val kb = 1024.0
+    val mb = kb * 1024
+    val gb = mb * 1024
+    return when {
+        bytes >= gb -> String.format(french, "%.1f Go", bytes / gb)
+        bytes >= mb -> "${(bytes / mb).toLong()} Mo"
+        else -> "${(bytes / kb).toLong().coerceAtLeast(1)} Ko"
+    }
+}

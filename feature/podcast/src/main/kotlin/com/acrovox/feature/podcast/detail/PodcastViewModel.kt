@@ -9,6 +9,8 @@ import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.data.repository.SubscriptionRepository
 import com.acrovox.core.database.entity.EpisodeEntity
 import com.acrovox.core.database.entity.FeedEntity
+import com.acrovox.core.download.DownloadManager
+import com.acrovox.core.model.DownloadState
 import com.acrovox.feature.podcast.navigation.PodcastRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -26,6 +28,7 @@ data class PodcastUiState(
     val episodes: List<EpisodeEntity> = emptyList(),
     val filter: EpisodeFilter = EpisodeFilter.ALL,
     val queuedIds: Set<Long> = emptySet(),
+    val downloads: Map<Long, DownloadState> = emptyMap(),
     /** Vrai une fois le podcast supprimé : l'écran se ferme. */
     val unsubscribed: Boolean = false
 )
@@ -35,7 +38,8 @@ data class PodcastUiState(
 class PodcastViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val subscriptions: SubscriptionRepository,
-    private val episodes: EpisodeRepository
+    private val episodes: EpisodeRepository,
+    private val downloadManager: DownloadManager
 ) : ViewModel() {
     private val feedId = savedStateHandle.toRoute<PodcastRoute>().feedId
     private val filter = MutableStateFlow(EpisodeFilter.ALL)
@@ -45,10 +49,10 @@ class PodcastViewModel @Inject constructor(
         subscriptions.observeFeed(feedId),
         filter.flatMapLatest { episodes.observeByFeed(feedId, it) },
         filter,
-        episodes.observeQueuedIds(),
+        combine(episodes.observeQueuedIds(), downloadManager.observeStates(), ::Pair),
         unsubscribed
-    ) { feed, list, currentFilter, queued, gone ->
-        PodcastUiState(feed, list, currentFilter, queued, gone)
+    ) { feed, list, currentFilter, (queued, downloads), gone ->
+        PodcastUiState(feed, list, currentFilter, queued, downloads, gone)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PodcastUiState())
 
     fun setFilter(value: EpisodeFilter) {
@@ -64,6 +68,8 @@ class PodcastViewModel @Inject constructor(
             episodes.addToQueue(listOf(episodeId))
         }
     }
+
+    fun toggleDownload(episodeId: Long) = viewModelScope.launch { downloadManager.toggle(episodeId) }
 
     fun ignore(episodeId: Long) = viewModelScope.launch { episodes.ignore(listOf(episodeId)) }
 

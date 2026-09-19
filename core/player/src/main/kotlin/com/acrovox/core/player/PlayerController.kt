@@ -9,6 +9,7 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.data.settings.PlaybackSettingsRepository
+import com.acrovox.core.download.DownloadManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -54,7 +55,8 @@ class PlayerController @Inject constructor(
     @param:ApplicationContext private val context: Context,
     private val episodes: EpisodeRepository,
     private val settings: PlaybackSettingsRepository,
-    private val sleepTimer: SleepTimer
+    private val sleepTimer: SleepTimer,
+    private val downloads: DownloadManager
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val mutex = Mutex()
@@ -69,9 +71,13 @@ class PlayerController @Inject constructor(
         scope.launch { restoreLastEpisode() }
     }
 
-    /** Lit un épisode, depuis [positionMs] ou sa position sauvegardée. */
+    /**
+     * Lit un épisode, depuis [positionMs] ou sa position sauvegardée. Si le streaming est désactivé
+     * et l'épisode absent, propose de le télécharger au lieu de le lire.
+     */
     fun play(episodeId: Long, positionMs: Long? = null) {
         scope.launch {
+            if (!downloads.checkPlayable(episodeId)) return@launch
             val c = connect()
             if (episodeIdOf(c.currentMediaItem) == episodeId) {
                 positionMs?.let(c::seekTo)

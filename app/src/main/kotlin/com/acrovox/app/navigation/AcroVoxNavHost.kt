@@ -6,6 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.acrovox.feature.discover.navigation.discoverScreen
+import com.acrovox.feature.downloads.navigation.DownloadsRoute
+import com.acrovox.feature.downloads.navigation.downloadsScreen
 import com.acrovox.feature.home.HomeActions
 import com.acrovox.feature.home.navigation.HomeRoute
 import com.acrovox.feature.home.navigation.homeScreen
@@ -54,8 +56,15 @@ fun AcroVoxNavHost(
             LibraryActions(
                 onOpenPodcast = { navController.navigate(PodcastRoute(it)) },
                 onOpenEpisodeList = { navController.navigate(EpisodeListRoute(it)) },
-                onImportOpml = { navController.navigate(OpmlImportRoute(it)) }
+                onImportOpml = { navController.navigate(OpmlImportRoute(it)) },
+                onOpenDownloads = { navController.navigate(DownloadsRoute) }
             )
+        )
+        downloadsScreen(
+            contentPadding,
+            onBack = navController::popBackStack,
+            onOpenEpisode = { navController.navigate(EpisodeRoute(it)) },
+            onPlay = { onPlay(it, null) }
         )
         episodeListScreen(
             contentPadding,
