@@ -19,6 +19,7 @@ rootProject.name = "acrovox"
 
 include(":app")
 include(":core:model")
+include(":core:data")
 include(":core:database")
 include(":core:network")
 include(":core:designsystem")

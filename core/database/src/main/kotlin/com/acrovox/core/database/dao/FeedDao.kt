@@ -35,6 +35,9 @@ interface FeedDao {
     @Query("SELECT * FROM feed WHERE feed_url = :url")
     suspend fun getByUrl(url: String): FeedEntity?
 
+    @Query("SELECT * FROM feed WHERE feed_url = :url")
+    fun observeByUrl(url: String): Flow<FeedEntity?>
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(feed: FeedEntity): Long
 

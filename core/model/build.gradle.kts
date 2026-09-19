@@ -9,4 +9,5 @@ kotlin {
 
 dependencies {
     testImplementation(libs.junit)
+    testImplementation(libs.truth)
 }

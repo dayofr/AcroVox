@@ -7,6 +7,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("com.android.application")
         pluginManager.apply("org.jlleitschuh.gradle.ktlint")
+        configureUnitTests()
         extensions.configure<ApplicationExtension> {
             configureAndroid()
             defaultConfig.targetSdk = AcroVoxSdk.TARGET

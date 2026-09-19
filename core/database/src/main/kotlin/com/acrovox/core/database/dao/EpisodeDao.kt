@@ -69,18 +69,22 @@ abstract class EpisodeDao {
     /**
      * Fusionne les épisodes lus dans le flux.
      *
-     * Un épisode inconnu est inséré en [EpisodeState.NEW]. Un épisode connu voit ses
+     * Un épisode inconnu est inséré dans l'état [stateForNew]. Un épisode connu voit ses
      * métadonnées mises à jour, sans toucher à l'état, la position ni le favori.
      *
      * @return identifiants des épisodes insérés.
      */
     @Transaction
-    open suspend fun mergeFromFeed(feedId: Long, episodes: List<EpisodeEntity>): List<Long> {
+    open suspend fun mergeFromFeed(
+        feedId: Long,
+        episodes: List<EpisodeEntity>,
+        stateForNew: EpisodeState = EpisodeState.NEW
+    ): List<Long> {
         val inserted = mutableListOf<Long>()
         for (parsed in episodes) {
             val existing = getByGuid(feedId, parsed.guid)
             if (existing == null) {
-                inserted += insert(parsed.copy(id = 0, feedId = feedId, state = EpisodeState.NEW))
+                inserted += insert(parsed.copy(id = 0, feedId = feedId, state = stateForNew))
             } else {
                 update(
                     parsed.copy(

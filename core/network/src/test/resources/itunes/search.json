@@ -1,0 +1,55 @@
+{
+ "resultCount": 3,
+ "results": [
+  {
+   "wrapperType": "track",
+   "kind": "podcast",
+   "collectionId": 912451024,
+   "artistName": "France Inter",
+   "collectionName": "Affaires sensibles",
+   "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/63/70/8c/63708c3b-ed11-5d19-fa67-132f92e463f3/mza_8301076687401115427.jpg/100x100bb.jpg",
+   "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/63/70/8c/63708c3b-ed11-5d19-fa67-132f92e463f3/mza_8301076687401115427.jpg/600x600bb.jpg",
+   "trackCount": 135,
+   "primaryGenreName": "Documentaire",
+   "genres": [
+    "Documentaire",
+    "Podcasts",
+    "Culture et société"
+   ],
+   "releaseDate": "2026-09-18T13:04:00Z"
+  },
+  {
+   "wrapperType": "track",
+   "kind": "podcast",
+   "collectionId": 608884562,
+   "artistName": "France Culture",
+   "collectionName": "Affaires étrangères",
+   "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/c1/fb/0f/c1fb0fb5-8f82-1134-8567-2910b1c77d89/mza_8766385510833197674.jpg/100x100bb.jpg",
+   "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/c1/fb/0f/c1fb0fb5-8f82-1134-8567-2910b1c77d89/mza_8766385510833197674.jpg/600x600bb.jpg",
+   "trackCount": 45,
+   "primaryGenreName": "Actualités",
+   "genres": [
+    "Actualités",
+    "Podcasts"
+   ],
+   "releaseDate": "2026-09-12T09:00:00Z"
+  },
+  {
+   "wrapperType": "track",
+   "kind": "podcast",
+   "collectionId": 1454401823,
+   "artistName": "ARTE Radio",
+   "collectionName": "Fenêtre sur cour : enquêtes, justice, affaires criminelles",
+   "feedUrl": "https://www.arteradio.com/xml_sound_emission?emissionname=%22FEN%C3%8ATRE%20SUR%20COUR%22&partner=applepodcast",
+   "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts114/v4/1b/6c/49/1b6c49d6-8b3f-f50a-2690-a99dc7481c1c/mza_8688042601582116975.jpg/100x100bb.jpg",
+   "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts114/v4/1b/6c/49/1b6c49d6-8b3f-f50a-2690-a99dc7481c1c/mza_8688042601582116975.jpg/600x600bb.jpg",
+   "trackCount": 51,
+   "primaryGenreName": "Criminologie",
+   "genres": [
+    "Criminologie",
+    "Podcasts"
+   ],
+   "releaseDate": "2021-09-23T14:32:00Z"
+  }
+ ]
+}
