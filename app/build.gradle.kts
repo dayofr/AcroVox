@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.pulse.android.application)
     alias(libs.plugins.pulse.android.compose)
+    alias(libs.plugins.pulse.hilt)
 }
 
 android {
