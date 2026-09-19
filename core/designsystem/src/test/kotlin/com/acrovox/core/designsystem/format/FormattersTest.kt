@@ -4,7 +4,10 @@ import java.time.Instant
 import java.time.ZoneOffset
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 class FormattersTest {
     @Test
     fun durations() {
@@ -26,5 +29,12 @@ class FormattersTest {
         assertEquals("Il y a 3 j", at("2026-09-16T08:00:00Z"))
         assertEquals("2 sept.", at("2026-09-02T08:00:00Z"))
         assertEquals("2 sept. 2025", at("2025-09-02T08:00:00Z"))
+    }
+
+    @Test
+    fun htmlToPlainText_stripsTagsAndDecodesEntities() {
+        assertEquals("Long & riche. Suite", htmlToPlainText("<p>Long &amp; riche.</p>\n<p>Suite</p>"))
+        assertEquals(null, htmlToPlainText("  "))
+        assertEquals(null, htmlToPlainText("<br/>"))
     }
 }

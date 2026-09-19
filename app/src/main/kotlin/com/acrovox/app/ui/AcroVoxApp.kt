@@ -53,7 +53,11 @@ fun AcroVoxApp(
             }
         }
     ) { innerPadding ->
-        AcroVoxNavHost(navController = navController, contentPadding = innerPadding)
+        AcroVoxNavHost(
+            navController = navController,
+            contentPadding = innerPadding,
+            onSelectTab = navController::navigateToTopLevel
+        )
     }
 }
 

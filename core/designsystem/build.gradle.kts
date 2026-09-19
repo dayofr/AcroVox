@@ -13,6 +13,7 @@ android {
 dependencies {
     api(libs.androidx.compose.material.icons)
     api(libs.coil.compose)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.coil.network.okhttp)
 
     testImplementation(libs.robolectric)

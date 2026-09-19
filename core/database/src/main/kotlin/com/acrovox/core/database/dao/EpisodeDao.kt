@@ -109,6 +109,14 @@ abstract class EpisodeDao {
         return inserted
     }
 
+    /** Épisodes gardés : sortent de la boîte ou du catalogue, sans toucher aux autres états. */
+    @Query("UPDATE episode SET state = 'UNPLAYED' WHERE id IN (:ids) AND state IN ('NEW', 'AVAILABLE')")
+    abstract suspend fun markKept(ids: List<Long>)
+
+    @Transaction
+    @Query("SELECT * FROM episode WHERE state != 'IGNORED' ORDER BY pub_date ASC LIMIT :limit")
+    abstract fun observeOldest(limit: Int): Flow<List<EpisodeWithFeed>>
+
     @Query("UPDATE episode SET state = :state WHERE id IN (:ids)")
     abstract suspend fun setState(ids: List<Long>, state: EpisodeState)
 

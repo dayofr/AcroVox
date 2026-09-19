@@ -1,5 +1,6 @@
 package com.acrovox.core.designsystem.format
 
+import androidx.core.text.HtmlCompat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -45,4 +46,15 @@ fun formatRelativeDate(
         thenDate.year == today.year -> dayMonth.format(thenDate)
         else -> dayMonthYear.format(thenDate)
     }
+}
+
+/** Texte brut d'une description HTML (shownotes), espaces normalisés. Null si vide. */
+fun htmlToPlainText(html: String?): String? {
+    if (html.isNullOrBlank()) return null
+    return HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        .toString()
+        .replace('￼', ' ')
+        .replace(Regex("\\s+"), " ")
+        .trim()
+        .ifEmpty { null }
 }

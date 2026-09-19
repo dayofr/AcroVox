@@ -5,7 +5,7 @@ import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isSelectable
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.performClick
 import com.acrovox.app.navigation.TopLevelDestination
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -29,9 +29,9 @@ class AcroVoxAppTest {
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun startsOnHome() {
+    fun startsOnHome_withEmptyState() {
         tab(TopLevelDestination.HOME).assertIsSelected()
-        composeRule.onNodeWithText("Vos podcasts suivis et les derniers épisodes.").assertExists()
+        waitForText("Aucun podcast suivi")
     }
 
     @Test
@@ -41,15 +41,22 @@ class AcroVoxAppTest {
             TopLevelDestination.QUEUE to "File de lecture",
             TopLevelDestination.DISCOVER to "Nom du podcast ou adresse du flux",
             TopLevelDestination.LIBRARY to "Importer des abonnements",
-            TopLevelDestination.HOME to "Vos podcasts suivis et les derniers épisodes."
+            TopLevelDestination.HOME to "Aucun podcast suivi"
         )
         texts.forEach { (destination, text) ->
             tab(destination).performClick()
             tab(destination).assertIsSelected()
-            composeRule.onNodeWithText(text).assertExists()
+            waitForText(text)
         }
     }
 
     private fun tab(destination: TopLevelDestination): SemanticsNodeInteraction =
         composeRule.onNode(hasText(destination.label) and isSelectable())
+
+    /** Les écrans lisent la base en arrière-plan : attendre que le texte apparaisse. */
+    private fun waitForText(text: String) {
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            composeRule.onAllNodesWithText(text).fetchSemanticsNodes().isNotEmpty()
+        }
+    }
 }

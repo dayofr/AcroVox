@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.acrovox.feature.discover.navigation.discoverScreen
+import com.acrovox.feature.home.HomeActions
 import com.acrovox.feature.home.navigation.HomeRoute
 import com.acrovox.feature.home.navigation.homeScreen
 import com.acrovox.feature.inbox.navigation.inboxScreen
@@ -17,9 +18,20 @@ import com.acrovox.feature.podcast.navigation.podcastPreviewScreen
 import com.acrovox.feature.queue.navigation.queueScreen
 
 @Composable
-fun AcroVoxNavHost(navController: NavHostController, contentPadding: PaddingValues, modifier: Modifier = Modifier) {
+fun AcroVoxNavHost(
+    navController: NavHostController,
+    contentPadding: PaddingValues,
+    onSelectTab: (TopLevelDestination) -> Unit,
+    modifier: Modifier = Modifier
+) {
     NavHost(navController = navController, startDestination = HomeRoute, modifier = modifier) {
-        homeScreen(contentPadding)
+        homeScreen(
+            contentPadding,
+            HomeActions(
+                onSeeAllSubscriptions = { onSelectTab(TopLevelDestination.LIBRARY) },
+                onExplore = { onSelectTab(TopLevelDestination.DISCOVER) }
+            )
+        )
         inboxScreen(contentPadding)
         queueScreen(contentPadding)
         discoverScreen(contentPadding, onOpenFeed = { navController.navigate(PodcastPreviewRoute(it)) })

@@ -24,6 +24,9 @@ abstract class QueueDao {
     @Query("SELECT episode_id FROM queue_item ORDER BY position")
     abstract suspend fun getEpisodeIds(): List<Long>
 
+    @Query("SELECT episode_id FROM queue_item ORDER BY position")
+    abstract fun observeEpisodeIds(): Flow<List<Long>>
+
     @Query("SELECT EXISTS(SELECT 1 FROM queue_item WHERE episode_id = :episodeId)")
     abstract fun observeContains(episodeId: Long): Flow<Boolean>
 
