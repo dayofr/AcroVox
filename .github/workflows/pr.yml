@@ -1,7 +1,8 @@
 name: PR
 
-# Lance le style et les tests unitaires sur chaque pull request.
+# Lance le style et les tests unitaires sur chaque push et pull request.
 on:
+  push:
   pull_request:
 
 permissions:
