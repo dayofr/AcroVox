@@ -1,12 +1,12 @@
 # AcroVox
 
-Lecteur de podcasts Android, dans l'esprit d'AntennaPod. Suivi du projet dans Chantier (clé `PULSE`).
+Android podcast player, inspired by AntennaPod. Project tracked in Chantier (`PULSE` key).
 
-## Prérequis
+## Prerequisites
 
-- JDK 17 ou plus (`brew install openjdk@17`).
-- Android SDK avec la plateforme 37.
-- `local.properties` avec `sdk.dir=...` (non versionné).
+- JDK 17 or later (`brew install openjdk@17`).
+- Android SDK with platform 37.
+- `local.properties` with `sdk.dir=...` (not versioned).
 
 ## Build
 
