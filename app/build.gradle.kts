@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.acrovox.android.application)
     alias(libs.plugins.acrovox.android.compose)
     alias(libs.plugins.acrovox.hilt)
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 /** Version et signature fournies par l'intégration continue ; valeurs locales sinon. */
@@ -82,4 +83,5 @@ dependencies {
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.coroutines.guava)
     androidTestImplementation(libs.androidx.media3.session)
+    baselineProfile(project(":baselineprofile"))
 }
