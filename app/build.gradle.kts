@@ -4,17 +4,33 @@ plugins {
     alias(libs.plugins.acrovox.hilt)
 }
 
+/** Version et signature fournies par l'intégration continue ; valeurs locales sinon. */
+private val releaseVersion: String = System.getenv("ACROVOX_VERSION")?.removePrefix("v") ?: "0.1.0"
+private val releaseVersionCode: Int = System.getenv("ACROVOX_VERSION_CODE")?.toIntOrNull() ?: 1
+private val releaseKeystore: String? = System.getenv("ACROVOX_KEYSTORE")?.takeIf { it.isNotBlank() }
+
 android {
     namespace = "com.acrovox.app"
 
     defaultConfig {
         applicationId = "com.acrovox.app"
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = releaseVersionCode
+        versionName = releaseVersion
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     testOptions.unitTests.isIncludeAndroidResources = true
+
+    signingConfigs {
+        releaseKeystore?.let { path ->
+            create("release") {
+                storeFile = file(path)
+                storePassword = System.getenv("ACROVOX_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("ACROVOX_KEY_ALIAS")
+                keyPassword = System.getenv("ACROVOX_KEY_PASSWORD")
+            }
+        }
+    }
 
     buildTypes {
         debug {
@@ -23,6 +39,7 @@ android {
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 }
