@@ -14,7 +14,3 @@ Lecteur de podcasts Android, dans l'esprit d'AntennaPod. Suivi du projet dans Ch
 export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
 ./gradlew assembleDebug
 ```
-
-## Maquettes
-
-`stitch_android_podcast_player_ui/` : écrans Stitch et DESIGN.md du design system « Pulse Audio » (thèmes sombre et clair).
