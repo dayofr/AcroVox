@@ -1,5 +1,6 @@
 package com.acrovox.feature.library.episodes
 
+import androidx.annotation.Keep
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -39,6 +40,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+@Keep
 enum class EpisodeListKind(val title: String, val empty: String) {
     FAVORITES("Favoris", "Aucun favori. Ajoutez-en depuis la page d'un épisode."),
     HISTORY("Historique", "L'historique se remplit quand vous écoutez des épisodes.")
