@@ -23,3 +23,6 @@ jobs:
 
       - name: Style et tests
         run: ./gradlew ktlintCheck testDebugUnitTest
+
+      - name: Captures Roborazzi
+        run: ./gradlew verifyRoborazziDebug
