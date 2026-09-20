@@ -26,3 +26,6 @@ keystore.properties
 
 # OS
 .DS_Store
+
+# Maquettes locales (non versionnées)
+stitch_android_podcast_player_ui/
