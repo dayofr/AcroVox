@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fond de l'icône adaptative : même dégradé diagonal que la maquette SVG. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="315"
+        android:endColor="#0A0C10"
+        android:startColor="#1B1E25"
+        android:type="linear" />
+</shape>
