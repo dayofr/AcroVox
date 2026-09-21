@@ -29,3 +29,9 @@ keystore.properties
 
 # Maquettes locales (non versionnées)
 stitch_android_podcast_player_ui/
+
+# Config opencode locale (contient des URLs internes)
+opencode.json
+
+# Sauvegarde AntennaPod personnelle (données privées, 14 Mo)
+AntennaPodBackup*.db

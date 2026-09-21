@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.acrovox.feature.library.LibraryActions
 import com.acrovox.feature.library.LibraryScreen
+import com.acrovox.feature.library.antennapod.AntennaPodImportScreen
 import com.acrovox.feature.library.episodes.EpisodeListKind
 import com.acrovox.feature.library.episodes.EpisodeListScreen
 import com.acrovox.feature.library.opml.OpmlImportScreen
@@ -17,6 +18,10 @@ data object LibraryRoute
 @Serializable
 data class OpmlImportRoute(val uri: String)
 
+/** Migration depuis une sauvegarde AntennaPod ([uri] : `content://`, base SQLite). */
+@Serializable
+data class AntennaPodImportRoute(val uri: String)
+
 /** Favoris ou historique. */
 @Serializable
 data class EpisodeListRoute(val kind: EpisodeListKind)
@@ -27,6 +32,10 @@ fun NavGraphBuilder.libraryScreen(contentPadding: PaddingValues, actions: Librar
 
 fun NavGraphBuilder.opmlImportScreen(contentPadding: PaddingValues, onClose: () -> Unit) {
     composable<OpmlImportRoute> { OpmlImportScreen(contentPadding, onClose) }
+}
+
+fun NavGraphBuilder.antennaPodImportScreen(contentPadding: PaddingValues, onClose: () -> Unit) {
+    composable<AntennaPodImportRoute> { AntennaPodImportScreen(contentPadding, onClose) }
 }
 
 fun NavGraphBuilder.episodeListScreen(
