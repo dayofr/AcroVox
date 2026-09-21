@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.annotation.OptIn
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
+import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
@@ -102,7 +103,7 @@ class PlaybackService : MediaLibraryService() {
                 PendingIntent.FLAG_IMMUTABLE
             )
         }
-        session = MediaLibrarySession.Builder(this, player, callback)
+        session = MediaLibrarySession.Builder(this, QueuePlayer(player), callback)
             .apply { sessionActivity?.let(::setSessionActivity) }
             .setMediaButtonPreferences(
                 listOf(
@@ -150,7 +151,60 @@ class PlaybackService : MediaLibraryService() {
         super.onDestroy()
     }
 
+    /**
+     * File pilotée à la main : la timeline ne contient qu'un épisode, donc
+     * suivant/précédent sont résolus dans la file plutôt que dans la timeline.
+     * Utilisé par Android Auto, le volant, le casque et la notification.
+     */
+    private inner class QueuePlayer(wrapped: Player) : ForwardingPlayer(wrapped) {
+        override fun getAvailableCommands(): Player.Commands = super.getAvailableCommands().buildUpon()
+            .add(Player.COMMAND_SEEK_TO_NEXT)
+            .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+            .build()
+
+        override fun seekToNext() = skipToNext()
+
+        override fun seekToNextMediaItem() = skipToNext()
+
+        override fun seekToPrevious() = skipToPrevious()
+
+        override fun seekToPreviousMediaItem() = skipToPrevious()
+
+        private fun skipToNext() {
+            val current = currentEpisodeId ?: episodeIdOf(currentMediaItem) ?: return
+            scope.launch { playResolved(nextPlayable(current) ?: return@launch) }
+        }
+
+        private fun skipToPrevious() {
+            if (currentPosition > RESTART_THRESHOLD_MS) {
+                seekTo(0)
+                return
+            }
+            val current = currentEpisodeId ?: episodeIdOf(currentMediaItem) ?: return
+            scope.launch { playResolved(episodes.previousInQueue(current) ?: return@launch) }
+        }
+    }
+
     private val callback = object : MediaLibrarySession.Callback {
+        /**
+         * Déclare suivant/précédent : Android Auto affiche les boutons et le volant
+         * (ainsi que casque, montre, Assistant) peut les utiliser. La timeline ne
+         * contient qu'un épisode, la file est gérée à la main (voir onSeekToNext).
+         */
+        override fun onConnect(
+            session: MediaSession,
+            controller: MediaSession.ControllerInfo
+        ): MediaSession.ConnectionResult {
+            val playerCommands = MediaSession.ConnectionResult.DEFAULT_PLAYER_COMMANDS.buildUpon()
+                .add(Player.COMMAND_SEEK_TO_NEXT)
+                .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+                .build()
+            return MediaSession.ConnectionResult.accept(
+                MediaSession.ConnectionResult.DEFAULT_SESSION_COMMANDS,
+                playerCommands
+            )
+        }
+
         /**
          * L'interface envoie des identifiants d'épisode ; le service fournit l'URL et les métadonnées.
          * Une demande vocale arrive sans identifiant, avec une recherche.
@@ -358,6 +412,14 @@ class PlaybackService : MediaLibraryService() {
         scope.launch { episodes.recordListening(id, start, position, total) }
     }
 
+    /** Lit l'épisode demandé depuis le début estimé (vitesse et intro du podcast). */
+    private suspend fun playResolved(episodeId: Long) {
+        val resolved = resolve(episodeId, C.TIME_UNSET) ?: return
+        player.setMediaItem(resolved.first, resolved.second)
+        player.prepare()
+        player.play()
+    }
+
     /** Fin d'épisode : écouté, retiré de la file, suivant de la file si la lecture continue est active. */
     private fun onEpisodeEnded(episodeId: Long) {
         tracker?.cancel()
@@ -373,10 +435,7 @@ class PlaybackService : MediaLibraryService() {
                 return@launch
             }
             if (next != null) {
-                val resolved = resolve(next, C.TIME_UNSET) ?: return@launch
-                player.setMediaItem(resolved.first, resolved.second)
-                player.prepare()
-                player.play()
+                playResolved(next)
             } else {
                 player.pause()
             }
@@ -398,5 +457,8 @@ class PlaybackService : MediaLibraryService() {
 
     private companion object {
         const val SAVE_INTERVAL_MS = 5_000L
+
+        /** Passé ce seuil, « précédent » recommence l'épisode au lieu de reculer. */
+        const val RESTART_THRESHOLD_MS = 5_000L
     }
 }

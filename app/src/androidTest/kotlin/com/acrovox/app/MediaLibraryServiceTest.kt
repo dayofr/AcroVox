@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.os.Looper
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import androidx.media3.session.MediaBrowser
 import androidx.media3.session.SessionToken
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -95,5 +96,16 @@ class MediaLibraryServiceTest {
 
         assertThat(current!!.mediaId.toLongOrNull()).isNotNull()
         assertThat(current!!.mediaMetadata.artist.toString()).isEqualTo(query)
+    }
+
+    /**
+     * Android Auto et le volant : les commandes suivant/précédent sont annoncées
+     * même si la timeline ne contient qu'un épisode (file gérée à la main).
+     */
+    @Test
+    fun nextPreviousCommandsAreAdvertised() = runBlocking {
+        val commands = main { availableCommands }
+        assertThat(commands.contains(Player.COMMAND_SEEK_TO_NEXT)).isTrue()
+        assertThat(commands.contains(Player.COMMAND_SEEK_TO_PREVIOUS)).isTrue()
     }
 }
