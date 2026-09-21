@@ -75,7 +75,8 @@ class MediaLibraryServiceTest {
     }
 
     @Test
-    fun voiceRequestStartsAnEpisode() = runBlocking {        val feed = main { getChildren(MediaLibraryTree.FEEDS, 0, 50, null).await().value!! }.first()
+    fun voiceRequestStartsAnEpisode() = runBlocking {
+        val feed = main { getChildren(MediaLibraryTree.FEEDS, 0, 50, null).await().value!! }.first()
         val query = feed.mediaMetadata.title.toString()
         val request = MediaItem.Builder()
             .setRequestMetadata(MediaItem.RequestMetadata.Builder().setSearchQuery(query).build())
