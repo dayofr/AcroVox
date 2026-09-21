@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -192,14 +193,16 @@ private fun TopBar(onBack: () -> Unit, onSettings: () -> Unit, onUnsubscribe: ()
         IconButton(onClick = onSettings) {
             Icon(AcroVoxIcons.Settings, contentDescription = "Réglages du podcast", tint = colors.textPrimary)
         }
-        IconButton(onClick = {
-            menu = true
-        }) { Icon(AcroVoxIcons.More, contentDescription = "Plus", tint = colors.textPrimary) }
-        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-            DropdownMenuItem(text = { Text("Se désabonner") }, onClick = {
-                menu = false
-                onUnsubscribe()
-            })
+        Box {
+            IconButton(onClick = {
+                menu = true
+            }) { Icon(AcroVoxIcons.More, contentDescription = "Plus", tint = colors.textPrimary) }
+            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                DropdownMenuItem(text = { Text("Se désabonner") }, onClick = {
+                    menu = false
+                    onUnsubscribe()
+                })
+            }
         }
     }
 }
