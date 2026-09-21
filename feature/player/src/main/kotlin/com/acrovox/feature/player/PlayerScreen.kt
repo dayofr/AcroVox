@@ -2,6 +2,8 @@ package com.acrovox.feature.player
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,16 +26,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +55,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.acrovox.core.database.entity.ChapterEntity
 import com.acrovox.core.designsystem.component.AcroVoxFilterChip
 import com.acrovox.core.designsystem.component.Artwork
 import com.acrovox.core.designsystem.component.PlayButtonSize
@@ -167,30 +174,50 @@ fun PlayerScreen(
             )
         }
         Spacer(Modifier.height(Spacing.lg))
-        SeekBar(player.positionMs, player.durationMs, onSeek = controller::seekTo)
-        Row(
-            Modifier.fillMaxWidth().padding(vertical = Spacing.md),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ControlButton(AcroVoxIcons.SkipPrevious, "Précédent", onClick = controller::previous)
-            ControlButton(
-                AcroVoxIcons.Replay10,
-                "Reculer de ${state.skipBackSeconds} s",
-                onClick = controller::skipBack
-            )
-            PlayPauseButton(
-                isPlaying = player.isPlaying,
-                onClick = controller::togglePlayPause,
-                size = PlayButtonSize.Large,
-                modifier = Modifier.size(72.dp)
-            )
-            ControlButton(
-                AcroVoxIcons.Forward30,
-                "Avancer de ${state.skipForwardSeconds} s",
-                onClick = controller::skipForward
-            )
-            ControlButton(AcroVoxIcons.SkipNext, "Suivant dans la file", onClick = controller::next)
+        var tab by rememberSaveable { mutableIntStateOf(0) }
+        val chapters = state.chapters
+        if (chapters.isNotEmpty()) {
+            PrimaryTabRow(
+                selectedTabIndex = tab,
+                containerColor = colors.surfaceCard,
+                contentColor = colors.textPrimary,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text("Lecture") })
+                Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text("Chapitres (${chapters.size})") })
+            }
+            Spacer(Modifier.height(Spacing.md))
+        } else {
+            tab = 0
+        }
+        if (tab == 0) {
+            SeekBar(player.positionMs, player.durationMs, chapters, onSeek = controller::seekTo)
+            Row(
+                Modifier.fillMaxWidth().padding(vertical = Spacing.md),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ControlButton(AcroVoxIcons.SkipPrevious, "Précédent", onClick = controller::previous)
+                ControlButton(
+                    AcroVoxIcons.Replay10,
+                    "Reculer de ${state.skipBackSeconds} s",
+                    onClick = controller::skipBack
+                )
+                PlayPauseButton(
+                    isPlaying = player.isPlaying,
+                    onClick = controller::togglePlayPause,
+                    size = PlayButtonSize.Large,
+                    modifier = Modifier.size(72.dp)
+                )
+                ControlButton(
+                    AcroVoxIcons.Forward30,
+                    "Avancer de ${state.skipForwardSeconds} s",
+                    onClick = controller::skipForward
+                )
+                ControlButton(AcroVoxIcons.SkipNext, "Suivant dans la file", onClick = controller::next)
+            }
+        } else {
+            ChaptersList(chapters, player.positionMs, player.durationMs, onSeek = controller::seekTo)
         }
     }
 
@@ -203,7 +230,7 @@ fun PlayerScreen(
 private fun Modifier.clickableText(onClick: () -> Unit) = clickable(onClick = onClick)
 
 @Composable
-private fun SeekBar(positionMs: Long, durationMs: Long, onSeek: (Long) -> Unit) {
+private fun SeekBar(positionMs: Long, durationMs: Long, chapters: List<ChapterEntity>, onSeek: (Long) -> Unit) {
     val colors = AcroVoxTheme.colors
     var dragging by remember { mutableStateOf(false) }
     var dragValue by remember { mutableFloatStateOf(0f) }
@@ -227,6 +254,9 @@ private fun SeekBar(positionMs: Long, durationMs: Long, onSeek: (Long) -> Unit) 
                 inactiveTrackColor = colors.outlineSubtle
             )
         )
+        if (chapters.size > 1 && durationMs > 0) {
+            ChapterTicks(chapters, durationMs)
+        }
         Row {
             Text(formatClock(shown), style = MaterialTheme.typography.labelSmall, color = colors.textSecondary)
             Spacer(Modifier.weight(1f))
@@ -235,6 +265,82 @@ private fun SeekBar(positionMs: Long, durationMs: Long, onSeek: (Long) -> Unit) 
                 style = MaterialTheme.typography.labelSmall,
                 color = colors.textSecondary
             )
+        }
+    }
+}
+
+@Composable
+private fun ChapterTicks(chapters: List<ChapterEntity>, durationMs: Long) {
+    val color = AcroVoxTheme.colors.textMuted
+    Canvas(
+        Modifier.fillMaxWidth().height(6.dp).padding(horizontal = 12.dp)
+    ) {
+        chapters.forEach { chapter ->
+            val x = size.width * (chapter.startMs.toFloat() / durationMs).coerceIn(0f, 1f)
+            drawLine(color, Offset(x, 0f), Offset(x, size.height), strokeWidth = 2.dp.toPx())
+        }
+    }
+}
+
+/** Onglet Chapitres : liste, chapitre courant surligné, saut au tap, images. */
+@Composable
+fun ChaptersList(
+    chapters: List<ChapterEntity>,
+    positionMs: Long,
+    durationMs: Long,
+    onSeek: (Long) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val colors = AcroVoxTheme.colors
+    val currentIndex = chapters.indexOfLast { it.startMs <= positionMs }.coerceAtLeast(0)
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+        chapters.forEachIndexed { index, chapter ->
+            val endMs = chapters.getOrNull(index + 1)?.startMs ?: durationMs.coerceAtLeast(chapter.startMs)
+            val selected = index == currentIndex
+            Surface(
+                onClick = { onSeek(chapter.startMs) },
+                shape = AcroVoxShape.Card,
+                color = if (selected) colors.surfaceFloating else colors.surfaceCard,
+                border = BorderStroke(1.dp, if (selected) colors.brand else colors.outlineSubtle),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    Modifier.padding(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.md),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Artwork(
+                        url = chapter.imageUrl,
+                        contentDescription = null,
+                        shape = AcroVoxShape.ArtworkSmall,
+                        modifier = Modifier.size(48.dp)
+                    )
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            chapter.title,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = colors.textPrimary,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            formatClock(chapter.startMs) + " · " +
+                                formatClock((endMs - chapter.startMs).coerceAtLeast(0)),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = colors.textSecondary,
+                            maxLines = 1
+                        )
+                    }
+                    if (selected) {
+                        Icon(
+                            AcroVoxIcons.Play,
+                            contentDescription = "Chapitre en cours",
+                            tint = colors.brand,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+            }
         }
     }
 }

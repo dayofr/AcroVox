@@ -3,11 +3,13 @@ package com.acrovox.core.data
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.acrovox.core.data.refresh.RefreshRepository
+import com.acrovox.core.data.repository.ChaptersRepository
 import com.acrovox.core.data.repository.SubscriptionRepository
 import com.acrovox.core.database.AcroVoxDatabase
 import com.acrovox.core.model.EpisodeState
 import com.acrovox.core.network.feed.FeedFetcher
 import com.acrovox.core.network.rss.FeedParser
+import com.acrovox.core.network.rss.PodcastChaptersFetcher
 import com.google.common.truth.Truth.assertThat
 import java.time.Clock
 import java.time.Instant
@@ -63,8 +65,9 @@ class RefreshRepositoryTest {
             .build()
         val fetcher = FeedFetcher(OkHttpClient(), FeedParser(), Dispatchers.Unconfined)
         val clock = Clock.fixed(Instant.parse("2026-09-19T10:00:00Z"), ZoneOffset.UTC)
-        subscriptions = SubscriptionRepository(db, fetcher, clock)
-        refresher = RefreshRepository(db, fetcher, clock)
+        val chapters = ChaptersRepository(db, PodcastChaptersFetcher(OkHttpClient(), Dispatchers.Unconfined))
+        subscriptions = SubscriptionRepository(db, fetcher, chapters, clock)
+        refresher = RefreshRepository(db, fetcher, chapters, clock)
     }
 
     @After

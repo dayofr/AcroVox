@@ -5,10 +5,12 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.acrovox.core.data.opml.OpmlOutline
 import com.acrovox.core.data.opml.OpmlRepository
+import com.acrovox.core.data.repository.ChaptersRepository
 import com.acrovox.core.data.repository.SubscriptionRepository
 import com.acrovox.core.database.AcroVoxDatabase
 import com.acrovox.core.network.feed.FeedFetcher
 import com.acrovox.core.network.rss.FeedParser
+import com.acrovox.core.network.rss.PodcastChaptersFetcher
 import com.google.common.truth.Truth.assertThat
 import java.time.Clock
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +54,7 @@ class OpmlImportTest {
             SubscriptionRepository(
                 db,
                 FeedFetcher(OkHttpClient(), FeedParser(), Dispatchers.Unconfined),
+                ChaptersRepository(db, PodcastChaptersFetcher(OkHttpClient(), Dispatchers.Unconfined)),
                 Clock.systemUTC()
             )
         opml = OpmlRepository(context, db, subscriptions, Dispatchers.Unconfined)

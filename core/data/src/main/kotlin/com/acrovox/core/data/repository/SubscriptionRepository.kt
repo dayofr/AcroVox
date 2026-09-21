@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.map
 class SubscriptionRepository @Inject constructor(
     private val db: AcroVoxDatabase,
     private val fetcher: FeedFetcher,
+    private val chapters: ChaptersRepository,
     private val clock: Clock
 ) {
     private val feedDao get() = db.feedDao()
@@ -80,6 +81,7 @@ class SubscriptionRepository @Inject constructor(
         val inboxCount = if (inboxLatest) 1 else 0
         episodeDao.mergeFromFeed(feedId, episodes.take(inboxCount), stateForNew = EpisodeState.NEW)
         episodeDao.mergeFromFeed(feedId, episodes.drop(inboxCount), stateForNew = EpisodeState.AVAILABLE)
+        chapters.storePodlove(feedId, feed.episodes)
         feedId
     }
 

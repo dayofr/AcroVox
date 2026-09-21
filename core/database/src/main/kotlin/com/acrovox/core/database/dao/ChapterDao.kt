@@ -12,6 +12,9 @@ abstract class ChapterDao {
     @Query("SELECT * FROM chapter WHERE episode_id = :episodeId ORDER BY start_ms")
     abstract fun observe(episodeId: Long): Flow<List<ChapterEntity>>
 
+    @Query("SELECT * FROM chapter WHERE episode_id = :episodeId ORDER BY start_ms")
+    abstract suspend fun get(episodeId: Long): List<ChapterEntity>
+
     @Query("DELETE FROM chapter WHERE episode_id = :episodeId")
     protected abstract suspend fun deleteForEpisode(episodeId: Long)
 

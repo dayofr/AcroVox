@@ -1,6 +1,7 @@
 package com.acrovox.core.data.refresh
 
 import androidx.room.withTransaction
+import com.acrovox.core.data.repository.ChaptersRepository
 import com.acrovox.core.data.repository.toEntity
 import com.acrovox.core.database.AcroVoxDatabase
 import com.acrovox.core.database.entity.FeedEntity
@@ -41,6 +42,7 @@ data class RefreshSummary(
 class RefreshRepository @Inject constructor(
     private val db: AcroVoxDatabase,
     private val fetcher: FeedFetcher,
+    private val chapters: ChaptersRepository,
     private val clock: Clock
 ) {
     private val feedDao get() = db.feedDao()
@@ -104,11 +106,12 @@ class RefreshRepository @Inject constructor(
             val known = episodeDao.getIdentities(feed.id)
             val knownGuids = known.mapTo(HashSet()) { it.guid }
             val guidByMediaUrl = known.associate { it.mediaUrl to it.guid }
-            val episodes = parsed.episodes
+            val parsedEpisodes = parsed.episodes
                 .map { it.keepKnownGuid(knownGuids, guidByMediaUrl) }
                 .distinctBy { it.guid }
-                .map { it.toEntity(feed.id, fallbackDate = now) }
+            val episodes = parsedEpisodes.map { it.toEntity(feed.id, fallbackDate = now) }
             val inserted = episodeDao.mergeFromFeed(feed.id, episodes, stateForNew = EpisodeState.NEW)
+            chapters.storePodlove(feed.id, parsedEpisodes)
             feedDao.updateMetadata(
                 id = feed.id,
                 title = parsed.title.ifBlank { feed.title },

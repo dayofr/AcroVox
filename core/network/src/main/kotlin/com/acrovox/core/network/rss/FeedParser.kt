@@ -120,6 +120,7 @@ class FeedParser @Inject constructor() {
         var mediaContent: Enclosure? = null
         var image: String? = null
         var chapters: String? = null
+        var podloveChapters: List<ParsedChapter> = emptyList()
         val transcripts = mutableListOf<Pair<String, String?>>()
 
         parser.forEachChild {
@@ -139,6 +140,7 @@ class FeedParser @Inject constructor() {
                     mediaContent =
                         mediaContent ?: parser.readEnclosure("url")?.takeIf { it.isAudioOrVideo }
                 Ns.PODCAST to "chapters" -> chapters = parser.attr("url").also { parser.skip() }
+                Ns.PODLOVE to "chapters" -> podloveChapters = parsePodloveChapters(parser)
                 Ns.PODCAST to "transcript" -> {
                     parser.attr("url")?.let { transcripts += it to parser.attr("type") }
                     parser.skip()
@@ -161,9 +163,38 @@ class FeedParser @Inject constructor() {
             mediaSize = media.length,
             imageUrl = image,
             chaptersUrl = chapters,
+            chapters = podloveChapters,
             transcriptUrl = transcript?.first,
             transcriptType = transcript?.second
         )
+    }
+
+    /** `<psc:chapters>` : chaque `<psc:chapter start title href image/>`, dans l'ordre du flux. */
+    private fun parsePodloveChapters(parser: XmlPullParser): List<ParsedChapter> {
+        val chapters = mutableListOf<ParsedChapter>()
+        parser.forEachChild {
+            if (Ns.of(parser.namespace) == Ns.PODLOVE && parser.name == "chapter") {
+                val start = parser.attr("start")?.let(::parsePodloveStartMs)
+                val title = parser.attr("title")
+                if (start != null && !title.isNullOrBlank()) {
+                    chapters += ParsedChapter(start, title, parser.attr("href"), parser.attr("image"))
+                }
+            }
+            parser.skip()
+        }
+        return chapters.sortedBy { it.startMs }
+    }
+
+    /** `start` Podlove : secondes (`57`, `57.5`) ou `HH:MM:SS[.mmm]`. */
+    private fun parsePodloveStartMs(raw: String): Long? {
+        val value = raw.trim()
+        if (value.isEmpty()) return null
+        if (':' !in value) return value.toDoubleOrNull()?.times(1_000)?.toLong()?.takeIf { it >= 0 }
+        var total = 0.0
+        for (part in value.split(':')) {
+            total = total * 60 + (part.toDoubleOrNull() ?: return null)
+        }
+        return (total * 1_000).toLong().takeIf { it >= 0 }
     }
 
     // Atom
@@ -290,6 +321,7 @@ private enum class Ns {
     CONTENT,
     MEDIA,
     PODCAST,
+    PODLOVE,
     OTHER
     ;
 
@@ -303,6 +335,7 @@ private enum class Ns {
                 u == "http://purl.org/rss/1.0/modules/content" -> CONTENT
                 u == "http://search.yahoo.com/mrss" -> MEDIA
                 u.contains("podcastindex.org/namespace") || u.contains("podcastindex-org/podcast-namespace") -> PODCAST
+                u == "http://podlove.org/simple-chapters" -> PODLOVE
                 else -> OTHER
             }
         }

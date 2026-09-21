@@ -30,8 +30,13 @@ data class ParsedEpisode(
     val mediaSize: Long? = null,
     val imageUrl: String? = null,
     val chaptersUrl: String? = null,
+    /** Chapitres Podlove lus dans le flux, dans l'ordre. */
+    val chapters: List<ParsedChapter> = emptyList(),
     val transcriptUrl: String? = null,
     val transcriptType: String? = null
 )
+
+/** Chapitre Podlove (`psc:chapter`) : début en millisecondes. */
+data class ParsedChapter(val startMs: Long, val title: String, val url: String? = null, val imageUrl: String? = null)
 
 class FeedParseException(message: String, cause: Throwable? = null) : Exception(message, cause)
