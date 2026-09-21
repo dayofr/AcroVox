@@ -60,6 +60,7 @@ data class LibraryActions(
     val onOpenPodcast: (Long) -> Unit = {},
     val onOpenEpisodeList: (EpisodeListKind) -> Unit = {},
     val onImportOpml: (String) -> Unit = {},
+    val onImportAntennaPod: (String) -> Unit = {},
     val onOpenDownloads: () -> Unit = {},
     val onOpenSync: () -> Unit = {}
 )
@@ -82,6 +83,9 @@ fun LibraryScreen(
     }
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         uri?.let { actions.onImportOpml(it.toString()) }
+    }
+    val antennaPodLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri?.let { actions.onImportAntennaPod(it.toString()) }
     }
     val exportLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/x-opml")) { uri ->
@@ -161,6 +165,11 @@ fun LibraryScreen(
                         "Importer des abonnements",
                         "Fichier OPML exporté d'AntennaPod ou d'une autre app"
                     ) { importLauncher.launch(OpmlMimeTypes) }
+                    LibraryAction(
+                        AcroVoxIcons.Sync,
+                        "Migrer depuis AntennaPod",
+                        "Sauvegarde AntennaPod : abonnements, écoutes, file et favoris"
+                    ) { antennaPodLauncher.launch(arrayOf("*/*")) }
                     LibraryAction(
                         AcroVoxIcons.Share,
                         "Exporter mes abonnements",

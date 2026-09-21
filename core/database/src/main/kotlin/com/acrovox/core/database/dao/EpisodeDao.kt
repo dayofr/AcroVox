@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.Flow
 
 data class EpisodeIdentity(val guid: String, @ColumnInfo(name = "media_url") val mediaUrl: String)
 
+data class EpisodeLookup(val id: Long, val guid: String, val mediaUrl: String?)
+
 @Dao
 abstract class EpisodeDao {
     @Transaction
@@ -84,6 +86,10 @@ abstract class EpisodeDao {
     /** guid et URL média des épisodes d'un podcast, pour reconnaître un épisode dont le guid a changé. */
     @Query("SELECT guid, media_url FROM episode WHERE feed_id = :feedId")
     abstract suspend fun getIdentities(feedId: Long): List<EpisodeIdentity>
+
+    /** Correspondance guid / URL média vers identifiant, pour les imports. */
+    @Query("SELECT id, guid, media_url AS mediaUrl FROM episode WHERE feed_id = :feedId")
+    abstract suspend fun getLookup(feedId: Long): List<EpisodeLookup>
 
     @Query("SELECT id FROM episode WHERE state = 'NEW'")
     abstract suspend fun getInboxIds(): List<Long>
