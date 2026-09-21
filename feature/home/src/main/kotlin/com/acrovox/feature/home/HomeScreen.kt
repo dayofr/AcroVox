@@ -32,7 +32,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -54,7 +53,6 @@ import com.acrovox.core.designsystem.component.PlayButtonSize
 import com.acrovox.core.designsystem.component.PlayPauseButton
 import com.acrovox.core.designsystem.format.formatDuration
 import com.acrovox.core.designsystem.format.formatRelativeDate
-import com.acrovox.core.designsystem.format.htmlToPlainText
 import com.acrovox.core.designsystem.icon.AcroVoxIcons
 import com.acrovox.core.designsystem.theme.AcroVoxShape
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
@@ -134,10 +132,8 @@ internal fun HomeContent(
             items(state.latest, key = { it.episode.id }) { item ->
                 val episode = item.episode
                 val queued = episode.id in state.queuedIds
-                val description = remember(episode.id, episode.description) { htmlToPlainText(episode.description) }
                 EpisodeCard(
                     title = episode.title,
-                    description = description,
                     podcastTitle = item.feed.title,
                     dateLabel = formatRelativeDate(episode.pubDate, now),
                     durationLabel = formatDuration(episode.durationMs)?.replace(" h ", "h "),
