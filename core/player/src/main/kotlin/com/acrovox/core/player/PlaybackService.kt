@@ -7,6 +7,7 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Metadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultDataSource
@@ -22,6 +23,7 @@ import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionError
+import com.acrovox.core.data.repository.ChaptersRepository
 import com.acrovox.core.data.repository.EpisodeRepository
 import com.acrovox.core.data.settings.PlaybackSettingsRepository
 import com.acrovox.core.download.DownloadManager
@@ -50,6 +52,8 @@ import okhttp3.OkHttpClient
 @AndroidEntryPoint
 class PlaybackService : MediaLibraryService() {
     @Inject lateinit var episodes: EpisodeRepository
+
+    @Inject lateinit var chapters: ChaptersRepository
 
     @Inject lateinit var settings: PlaybackSettingsRepository
 
@@ -342,6 +346,14 @@ class PlaybackService : MediaLibraryService() {
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
             endSegment()
             currentEpisodeId = episodeIdOf(mediaItem)
+        }
+
+        /** Tags ID3 du fichier : remplit les chapitres si le flux n'en donne pas. */
+        override fun onMetadata(metadata: Metadata) {
+            val parsed = metadata.toParsedChapters()
+            if (parsed.isEmpty()) return
+            val id = currentEpisodeId ?: episodeIdOf(player.currentMediaItem) ?: return
+            scope.launch { chapters.storeIfEmpty(id, parsed) }
         }
 
         override fun onIsPlayingChanged(isPlaying: Boolean) {

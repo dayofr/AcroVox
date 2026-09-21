@@ -133,6 +133,47 @@ class FeedParserTest {
     }
 
     @Test
+    fun podloveChapters_areParsedInOrder() {
+        val feed = xml(
+            """
+            <rss version="2.0" xmlns:psc="http://podlove.org/simple-chapters">
+              <channel><title>T</title>
+                <item>
+                  <title>E</title><guid>g</guid>
+                  <enclosure url="https://example.org/e.mp3" type="audio/mpeg"/>
+                  <psc:chapters version="1.1">
+                    <psc:chapter start="135" title="Deuxième"/>
+                    <psc:chapter start="0" title="Intro" href="https://example.org/intro" image="https://example.org/i.png"/>
+                    <psc:chapter start="00:07:36.500" title="Troisième"/>
+                    <psc:chapter title="Sans début"/>
+                    <psc:chapter start="60"/>
+                  </psc:chapters>
+                </item>
+              </channel>
+            </rss>
+            """
+        )
+        val chapters = feed.episodes.single().chapters
+        assertThat(chapters.map { it.title }).containsExactly("Intro", "Deuxième", "Troisième").inOrder()
+        assertThat(chapters[0].startMs).isEqualTo(0)
+        assertThat(chapters[0].url).isEqualTo("https://example.org/intro")
+        assertThat(chapters[0].imageUrl).isEqualTo("https://example.org/i.png")
+        assertThat(chapters[1].startMs).isEqualTo(135_000)
+        assertThat(chapters[2].startMs).isEqualTo(456_500)
+    }
+
+    @Test
+    fun aushaFixture_hasPodloveChapters() {
+        val episode = fixture("ausha").episodes.first { it.chapters.isNotEmpty() }
+        assertThat(episode.chapters.first().startMs).isEqualTo(0)
+        assertThat(
+            episode.chapters.map {
+                it.title
+            }
+        ).contains("Introduction à la reconstruction après un pervers narcissique")
+    }
+
+    @Test
     fun mediaContent_isUsedWhenNoEnclosure() {
         val feed = xml(
             """

@@ -2,11 +2,13 @@ package com.acrovox.core.data
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.acrovox.core.data.repository.ChaptersRepository
 import com.acrovox.core.data.repository.SubscriptionRepository
 import com.acrovox.core.database.AcroVoxDatabase
 import com.acrovox.core.model.EpisodeState
 import com.acrovox.core.network.feed.FeedFetcher
 import com.acrovox.core.network.rss.FeedParser
+import com.acrovox.core.network.rss.PodcastChaptersFetcher
 import com.google.common.truth.Truth.assertThat
 import java.time.Clock
 import java.time.Instant
@@ -48,7 +50,8 @@ class SubscriptionRepositoryTest {
             .allowMainThreadQueries()
             .build()
         val fetcher = FeedFetcher(OkHttpClient(), FeedParser(), Dispatchers.Unconfined)
-        repository = SubscriptionRepository(db, fetcher, Clock.fixed(now, ZoneOffset.UTC))
+        val chapters = ChaptersRepository(db, PodcastChaptersFetcher(OkHttpClient(), Dispatchers.Unconfined))
+        repository = SubscriptionRepository(db, fetcher, chapters, Clock.fixed(now, ZoneOffset.UTC))
     }
 
     @After
