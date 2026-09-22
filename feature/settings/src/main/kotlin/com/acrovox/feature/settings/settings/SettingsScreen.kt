@@ -125,6 +125,13 @@ fun SettingsScreen(
                     viewModel::setDynamicColor
                 )
             }
+            Section("À propos") {
+                Text(
+                    "Version ${state.appVersion}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colors.textSecondary
+                )
+            }
         }
     }
 }
