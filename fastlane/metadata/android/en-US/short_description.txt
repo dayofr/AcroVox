@@ -1,0 +1,1 @@
+Offline podcast player in the spirit of AntennaPod: open RSS, downloads, chapters.

@@ -1,0 +1,6 @@
+AcroVox est un lecteur de podcasts Android natif dans l'esprit d'AntennaPod : RSS ouvert, hors-ligne, sans compte obligatoire.
+
+- Abonnements par URL ou recherche iTunes, import/export OPML, migration AntennaPod
+- Lecture en arrière-plan (Media3), file d'attente, boîte de réception triée à la main
+- Chapitres (Podlove, Podcasting 2.0, tags ID3), vitesse, minuteur de sommeil
+- Android Auto, synchro gPodder, releases GitHub, compatible Obtainium
