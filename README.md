@@ -2,6 +2,8 @@
 
 Android podcast player, inspired by AntennaPod. Project tracked in Chantier (`PULSE` key).
 
+> Installer et se mettre à jour via Obtainium : voir [OBTAINIUM.md](OBTAINIUM.md).
+
 ## Prerequisites
 
 - JDK 17 or later (`brew install openjdk@17`).
