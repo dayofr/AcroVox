@@ -8,4 +8,5 @@ android {
 
 dependencies {
     implementation(project(":core:sync"))
+    implementation(libs.androidx.activity.compose)
 }

@@ -1,5 +1,7 @@
 package com.acrovox.feature.settings.settings
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -131,6 +134,51 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.textSecondary
                 )
+            }
+            Section("Sauvegarde") {
+                val backupMessage by viewModel.backupMessage.collectAsStateWithLifecycle()
+                val pendingImport by viewModel.pendingImport.collectAsStateWithLifecycle()
+                val exportLauncher = rememberLauncherForActivityResult(
+                    ActivityResultContracts.CreateDocument("application/zip")
+                ) { uri ->
+                    uri?.let(viewModel::exportBackup)
+                }
+                val importLauncher =
+                    rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                        uri?.let(viewModel::prepareImport)
+                    }
+                TextButton(onClick = { exportLauncher.launch("acrovox-sauvegarde.zip") }) {
+                    Text("Exporter la sauvegarde", color = colors.brand)
+                }
+                TextButton(onClick = { importLauncher.launch(arrayOf("application/zip")) }) {
+                    Text("Restaurer une sauvegarde", color = colors.brand)
+                }
+                backupMessage?.let {
+                    Text(it, style = MaterialTheme.typography.bodySmall, color = colors.textSecondary)
+                }
+                pendingImport?.let { staged ->
+                    AlertDialog(
+                        onDismissRequest = viewModel::cancelImport,
+                        title = { Text("Restaurer cette sauvegarde ?") },
+                        text = {
+                            Text(
+                                "Elle remplacera les données actuelles " +
+                                    "(${staged.info.feedCount} podcasts, ${staged.info.episodeCount} épisodes). " +
+                                    "L'app redémarrera."
+                            )
+                        },
+                        confirmButton = {
+                            TextButton(onClick = viewModel::confirmImport) {
+                                Text("Restaurer", color = colors.brand)
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = viewModel::cancelImport) {
+                                Text("Annuler", color = colors.textSecondary)
+                            }
+                        }
+                    )
+                }
             }
         }
     }

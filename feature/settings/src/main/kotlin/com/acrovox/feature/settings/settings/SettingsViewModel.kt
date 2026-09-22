@@ -2,9 +2,12 @@ package com.acrovox.feature.settings.settings
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.acrovox.core.data.backup.BackupRepository
+import com.acrovox.core.data.backup.StagedBackup
 import com.acrovox.core.data.refresh.RefreshSettings
 import com.acrovox.core.data.refresh.RefreshSettingsRepository
 import com.acrovox.core.data.refresh.RefreshWorker
@@ -16,6 +19,7 @@ import com.acrovox.core.data.settings.ThemeSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -34,7 +38,8 @@ class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val playback: PlaybackSettingsRepository,
     private val refresh: RefreshSettingsRepository,
-    private val themes: ThemeRepository
+    private val themes: ThemeRepository,
+    private val backup: BackupRepository
 ) : ViewModel() {
     val state: StateFlow<SettingsUiState> = combine(
         playback.settings,
@@ -66,6 +71,42 @@ class SettingsViewModel @Inject constructor(
     fun setThemeMode(mode: ThemeMode) = launch { themes.setMode(mode) }
 
     fun setDynamicColor(value: Boolean) = launch { themes.setDynamicColor(value) }
+
+    private val _backupMessage = MutableStateFlow<String?>(null)
+    val backupMessage: StateFlow<String?> = _backupMessage
+
+    private val _pendingImport = MutableStateFlow<StagedBackup?>(null)
+    val pendingImport: StateFlow<StagedBackup?> = _pendingImport
+
+    fun exportBackup(uri: Uri) = launch {
+        _backupMessage.value = null
+        try {
+            backup.export(uri)
+            _backupMessage.value = "Sauvegarde exportée."
+        } catch (e: Exception) {
+            _backupMessage.value = e.message ?: "Échec de l'export."
+        }
+    }
+
+    fun prepareImport(uri: Uri) = launch {
+        _backupMessage.value = null
+        try {
+            _pendingImport.value = backup.stageImport(uri)
+        } catch (e: Exception) {
+            _backupMessage.value = e.message ?: "Fichier invalide."
+        }
+    }
+
+    fun confirmImport() = launch { _pendingImport.value?.let { backup.import(it) } }
+
+    fun cancelImport() = launch {
+        _pendingImport.value?.let { backup.discard(it) }
+        _pendingImport.value = null
+    }
+
+    fun backupMessageShown() {
+        _backupMessage.value = null
+    }
 
     private fun launch(block: suspend () -> Unit) = viewModelScope.launch { block() }
 
