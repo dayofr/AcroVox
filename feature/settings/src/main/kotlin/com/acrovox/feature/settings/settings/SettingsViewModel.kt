@@ -1,6 +1,8 @@
 package com.acrovox.feature.settings.settings
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.acrovox.core.data.refresh.RefreshSettings
@@ -23,7 +25,8 @@ import kotlinx.coroutines.launch
 data class SettingsUiState(
     val playback: PlaybackSettings = PlaybackSettings(),
     val refresh: RefreshSettings = RefreshSettings(),
-    val theme: ThemeSettings = ThemeSettings()
+    val theme: ThemeSettings = ThemeSettings(),
+    val appVersion: String = ""
 )
 
 @HiltViewModel
@@ -38,7 +41,7 @@ class SettingsViewModel @Inject constructor(
         refresh.settings,
         themes.settings
     ) { playback, refresh, theme ->
-        SettingsUiState(playback, refresh, theme)
+        SettingsUiState(playback, refresh, theme, appVersion())
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SettingsUiState())
 
     fun setSkipBack(seconds: Int) = launch { playback.setSkipBack(seconds) }
@@ -65,4 +68,27 @@ class SettingsViewModel @Inject constructor(
     fun setDynamicColor(value: Boolean) = launch { themes.setDynamicColor(value) }
 
     private fun launch(block: suspend () -> Unit) = viewModelScope.launch { block() }
+
+    private fun appVersion(): String = try {
+        val packageInfo =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.packageManager.getPackageInfo(
+                    context.packageName,
+                    PackageManager.PackageInfoFlags.of(0)
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfo(context.packageName, 0)
+            }
+        val versionCode =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                packageInfo.versionCode.toLong()
+            }
+        "${packageInfo.versionName} ($versionCode)"
+    } catch (_: PackageManager.NameNotFoundException) {
+        ""
+    }
 }
