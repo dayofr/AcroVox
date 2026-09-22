@@ -17,10 +17,17 @@ object PlaybackPolicy {
      * d'une heure) pour retrouver le fil. Un épisode fini ou presque repart du début.
      * L'introduction du podcast est sautée si la reprise tombe dedans.
      */
-    fun startPosition(savedMs: Long, lastPlayedAt: Long?, now: Long, durationMs: Long?, skipIntroMs: Long): Long {
+    fun startPosition(
+        savedMs: Long,
+        lastPlayedAt: Long?,
+        now: Long,
+        durationMs: Long?,
+        skipIntroMs: Long,
+        playedThresholdMs: Long = PLAYED_REMAINING_MS
+    ): Long {
         val resumed = when {
             savedMs <= 0 -> 0L
-            durationMs != null && durationMs - savedMs <= PLAYED_REMAINING_MS -> 0L
+            durationMs != null && durationMs - savedMs <= playedThresholdMs -> 0L
             else -> {
                 val paused = lastPlayedAt?.let { now - it } ?: 0L
                 val rewind = when {
@@ -35,9 +42,14 @@ object PlaybackPolicy {
     }
 
     /** Vrai si l'écoute s'arrête assez près de la fin (ou dans l'outro à sauter) pour marquer l'épisode écouté. */
-    fun isFinished(positionMs: Long, durationMs: Long?, skipOutroMs: Long = 0): Boolean {
+    fun isFinished(
+        positionMs: Long,
+        durationMs: Long?,
+        skipOutroMs: Long = 0,
+        playedThresholdMs: Long = PLAYED_REMAINING_MS
+    ): Boolean {
         if (durationMs == null || durationMs <= 0) return false
-        return durationMs - positionMs <= maxOf(PLAYED_REMAINING_MS, skipOutroMs)
+        return durationMs - positionMs <= maxOf(playedThresholdMs, skipOutroMs)
     }
 
     /** Vrai si la lecture est entrée dans l'outro à sauter. */

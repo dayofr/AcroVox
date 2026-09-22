@@ -22,7 +22,11 @@ data class PlaybackSettings(
     val skipForwardSeconds: Int = 30,
     val skipSilence: Boolean = false,
     /** Enchaîner sur l'épisode suivant de la file. */
-    val continuousPlayback: Boolean = true
+    val continuousPlayback: Boolean = true,
+    /** Normalisation du volume (LoudnessEnhancer). */
+    val volumeNormalization: Boolean = false,
+    /** Reste à écouter en dessous duquel l'épisode compte comme écouté. */
+    val playedThresholdSeconds: Int = 30
 )
 
 private val Context.playbackStore: DataStore<Preferences> by preferencesDataStore("playback")
@@ -35,6 +39,8 @@ class PlaybackSettingsRepository @Inject constructor(@param:ApplicationContext p
         val skipForward = intPreferencesKey("skip_forward")
         val skipSilence = booleanPreferencesKey("skip_silence")
         val continuous = booleanPreferencesKey("continuous")
+        val volumeNormalization = booleanPreferencesKey("volume_normalization")
+        val playedThreshold = intPreferencesKey("played_threshold")
     }
 
     val settings: Flow<PlaybackSettings> = context.playbackStore.data.map { p ->
@@ -44,7 +50,9 @@ class PlaybackSettingsRepository @Inject constructor(@param:ApplicationContext p
             skipBackSeconds = p[Keys.skipBack] ?: defaults.skipBackSeconds,
             skipForwardSeconds = p[Keys.skipForward] ?: defaults.skipForwardSeconds,
             skipSilence = p[Keys.skipSilence] ?: defaults.skipSilence,
-            continuousPlayback = p[Keys.continuous] ?: defaults.continuousPlayback
+            continuousPlayback = p[Keys.continuous] ?: defaults.continuousPlayback,
+            volumeNormalization = p[Keys.volumeNormalization] ?: defaults.volumeNormalization,
+            playedThresholdSeconds = p[Keys.playedThreshold] ?: defaults.playedThresholdSeconds
         )
     }
 
@@ -68,5 +76,13 @@ class PlaybackSettingsRepository @Inject constructor(@param:ApplicationContext p
 
     suspend fun setContinuousPlayback(value: Boolean) {
         context.playbackStore.edit { it[Keys.continuous] = value }
+    }
+
+    suspend fun setVolumeNormalization(value: Boolean) {
+        context.playbackStore.edit { it[Keys.volumeNormalization] = value }
+    }
+
+    suspend fun setPlayedThreshold(seconds: Int) {
+        context.playbackStore.edit { it[Keys.playedThreshold] = seconds }
     }
 }
