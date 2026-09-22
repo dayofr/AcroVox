@@ -28,7 +28,9 @@ import com.acrovox.feature.podcast.navigation.episodeScreen
 import com.acrovox.feature.podcast.navigation.podcastPreviewScreen
 import com.acrovox.feature.podcast.navigation.podcastScreen
 import com.acrovox.feature.queue.navigation.queueScreen
+import com.acrovox.feature.settings.navigation.SettingsRoute
 import com.acrovox.feature.settings.navigation.SyncRoute
+import com.acrovox.feature.settings.navigation.settingsScreen
 import com.acrovox.feature.settings.navigation.syncScreen
 
 @Composable
@@ -63,9 +65,11 @@ fun AcroVoxNavHost(
                 onImportOpml = { navController.navigate(OpmlImportRoute(it)) },
                 onImportAntennaPod = { navController.navigate(AntennaPodImportRoute(it)) },
                 onOpenDownloads = { navController.navigate(DownloadsRoute) },
-                onOpenSync = { navController.navigate(SyncRoute) }
+                onOpenSync = { navController.navigate(SyncRoute) },
+                onOpenSettings = { navController.navigate(SettingsRoute) }
             )
         )
+        settingsScreen(contentPadding, onBack = navController::popBackStack)
         syncScreen(contentPadding, onBack = navController::popBackStack)
         downloadsScreen(
             contentPadding,

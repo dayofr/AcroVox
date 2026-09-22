@@ -2,6 +2,7 @@ package com.acrovox.core.player
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.media.audiofx.LoudnessEnhancer
 import androidx.annotation.OptIn
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
@@ -71,6 +72,8 @@ class PlaybackService : MediaLibraryService() {
     private lateinit var player: ExoPlayer
     private var session: MediaLibrarySession? = null
     private var tracker: Job? = null
+    private var loudness: LoudnessEnhancer? = null
+    private var volumeNormalization = false
 
     /** Début du segment d'écoute en cours, pour l'action gPodder `play`. */
     private var segmentStartMs: Long? = null
@@ -128,9 +131,26 @@ class PlaybackService : MediaLibraryService() {
         scope.launch {
             settings.settings.distinctUntilChanged().collect { s ->
                 player.skipSilenceEnabled = s.skipSilence
+                volumeNormalization = s.volumeNormalization
+                applyVolumeNormalization()
             }
         }
         sleepTimer.attach(player, scope)
+    }
+
+    /** Normalisation du volume : recrée l'effet à chaque session audio. */
+    private fun applyVolumeNormalization() {
+        loudness?.release()
+        loudness = null
+        if (!volumeNormalization) return
+        val sessionId = player.audioSessionId
+        if (sessionId == C.AUDIO_SESSION_ID_UNSET) return
+        loudness = runCatching {
+            LoudnessEnhancer(sessionId).apply {
+                setTargetGain(NORMALIZATION_GAIN_MB)
+                enabled = true
+            }
+        }.getOrNull()
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession? = session
@@ -141,6 +161,8 @@ class PlaybackService : MediaLibraryService() {
 
     override fun onDestroy() {
         endSegment()
+        loudness?.release()
+        loudness = null
         currentEpisodeId?.let { id ->
             val pos = player.currentPosition
             scope.launch { episodes.savePosition(id, pos) }
@@ -348,6 +370,10 @@ class PlaybackService : MediaLibraryService() {
             currentEpisodeId = episodeIdOf(mediaItem)
         }
 
+        override fun onAudioSessionIdChanged(audioSessionId: Int) {
+            applyVolumeNormalization()
+        }
+
         /** Tags ID3 du fichier : remplit les chapitres si le flux n'en donne pas. */
         override fun onMetadata(metadata: Metadata) {
             val parsed = metadata.toParsedChapters()
@@ -367,14 +393,17 @@ class PlaybackService : MediaLibraryService() {
                 tracker?.cancel()
                 val position = player.currentPosition
                 val duration = player.duration.takeIf { it != C.TIME_UNSET }
-                scope.launch { episodes.savePosition(id, position) }
-                endSegment()
-                if (player.playbackState != Player.STATE_ENDED &&
-                    !player.playWhenReady &&
-                    PlaybackPolicy.isFinished(position, duration, skipOutroMs)
-                ) {
-                    scope.launch { episodes.complete(id) }
+                scope.launch {
+                    episodes.savePosition(id, position)
+                    val thresholdMs = settings.current().playedThresholdSeconds * 1_000L
+                    if (player.playbackState != Player.STATE_ENDED &&
+                        !player.playWhenReady &&
+                        PlaybackPolicy.isFinished(position, duration, skipOutroMs, thresholdMs)
+                    ) {
+                        episodes.complete(id)
+                    }
                 }
+                endSegment()
             }
         }
 
@@ -472,5 +501,8 @@ class PlaybackService : MediaLibraryService() {
 
         /** Passé ce seuil, « précédent » recommence l'épisode au lieu de reculer. */
         const val RESTART_THRESHOLD_MS = 5_000L
+
+        /** Gain de la normalisation du volume, en millibels. */
+        const val NORMALIZATION_GAIN_MB = 500
     }
 }

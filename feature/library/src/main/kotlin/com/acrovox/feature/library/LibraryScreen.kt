@@ -62,7 +62,8 @@ data class LibraryActions(
     val onImportOpml: (String) -> Unit = {},
     val onImportAntennaPod: (String) -> Unit = {},
     val onOpenDownloads: () -> Unit = {},
-    val onOpenSync: () -> Unit = {}
+    val onOpenSync: () -> Unit = {},
+    val onOpenSettings: () -> Unit = {}
 )
 
 @Composable
@@ -115,6 +116,9 @@ fun LibraryScreen(
                     }
                     LibraryAction(AcroVoxIcons.Queue, "Historique", null) {
                         actions.onOpenEpisodeList(EpisodeListKind.HISTORY)
+                    }
+                    LibraryAction(AcroVoxIcons.Settings, "Réglages", "Lecture, actualisation, apparence") {
+                        actions.onOpenSettings()
                     }
                 }
             }
