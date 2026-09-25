@@ -117,6 +117,30 @@ class EpisodeRepositoryTest {
     }
 
     @Test
+    fun savePosition_zeroDoesNotWipeProgress() = runTest {
+        repository.savePosition(ids[0], 600_000)
+
+        // Flush d'un lecteur sans média (service tué, position 0) : ne doit rien écraser.
+        repository.savePosition(ids[0], 0)
+
+        val episode = db.episodeDao().get(ids[0])!!
+        assertThat(episode.positionMs).isEqualTo(600_000)
+        assertThat(episode.state).isEqualTo(EpisodeState.IN_PROGRESS)
+    }
+
+    @Test
+    fun markUnplayed_keepsDownloadableState_andClearsCompletedAt() = runTest {
+        db.episodeDao().markPlayed(ids[0], at = 1000)
+
+        repository.markUnplayed(listOf(ids[0]))
+
+        val episode = db.episodeDao().get(ids[0])!!
+        assertThat(episode.state).isEqualTo(EpisodeState.UNPLAYED)
+        assertThat(episode.completedAt).isNull()
+        assertThat(db.episodeActionDao().count()).isEqualTo(0)
+    }
+
+    @Test
     fun listening_recordsPlayAction_savesPositionAndHistory() = runTest {
         repository.onPlaybackStarted(ids[0], 0)
         repository.savePosition(ids[0], 125_000)

@@ -26,6 +26,7 @@ import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Podcasts
+import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material.icons.rounded.RemoveCircleOutline
 import androidx.compose.material.icons.rounded.Replay10
 import androidx.compose.material.icons.rounded.Schedule
@@ -71,6 +72,7 @@ object AcroVoxIcons {
     val Error: ImageVector = Icons.Rounded.ErrorOutline
     val Delete: ImageVector = Icons.Rounded.DeleteOutline
     val Check: ImageVector = Icons.Rounded.CheckCircle
+    val Uncheck: ImageVector = Icons.Rounded.RadioButtonUnchecked
     val More: ImageVector = Icons.Rounded.MoreVert
     val ExpandMore: ImageVector = Icons.Rounded.KeyboardArrowDown
     val Back: ImageVector = Icons.AutoMirrored.Rounded.ArrowBack

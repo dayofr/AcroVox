@@ -56,6 +56,8 @@ class EpisodeViewModel @Inject constructor(
 
     fun markPlayed() = viewModelScope.launch { episodes.markPlayed(listOf(episodeId)) }
 
+    fun markUnplayed() = viewModelScope.launch { episodes.markUnplayed(listOf(episodeId)) }
+
     fun toggleFavorite() = viewModelScope.launch {
         uiState.value.item?.let { episodes.setFavorite(episodeId, !it.episode.isFavorite) }
     }

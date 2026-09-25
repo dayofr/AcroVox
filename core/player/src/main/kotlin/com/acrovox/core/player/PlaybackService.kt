@@ -43,6 +43,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.guava.future
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
 import okhttp3.OkHttpClient
 
 /**
@@ -156,17 +158,17 @@ class PlaybackService : MediaLibraryService() {
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession? = session
 
     override fun onTaskRemoved(rootIntent: Intent?) {
-        if (!player.playWhenReady || player.mediaItemCount == 0) stopSelf()
+        if (!player.playWhenReady || player.mediaItemCount == 0) {
+            flushPosition()
+            stopSelf()
+        }
     }
 
     override fun onDestroy() {
         endSegment()
         loudness?.release()
         loudness = null
-        currentEpisodeId?.let { id ->
-            val pos = player.currentPosition
-            scope.launch { episodes.savePosition(id, pos) }
-        }
+        flushPosition()
         session?.run {
             player.release()
             release()
@@ -444,6 +446,21 @@ class PlaybackService : MediaLibraryService() {
         }
     }
 
+    /**
+     * Sauvegarde synchrone de la position (sortie voiture, swipe, mise en veille).
+     * Bloque au plus [FLUSH_TIMEOUT_MS] : un `scope.launch` annulé par `scope.cancel()`
+     * juste après dans [onDestroy] perdait la position quand le process mourait.
+     * Les positions nulles sont ignorées par le repository (lecteur sans média).
+     */
+    private fun flushPosition() {
+        val id = currentEpisodeId ?: episodeIdOf(player.currentMediaItem) ?: return
+        val pos = runCatching { player.currentPosition }.getOrDefault(0)
+        if (pos <= 0) return
+        runCatching {
+            runBlocking { withTimeoutOrNull(FLUSH_TIMEOUT_MS) { episodes.savePosition(id, pos) } }
+        }
+    }
+
     private fun endSegment() {
         val id = currentEpisodeId ?: return
         val start = segmentStartMs ?: return
@@ -498,6 +515,9 @@ class PlaybackService : MediaLibraryService() {
 
     private companion object {
         const val SAVE_INTERVAL_MS = 5_000L
+
+        /** Budget max du flush synchrone à la destruction du service. */
+        const val FLUSH_TIMEOUT_MS = 2_000L
 
         /** Passé ce seuil, « précédent » recommence l'épisode au lieu de reculer. */
         const val RESTART_THRESHOLD_MS = 5_000L

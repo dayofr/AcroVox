@@ -29,8 +29,12 @@ data class DownloadSettings(
     val wifiOnly: Boolean = true,
     /** Pas de streaming : seuls les épisodes téléchargés se lisent. */
     val downloadedOnly: Boolean = false,
-    /** Suppression des fichiers écoutés ; les favoris sont toujours gardés. */
-    val deleteAfterPlayed: CleanupDelay = CleanupDelay.ONE_DAY
+    /**
+     * Suppression des fichiers écoutés ; les favoris sont toujours gardés.
+     * Défaut « jamais » : les téléchargements sont manuels, on ne supprime
+     * rien sans action volontaire (opt-in dans l'écran Téléchargements).
+     */
+    val deleteAfterPlayed: CleanupDelay = CleanupDelay.NEVER
 )
 
 private val Context.downloadStore: DataStore<Preferences> by preferencesDataStore("downloads")
