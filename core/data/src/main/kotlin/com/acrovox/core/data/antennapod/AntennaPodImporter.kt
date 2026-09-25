@@ -96,13 +96,14 @@ class AntennaPodImporter @Inject constructor(
                 matched++
                 apToLocal[item.rowId] = localId
                 val now = clock.millis()
+                // Seul `read` décide : une date de complétion sans lu (« écouté puis
+                // démarqué » côté AntennaPod) ne doit pas marquer écouté, sinon la
+                // position est perdue et le nettoyeur supprime les téléchargements.
                 when {
-                    item.completedAt > 0 -> {
-                        episodeDao.markPlayed(localId, item.completedAt)
-                        played++
-                    }
                     item.read == 1 -> {
-                        episodeDao.markPlayed(localId, item.lastPlayedAt.takeIf { it > 0 } ?: now)
+                        val at = item.completedAt.takeIf { it > 0 }
+                            ?: item.lastPlayedAt.takeIf { it > 0 } ?: now
+                        episodeDao.markPlayed(localId, at)
                         played++
                     }
                     item.positionMs > 0 -> {

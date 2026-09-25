@@ -159,6 +159,10 @@ abstract class EpisodeDao {
     @Query("UPDATE episode SET state = 'PLAYED', position_ms = 0, completed_at = :at WHERE id = :id")
     abstract suspend fun markPlayed(id: Long, at: Long)
 
+    /** Remet des épisodes en « gardé » : le téléchargement est conservé, sans action de synchro. */
+    @Query("UPDATE episode SET state = 'UNPLAYED', completed_at = NULL WHERE id IN (:ids)")
+    abstract suspend fun markUnplayed(ids: List<Long>)
+
     @Query("UPDATE episode SET is_favorite = :favorite WHERE id = :id")
     abstract suspend fun setFavorite(id: Long, favorite: Boolean)
 }

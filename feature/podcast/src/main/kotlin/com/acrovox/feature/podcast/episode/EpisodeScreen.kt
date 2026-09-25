@@ -123,6 +123,14 @@ fun EpisodeScreen(
                             tint = colors.textSecondary
                         )
                     }
+                } else {
+                    IconButton(onClick = viewModel::markUnplayed) {
+                        Icon(
+                            AcroVoxIcons.Uncheck,
+                            contentDescription = "Marquer comme non écouté",
+                            tint = colors.textSecondary
+                        )
+                    }
                 }
             }
             downloadLabel(state.download)?.let {

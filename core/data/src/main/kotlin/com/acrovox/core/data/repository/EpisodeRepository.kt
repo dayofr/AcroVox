@@ -127,6 +127,13 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
         record(episodes.filter { it.episode.durationMs != null }, EpisodeActionType.PLAY)
     }
 
+    /**
+     * Marque non écouté : l'épisode redevient « gardé », son téléchargement est
+     * conservé. Sans action gPodder (pas d'équivalent « unplay »), sans toucher
+     * à la file ni à la position.
+     */
+    suspend fun markUnplayed(episodeIds: List<Long>) = episodeDao.markUnplayed(episodeIds)
+
     suspend fun setFavorite(episodeId: Long, favorite: Boolean) = episodeDao.setFavorite(episodeId, favorite)
 
     // Lecture
@@ -142,9 +149,17 @@ class EpisodeRepository @Inject constructor(private val db: AcroVoxDatabase, pri
         )
     }
 
-    /** Position courante ; l'épisode passe « en cours » s'il n'est pas déjà écouté. */
-    suspend fun savePosition(episodeId: Long, positionMs: Long) =
+    /**
+     * Position courante ; l'épisode passe « en cours » s'il n'est pas déjà écouté.
+     *
+     * Une position nulle ou négative est ignorée : elle vient d'un lecteur sans média
+     * (service tué, timeline vide) et ne doit jamais écraser la vraie progression.
+     * Repartir volontairement du début passe par [complete] / « marquer écouté ».
+     */
+    suspend fun savePosition(episodeId: Long, positionMs: Long) {
+        if (positionMs <= 0) return
         episodeDao.updatePosition(episodeId, positionMs, clock.millis())
+    }
 
     /**
      * Segment d'écoute terminé (pause, arrêt, changement d'épisode) : action gPodder `play`

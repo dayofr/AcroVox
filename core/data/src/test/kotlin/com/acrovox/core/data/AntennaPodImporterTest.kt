@@ -48,6 +48,8 @@ class AntennaPodImporterTest {
             <enclosure url="https://example.org/progress.mp3" type="audio/mpeg"/></item>
           <item><title>Nouveau</title><guid>g-new</guid><pubDate>Fri, 18 Sep 2026 08:00:00 GMT</pubDate>
             <enclosure url="https://example.org/new.mp3" type="audio/mpeg"/></item>
+          <item><title>Démarqué</title><guid>g-unmarked</guid><pubDate>Sat, 19 Sep 2026 08:00:00 GMT</pubDate>
+            <enclosure url="https://example.org/unmarked.mp3" type="audio/mpeg"/></item>
         </channel></rss>
     """.trimIndent()
 
@@ -86,9 +88,14 @@ class AntennaPodImporterTest {
             ap.execSQL("INSERT INTO FeedItems VALUES (11, 7, 'Ecouté', 'g-played', 1)")
             ap.execSQL("INSERT INTO FeedItems VALUES (12, 7, 'En cours', 'g-progress', 0)")
             ap.execSQL("INSERT INTO FeedItems VALUES (13, 7, 'Nouveau', 'g-new', -1)")
+            ap.execSQL("INSERT INTO FeedItems VALUES (14, 7, 'Démarqué', 'g-unmarked', 0)")
             ap.execSQL("INSERT INTO FeedMedia VALUES (21, 'https://example.org/played.mp3', 0, 1758000000000, 0, 11)")
             ap.execSQL("INSERT INTO FeedMedia VALUES (22, 'https://example.org/progress.mp3', 61000, 0, 0, 12)")
             ap.execSQL("INSERT INTO FeedMedia VALUES (23, 'https://example.org/new.mp3', 0, 0, 0, 13)")
+            // Écouté puis démarqué côté AntennaPod : complétion sans lu, position gardée.
+            ap.execSQL(
+                "INSERT INTO FeedMedia VALUES (24, 'https://example.org/unmarked.mp3', 534, 1758000000000, 1758000000000, 14)"
+            )
             ap.execSQL("INSERT INTO Queue VALUES (1, 12, 7)")
             ap.execSQL("INSERT INTO Queue VALUES (2, 11, 7)")
             ap.execSQL("INSERT INTO Favorites VALUES (1, 12, 7)")
@@ -106,9 +113,9 @@ class AntennaPodImporterTest {
         val summary = importer.import(backupFile.absolutePath)
 
         assertThat(summary.feedsAdded).isEqualTo(1)
-        assertThat(summary.episodesMatched).isEqualTo(3)
+        assertThat(summary.episodesMatched).isEqualTo(4)
         assertThat(summary.episodesPlayed).isEqualTo(1)
-        assertThat(summary.episodesInProgress).isEqualTo(1)
+        assertThat(summary.episodesInProgress).isEqualTo(2)
         assertThat(summary.queued).isEqualTo(2)
         assertThat(summary.favorites).isEqualTo(1)
 
@@ -123,6 +130,10 @@ class AntennaPodImporterTest {
         assertThat(progress.state).isEqualTo(EpisodeState.IN_PROGRESS)
         assertThat(progress.positionMs).isEqualTo(61_000)
         assertThat(db.episodeDao().get(states.getValue("g-new"))!!.state).isEqualTo(EpisodeState.NEW)
+        // Complétion sans lu : pas écouté, position reprise.
+        val unmarked = db.episodeDao().get(states.getValue("g-unmarked"))!!
+        assertThat(unmarked.state).isEqualTo(EpisodeState.IN_PROGRESS)
+        assertThat(unmarked.positionMs).isEqualTo(534)
 
         val queue = db.queueDao().getEpisodeIds()
         assertThat(queue).containsExactly(states.getValue("g-progress"), states.getValue("g-played")).inOrder()
