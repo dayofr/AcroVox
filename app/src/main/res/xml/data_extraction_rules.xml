@@ -7,11 +7,9 @@
     <cloud-backup>
         <include domain="database" path="acrovox.db" />
         <include domain="file" path="datastore/" />
-        <exclude domain="file" path="podcasts/" />
     </cloud-backup>
     <device-transfer>
         <include domain="database" path="acrovox.db" />
         <include domain="file" path="datastore/" />
-        <exclude domain="file" path="podcasts/" />
     </device-transfer>
 </data-extraction-rules>
