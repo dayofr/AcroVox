@@ -26,3 +26,8 @@ jobs:
 
       - name: Captures Roborazzi
         run: ./gradlew verifyRoborazziDebug
+
+      - name: Lint release
+        # Garde-fou : assembleRelease (workflow Release) exécute
+        # lintVitalRelease, qui a déjà bloqué un tag (v0.6.0, FullBackupContent).
+        run: ./gradlew :app:lintVitalRelease
