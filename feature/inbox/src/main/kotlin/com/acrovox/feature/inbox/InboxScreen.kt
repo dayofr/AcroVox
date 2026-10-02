@@ -264,7 +264,11 @@ private fun SwipeableInboxItem(
             onPlayClick = onPlay,
             badges = {
                 if (duration != null) {
-                    Text(duration, style = MaterialTheme.typography.labelMedium, color = AcroVoxTheme.colors.textSecondary)
+                    Text(
+                        duration,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = AcroVoxTheme.colors.textSecondary
+                    )
                 }
             },
             actions = {
