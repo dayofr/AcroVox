@@ -48,7 +48,6 @@ import com.acrovox.core.designsystem.component.EpisodeActionButton
 import com.acrovox.core.designsystem.component.EpisodeCard
 import com.acrovox.core.designsystem.format.formatDuration
 import com.acrovox.core.designsystem.format.formatRelativeDate
-import com.acrovox.core.designsystem.format.htmlToPlainText
 import com.acrovox.core.designsystem.icon.AcroVoxIcons
 import com.acrovox.core.designsystem.theme.AcroVoxShape
 import com.acrovox.core.designsystem.theme.AcroVoxTheme
@@ -239,7 +238,7 @@ private fun SwipeableInboxItem(
 ) {
     val (episode, feed) = item
     val swipe = rememberSwipeToDismissBoxState()
-    val description = remember(episode.id) { htmlToPlainText(episode.description) }
+    val duration = formatDuration(episode.durationMs)
     SwipeToDismissBox(
         state = swipe,
         enableDismissFromStartToEnd = !selecting,
@@ -258,13 +257,16 @@ private fun SwipeableInboxItem(
             title = episode.title,
             podcastTitle = feed.title,
             dateLabel = formatRelativeDate(episode.pubDate),
-            description = description,
-            durationLabel = formatDuration(episode.durationMs),
             artworkUrl = episode.imageUrl ?: feed.imageUrl,
             selected = selected,
             onClick = if (selecting) onToggleSelection else onOpen,
             onLongClick = onToggleSelection,
             onPlayClick = onPlay,
+            badges = {
+                if (duration != null) {
+                    Text(duration, style = MaterialTheme.typography.labelMedium, color = AcroVoxTheme.colors.textSecondary)
+                }
+            },
             actions = {
                 EpisodeActionButton(AcroVoxIcons.Ignore, "Ignorer", onClick = onIgnore)
                 EpisodeActionButton(AcroVoxIcons.Download, "Garder et télécharger", onClick = onDownload)
