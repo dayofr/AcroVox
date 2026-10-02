@@ -6,6 +6,8 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaBrowser
+import androidx.media3.session.SessionCommand
+import androidx.media3.session.SessionResult
 import androidx.media3.session.SessionToken
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -44,6 +46,21 @@ class MediaLibraryServiceTest {
 
     private suspend fun <T> main(block: suspend MediaBrowser.() -> T): T = withContext(Dispatchers.Main) {
         browser.block()
+    }
+
+    /**
+     * Android Auto demande la racine dès la connexion : sans la commande de bibliothèque,
+     * il affiche « AcroVox ne semble pas fonctionner ».
+     */
+    @Test
+    fun libraryCommandsAreGranted() = runBlocking {
+        val root = main {
+            assertThat(isSessionCommandAvailable(SessionCommand.COMMAND_CODE_LIBRARY_GET_LIBRARY_ROOT)).isTrue()
+            assertThat(isSessionCommandAvailable(SessionCommand.COMMAND_CODE_LIBRARY_GET_CHILDREN)).isTrue()
+            getLibraryRoot(null).await()
+        }
+        assertThat(root.resultCode).isEqualTo(SessionResult.RESULT_SUCCESS)
+        assertThat(root.value!!.mediaId).isEqualTo(MediaLibraryTree.ROOT)
     }
 
     @Test
@@ -100,7 +117,7 @@ class MediaLibraryServiceTest {
 
     /**
      * Android Auto et le volant : les commandes suivant/précédent sont annoncées
-     * même si la timeline ne contient qu'un épisode (file gérée à la main).
+     * même si la timeline ne contient qu'un épisode (ils sautent dans l'épisode).
      */
     @Test
     fun nextPreviousCommandsAreAdvertised() = runBlocking {

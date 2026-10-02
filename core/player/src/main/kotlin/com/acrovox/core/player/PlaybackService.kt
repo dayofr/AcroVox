@@ -180,8 +180,8 @@ class PlaybackService : MediaLibraryService() {
     }
 
     /**
-     * File pilotée à la main : la timeline ne contient qu'un épisode, donc
-     * suivant/précédent sont résolus dans la file plutôt que dans la timeline.
+     * Suivant/précédent sautent dans l'épisode en cours (+30 s / -10 s) au lieu de
+     * changer d'épisode : un podcast s'écoute en entier, le volant sert à sauter une pub.
      * Utilisé par Android Auto, le volant, le casque et la notification.
      */
     private inner class QueuePlayer(wrapped: Player) : ForwardingPlayer(wrapped) {
@@ -190,34 +190,22 @@ class PlaybackService : MediaLibraryService() {
             .add(Player.COMMAND_SEEK_TO_PREVIOUS)
             .build()
 
-        override fun seekToNext() = skipToNext()
+        override fun seekToNext() = seekForward()
 
-        override fun seekToNextMediaItem() = skipToNext()
+        override fun seekToNextMediaItem() = seekForward()
 
-        override fun seekToPrevious() = skipToPrevious()
+        override fun seekToPrevious() = seekBack()
 
-        override fun seekToPreviousMediaItem() = skipToPrevious()
-
-        private fun skipToNext() {
-            val current = currentEpisodeId ?: episodeIdOf(currentMediaItem) ?: return
-            scope.launch { playResolved(nextPlayable(current) ?: return@launch) }
-        }
-
-        private fun skipToPrevious() {
-            if (currentPosition > RESTART_THRESHOLD_MS) {
-                seekTo(0)
-                return
-            }
-            val current = currentEpisodeId ?: episodeIdOf(currentMediaItem) ?: return
-            scope.launch { playResolved(episodes.previousInQueue(current) ?: return@launch) }
-        }
+        override fun seekToPreviousMediaItem() = seekBack()
     }
 
     private val callback = object : MediaLibrarySession.Callback {
         /**
          * Déclare suivant/précédent : Android Auto affiche les boutons et le volant
-         * (ainsi que casque, montre, Assistant) peut les utiliser. La timeline ne
-         * contient qu'un épisode, la file est gérée à la main (voir onSeekToNext).
+         * (ainsi que casque, montre, Assistant) peut les utiliser. Ils sautent dans
+         * l'épisode en cours (voir QueuePlayer).
+         * Garde les commandes de bibliothèque : sans elles, Android Auto ne reçoit pas
+         * la racine et affiche « AcroVox ne semble pas fonctionner ».
          */
         override fun onConnect(
             session: MediaSession,
@@ -227,10 +215,9 @@ class PlaybackService : MediaLibraryService() {
                 .add(Player.COMMAND_SEEK_TO_NEXT)
                 .add(Player.COMMAND_SEEK_TO_PREVIOUS)
                 .build()
-            return MediaSession.ConnectionResult.accept(
-                MediaSession.ConnectionResult.DEFAULT_SESSION_COMMANDS,
-                playerCommands
-            )
+            return MediaSession.ConnectionResult.AcceptedResultBuilder(session)
+                .setAvailablePlayerCommands(playerCommands)
+                .build()
         }
 
         /**
@@ -518,9 +505,6 @@ class PlaybackService : MediaLibraryService() {
 
         /** Budget max du flush synchrone à la destruction du service. */
         const val FLUSH_TIMEOUT_MS = 2_000L
-
-        /** Passé ce seuil, « précédent » recommence l'épisode au lieu de reculer. */
-        const val RESTART_THRESHOLD_MS = 5_000L
 
         /** Gain de la normalisation du volume, en millibels. */
         const val NORMALIZATION_GAIN_MB = 500
